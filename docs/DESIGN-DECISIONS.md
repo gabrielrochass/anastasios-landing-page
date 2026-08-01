@@ -1,118 +1,215 @@
-# Decisões de design e conteúdo — E-Soluções
+# Decisões de design, H H Brasil
 
-Documento vivo. Explica **por que** cada página é como é e **o que falta** preencher/validar antes do go-live. Complementa: [ASSETS.md](../ASSETS.md) (slots de imagem), [IMAGE-SOURCES.md](./IMAGE-SOURCES.md) (onde buscar fotos), [README.md](../README.md) (stack e como rodar).
+Documento vivo. Registra o porquê, não o quê. Se uma decisão aqui for
+revertida, reescreva a entrada em vez de apagar: saber o que foi tentado e
+descartado vale tanto quanto saber o que ficou.
 
-## Princípios transversais
+Complementa [ASSETS.md](../ASSETS.md), [IMAGE-SOURCES.md](./IMAGE-SOURCES.md) e
+[README.md](../README.md).
 
-- **Assinatura visual: a matriz de risco 5×5.** É o artefato real do domínio (probabilidade × severidade). Aparece no hero, em divisores, nós de timeline e no loading do diagnóstico. Nenhum template corporativo tem isso — é o que tira a "cara de IA/genérico".
-- **Laranja é acento cirúrgico.** Petróleo domina; o laranja (`#ff8c42`) só aparece no CTA primário da tela, num dado destacado e no focus ring. Nunca dois laranjas competindo no mesmo viewport.
-- **Light-only.** Site de captação, visitante único; dark mode dobraria o QA de contraste. O "peso" visual vem de seções invertidas (petrol-950), não de um tema escuro.
-- **Orçamento de qualidade inegociável:** Lighthouse 100, CLS 0, WCAG AA (0 violações no accesslint), `prefers-reduced-motion` respeitado em toda animação. Todo componente novo passa por esses gates antes de entrar.
-- **Sem "cara de IA" no texto:** proibidos travessão (—) e middle dot (·) como muleta de pontuação. Separação de dados vira estrutura visual (spans em flex), não caractere. Números sempre tabulares.
-- **Movimento com função.** Animação entra para guiar atenção ou revelar hierarquia, nunca como enfeite. Tudo via `motion` confinado a `src/components/motion/*`.
+## Contexto
 
-## Direção visual: foto real lidera (revisão jul/2026)
+Landing de página única mais Painel de Inteligência, para a H H Brasil Ltda.,
+consultoria de sourcing e gestão de risco em comércio exterior. Público
+comprador: importador brasileiro, decisor B2B, muitas vezes em Android
+corporativo.
 
-Depois de uma revisão do dono ("não vi fotos, quero remover os gradientes e os gráficos de risco com quadrados e substituir por fotos reais"), o site passou a ser **liderado por foto**:
+O repositório nasceu de um fork do site da E-Soluções. A infraestrutura foi
+reaproveitada e todo o visual e conteúdo foram refeitos.
 
-- **Heros por foto** (`PhotoHero`): home, 4 serviços, sobre e contato abrem com uma foto real em tela cheia + overlay petróleo direcional (garante AA do texto claro). Nada de fundo abstrato no hero.
-- **Grafismos abstratos removidos das páginas** (matriz de quadrados, gradientes mesh, hex, doc-lines). Sobrevivem só como marca pequena (células do logo no header, `<hr>` do MDX) e na `/styleguide` interna. Cases de serviço, painéis do sticky-scroll e capas de blog agora usam foto (`Photo`).
-- **Tratamento natural**: `Photo` default = `grade` (dessaturação leve só para coesão). O duotone pesado da versão anterior fazia a foto parecer um gráfico azul — por isso o dono "não via foto". `overlay` (gradiente petróleo) só nos heros, para contraste do texto.
-- **Fotos de pessoas**: stock interino com pessoas (trabalhador, atendimento) em heros/seções; retrato de Adna, equipe e avatares de autor seguem **placeholder sólido honesto** (nunca stock passando por pessoa real da empresa) até a sessão própria.
-- As **âncoras funcionais** (timeline, painel de exames, fluxo DP, pilha de perícias) saíram do hero e viraram **seção do meio** (`ServiceAnchorSection`) — continuam entregando dinamismo, sem competir com a foto na dobra.
-- **Hierarquia**: todo `h1` de página usa `text-display` (contato foi corrigido); eyebrow `eager` (legível desde o SSR).
+## O que mudou em relação ao projeto anterior
 
-### Âncoras funcionais (agora em seção do meio)
+O doc anterior rejeitava explicitamente WebGL, GSAP e Lenis. Duas dessas
+rejeições continuam de pé, uma foi revista.
 
-Cada serviço tem uma âncora própria logo após o problema: (não um molde decorativo repetido), alternando fundo claro/escuro para nenhuma sequência abrir igual. Resposta direta à crítica "5 páginas com o mesmo molde e metade direita vazia":
+**WebGL entrou, three.js não.** A pesquisa de referências mostrou que nenhum
+site premiado do setor faz "embarcação percorrendo a rota conforme o scroll",
+ou seja, a ideia está desocupada. Mas ela não precisa de grafo de cena: o navio
+é SVG com `getPointAtLength` e o mar é um único quad em WebGL2 escrito à mão.
+React Three Fiber custaria de 200 a 250 kb gz, um rAF permanente e um peer pin
+`react >=19 <19.3` que trava o build num bump de versão, tudo para o mesmo
+efeito.
 
-| Página | Fundo | Âncora de entrada | Por quê |
-| --- | --- | --- | --- |
-| **Home** | escuro | Matriz em parallax + cascata do texto | Tese da marca; a matriz é a assinatura em movimento |
-| **Engenharia SST** | escuro | **Timeline da legislação** (1978→hoje) puxada pro topo | Era o elemento mais forte do site, estava enterrado no meio |
-| **Clínica** | escuro | **ExamStatusPanel**: exames animando para "Em dia" (verde) | Materializa "cada exame no prazo, cada risco no radar" |
-| **DP** | **claro** | **DpFlow**: admissão→eSocial→folha→desligamento | Mostra a integração que evita a divergência do eSocial |
-| **Complementares** | **claro** | **PericiaStack**: pilha de perícias/laudos em cascata | Concretiza os tipos de serviço técnico |
-| **Treinamentos** | claro | Leque de cursos reais + calculadora CIPA logo abaixo | Amarra ao catálogo; a ferramenta sobe pra dobra |
-| **Blog** | claro | Editorial: artigo em destaque (capa + resumo) | Entrega conteúdo imediatamente |
-| **Sobre** | escuro | **Números animados** (NumberTicker) + leque de fotos | Prova social na dobra; o leque humaniza |
-| **Contato** | escuro | Hero enxuto; o **quiz** é o protagonista logo abaixo | Sóbrio de propósito |
+**GSAP e Lenis seguem fora.** O Lenis quebra `animation-timeline` nativo e
+`scroll-snap`, trava em 60 fps no Safari e altera o comportamento de PageDown e
+Tab, o que é risco direto em WCAG 2.2 SC 2.4.11. Como parte do motion depende
+de scroll-timeline nativo, adotá-lo significaria abrir mão do compositor.
 
-Componentes-âncora novos em `src/components/sections/services/anchors/`. Alternância clara/escura vem de `heroTone` em cada `ServiceContent`; a âncora, de `heroAnchor`.
+## Direção de arte
 
-**Correções de contraste/legibilidade:** o eyebrow agora entra `eager` (legível desde o SSR, não depende da animação — era o "desbotado" que a análise apontou). Títulos de Clínica/DP/Complementares reescritos para quebrar a fórmula "X não se Y. Verbo-se." (mantidos Home e Engenharia). Heros de serviço tiveram a altura reduzida (`py-16/20`) e a metade direita deixou de ser decorativa.
+**Dois modos, não um tema com dark mode.** Modo `ocean` nas seções de travessia
+e modo `doc` nas seções densas de leitura. São 14 seções: tudo escuro cansa a
+leitura técnica longa, tudo claro desperdiça o mar. A troca é o respiro do
+ritmo da página.
 
-**Fotos reais (confiança):** stock curado tratado em duotone petróleo nos cases dos serviços (`Photo` + `src/lib/photos.ts`); ver Parte de fotos abaixo. Slots humanos (Adna, equipe, clínica com paciente) seguem placeholder até a sessão própria.
+Implementação: `[data-mode]` remapeia a camada semântica em `globals.css`, e os
+componentes consomem só `bg-surface text-content border-rule`. Nenhum
+componente sabe que existem dois modos. O header declara `data-mode="ocean"`
+enquanto está sobre o herói, então o anel de foco troca de cor sozinho quando o
+Tab atravessa a página.
 
-**Primitivos de animação** (`src/components/motion/`): `Entrance`/`EntranceItem` (cascata blur+y; prop `eager` no elemento LCP), `CardFan` (leque de 3 cards), `Reveal`/`Stagger`, `ScrollTimeline`, `NumberTicker`, `RotatingWord`, `PhotoGallery` (grade de fotos com Stagger + zoom no hover). Todos com fallback estático em reduced-motion.
+**Nada de azul de logística.** Dois dos três sites premiados do setor usam o
+mesmo `#2779A7`. O acento é cobre, cor de contêiner, não de brochura de
+armador.
 
-**Interações de scroll/parallax/3D** (adaptadas de padrões do 21st.dev ao tema, jul/2026): `WorkerScene` (cena-centro da Home: o trabalhador ao centro com os 4 serviços irradiando dele, revelados um a um no scroll com folga de leitura, perspectiva CSS + tilt no ponteiro; absorve a antiga grade de pilares), `ParallaxBand` (camada de foto deslocando em `y` por seção; Sobre e um serviço), `Tilt` (inclinação 3D por ponteiro em cards, via CSS transforms), `ReadingProgress` (filete de progresso em páginas longas). Regras que os mantêm dentro do orçamento: uma única lib (`motion`, sem `gsap`/`lenis`/`three`); leitura de scroll por `target` ref, **nunca** `preventDefault` em wheel/touch (sem scroll-jacking); só `transform`/`opacity`; altura reservada (CLS 0); tríplice guarda de reduced-motion com estado final estático. Descartados: smooth-scroll global (Lenis) por mudar o feel do site inteiro e furar reduced-motion; scroll-jacking do componente original; vídeo autoplay e image-sequence por peso/tom.
+**O mono carrega o argumento.** Código de porto, Incoterm, tipo de equipamento
+e nome de documento em Geist Mono nas margens leem como competência
+operacional. É o detalhe mais barato do projeto e o que mais separa a página de
+um template.
 
-**Posicionamento (jul/2026): dois pilares reais.** Alinhado ao negócio real (site esolucoesdp.com.br): **terceirização de folha/DP** (consolidado) + **engenharia de SST** (frente nova). A Home lidera pelos dois; `serviceLinks` põe DP em 1º e Engenharia de SST em 2º. **Prova fabricada removida** (stats 850+/100%/35%, cases "Cenário ilustrativo", depoimentos) até haver dado real. **Contato real** em `site-config.ts` (WhatsApp 5581996074906, Rua Alfredo Coutinho 95, @esolucoesdp); o formulário de contato compõe a mensagem do WhatsApp a partir dos campos. **Blog escondido** do nav/rodapé (rotas mantidas). Pendentes: validar clínica/complementares, e-mail/CNPJ, fotos próprias de turmas.
+**Instrument Serif no display.** Contraste de traço alto, então o piso do
+`clamp()` é maior que o de uma sans: abaixo de 36px fica frágil.
 
-**Seção "A solução" = abas** (`solution-tabs.tsx`, substituiu o antigo sticky de foto repetida): segmented-control escaneável, só o detalhe ativo à vista, `AnimatePresence` no painel + indicador por bg (sem `layoutId`, que exigiria `domMax`), teclado completo, `min-height` reservada (CLS 0).
+## Regras duras de cor
 
-**Mobile (375px):** verificado por medição real de viewport (CDP, `scrollWidth == 375`, zero elementos estourando) em home, serviços e treinamentos. DpFlow empilha vertical, timeline rola horizontal dentro do próprio container, nav vira hambúrguer. Sem overflow horizontal.
+Travadas em `src/lib/design/tokens.contrast.test.ts`, com asserções negativas
+que codificam as proibições.
 
-## Fotos
+- `copper` nunca como texto sobre papel. Reprova em 2,84:1. No modo doc o
+  acento de texto é `oxide`.
+- `oxide` nunca como texto sobre oceano. Reprova em 2,72:1. Os dois acentos são
+  um par por modo, não intercambiáveis.
+- Botão de acento leva texto `ocean-950`. `foam` sobre `copper` reprova em
+  2,77:1.
+- `content-muted` do modo ocean vale sobre `ocean-950` e `ocean-900`, não sobre
+  `sea-700`. `sea-700` é tinta de duotone de foto, não superfície de texto.
+- `rule` fica abaixo de 3:1 de propósito: é fio decorativo. Borda de input,
+  limite interativo e anel de foco usam `rule-strong` ou `focus`.
 
-Componente `Photo` (`src/components/photo/photo.tsx`) aplica o tratamento do design system a fotos de stock de origens diferentes: `grade` (dessatura), `overlay` (gradiente petróleo sob texto), `duotone` (monocromático petróleo — usado nos cases). 12 fotos de licença livre em `public/images/photos/` (créditos em `CREDITS.md` ao lado). São **interinas**: `docs/IMAGE-SOURCES.md` §3 tem o brief da sessão própria que as substitui. Slots que exigem foto própria (retrato Adna, equipe, clínica com pessoas) continuam placeholder por honestidade — stock não deve sugerir ser a equipe real.
+## Regras de escrita
 
-## Página a página: decisões e pendências
+Travadas em `src/lib/design/copy.test.ts`, que falha o build apontando arquivo,
+linha e coluna.
 
-### Home (`src/app/page.tsx`)
-Arco de storytelling do PRD: hero (tese) → 3 problemas → 4 pilares → prova social → depoimentos → CTA final.
-- **Prova social** (`NumberTicker`): números **`[VALIDAR]`** (850+, 100%, 35%) — vieram do PRD, precisam de confirmação da E-Soluções. Contam ao entrar na viewport.
-- **Depoimentos** (marquee): mock anonimizado **`[VALIDAR]`** em `src/data/testimonials.ts` — substituir por reais autorizados.
-- **CTA final**: slot de foto `home-especialista` (retrato Adna) ainda placeholder.
+Proibidos: travessão, midpoint como separador de dados, e meia-risca em faixa
+numérica. São as três marcas tipográficas que fazem um texto parecer gerado por
+IA. Faixa se escreve "de 90 a 120 dias", como o próprio cliente escreveu.
 
-### Serviços (`src/components/sections/services/service-page.tsx` + `src/data/services/*.ts`)
-Template único, 4 conteúdos tipados. Fluxo: hero → problema → solução (sticky scroll) → timeline de legislação → diferenciais → case → CTA.
-- **Cases de cliente**: todos **`[VALIDAR]`** (anonimizados, números conservadores) — precisam de autorização/adaptação real.
-- **Timeline de legislação**: datas de alta confiança; a entrada de riscos psicossociais na NR-1 está **`[VALIDAR]`** (portaria/cronograma).
-- **Slots de foto**: `servico-<slug>-hero-1/-3` (leque) e `servico-<slug>-case`.
+Separação de dados vira **estrutura visual**: spans em flex com `gap` e borda
+de 1px, células de tabela, ou linhas separadas. Isso empurra na mesma direção
+da direção de arte, porque a borda de 1px como separador é a gramática de
+documentação técnica que o site usa.
 
-### Treinamentos (`src/app/treinamentos/page.tsx`)
-Hero claro + tabela comparativa (filtros/sort/deep-link `?nr=`) + diagnóstico CIPA.
-- **Catálogo** (`src/data/trainings.json`): 12 cursos **mock** atrás do contrato `TrainingProvider`. Preços e URLs de checkout são ilustrativos — trocar pelo catálogo real (idealmente via API do Host, sem refactor de componente).
-- **Diagnóstico CIPA**: dimensionamento transcrito do Quadro I da NR-5 oficial (gov.br). O mapa **setor → grau de risco típico** é prudencial e está **`[VALIDAR]`** por CNAE (ver cabeçalho de `src/lib/cipa/cipa-data.ts`). Resultado é orientativo por design (disclaimer no painel).
+Obrigatórios: número sempre com ano e fonte, número não-redondo quando for
+real, vocabulário operacional específico, e tabular numerals em todo dado.
 
-### Blog (`src/app/blog/page.tsx` + `src/content/blog/*.mdx`)
-Hero editorial + grade. 3 artigos completos + 9 stubs `draft: true` (fora de listagem/sitemap em produção).
-- **Fatos normativos**: escritos só com alta confiança; detalhes incertos generalizados ("verifique a redação vigente"). Nenhuma estatística inventada.
-- **Falta**: completar os 9 stubs; capas reais (opcionais — placeholder por domínio cobre); avatar de autor.
+O teste tem uma segunda asserção que falha se a varredura ficar vazia. Sem ela,
+apagar `src/content` faria o portão passar por vazio.
 
-### Sobre (`src/app/sobre/page.tsx`)
-Hero com leque de fotos → TextReveal (manifesto) → tese "um dado, três usos" → método (ScrollTimeline com beam que preenche) → bloco da especialista.
-- **Falta**: retrato Adna (`sobre-especialista`), fotos do leque (`sobre-hero-1..3`), bio/cargo **`[VALIDAR]`** em `src/content/authors.yml`.
+## Motion
 
-### Contato (`src/app/contato/page.tsx`)
-Quiz de 3 perguntas → pré-preenche o formulário (RHF + Zod + server action). E-mail via `EmailProvider` (stub de console; Resend entra no deploy).
-- **Falta**: dados de contato reais em `src/lib/site-config.ts` (telefone, endereço, WhatsApp, e-mail — todos **`[VALIDAR]`**); credencial do Resend.
+**A animação tem que significar alguma coisa.** O navio não navega num mar
+decorativo: ele percorre a rota da própria operação, e cada waypoint é uma
+etapa real do serviço. Três consequências práticas. Sobrevive a auditoria de
+acessibilidade porque é indicador de progresso. Não conta como animação
+automática sob WCAG 2.2 SC 2.2.2 porque é dirigida pelo scroll do usuário. E o
+fallback acessível sai de graça, porque é a mesma lista ordenada.
 
-### Legais (`politica-de-privacidade`, `termos-de-uso`)
-Templates LGPD com marcadores **`[VALIDAR]`** visíveis (razão social, CNPJ, DPO, prazo de retenção, foro). **Exigem revisão jurídica antes do go-live.**
+**Três camadas, nunca duas na mesma propriedade do mesmo elemento.**
 
-## Backlog de validação (resumo — busque `[VALIDAR]` no código)
+| Elemento | Camada |
+| --- | --- |
+| Posição e rotação do navio | `useScroll` com `getPointAtLength` |
+| Uniform de scroll do shader | `scrollYProgress.on("change")` |
+| Desenho das rotas do mapa | CSS `animation-timeline: view()` |
+| Reveals de bloco | `whileInView` |
+| Contadores | `useInView`, uma vez |
 
-1. Dados de contato/endereço/razão social/CNPJ (`site-config.ts`, páginas legais)
-2. Números de prova social e todos os cases de cliente
-3. Revisão jurídica das páginas legais
-4. Mapa setor → grau de risco do diagnóstico CIPA (por CNAE)
-5. Catálogo real de treinamentos (preços, URLs, idealmente API do Host)
-6. Depoimentos reais autorizados
-7. Bios/fotos (Adna, equipe) e todos os slots de `ASSETS.md`
-8. Detalhe normativo dos riscos psicossociais na NR-1
-9. GA4 property (`NEXT_PUBLIC_GA_ID`) e domínio final
+**Custo por frame do navio:** três leituras de `getPointAtLength` e uma escrita
+de `transform`. Nada de `setState`, que renderizaria o React 60 vezes por
+segundo.
 
-## Opções de hero/layout para evoluir (inventário para decisão futura)
+**`offset-path` do CSS foi descartado** apesar de resolver posição e tangente
+de graça: as coordenadas de `path()` são pixels CSS e não unidades do viewBox,
+então a rota quebraria em layout responsivo.
 
-Alternativas pesquisadas e descartadas nesta rodada (mantidas aqui como cardápio; todas exigiriam re-skin para a paleta e passar nos gates):
+**Contrato de movimento reduzido, em quatro camadas:** media query global,
+`MotionConfig reducedMotion="user"`, `useReducedMotion()` com estado final
+estático, e um botão no rodapé. O botão existe porque nem todo mundo sabe que a
+preferência existe no sistema, e porque SC 2.2.2 pede um mecanismo na própria
+página. Um script inline no `<head>` aplica a preferência antes do primeiro
+paint, senão quem precisa de movimento reduzido veria alguns frames animados
+justamente antes de a página se comportar.
 
-- **Sticky scroll no hero**: painel fixo trocando por seção conforme o scroll — poderoso, mas já usamos sticky scroll na seção de soluções; repetir no hero cansaria.
-- **Container 3D scroll** (card que rotaciona em rotateX com o scroll): só faz sentido se houver um portal/dashboard do cliente para mostrar. Sem produto SaaS próprio, fica sem função.
-- **Text shimmer / kinetic type**: brilho varrendo um rótulo. Reservado para um selo pontual; hoje o acento é o laranja, não brilho.
-- **Bento grid no hero**: destacaria o carro-chefe num bloco maior. Bom candidato para uma futura home v2, combina com a linguagem de grid da matriz.
-- **Descartados por conflito de tom**: heros com WebGL/shader, partículas, glow neon, glassmorphism, timelines gamificadas/retrô — quebram o tom técnico B2B e o orçamento de performance.
+O botão nunca liga o movimento de volta contra a preferência do sistema. Se o
+sistema pede reduzido, ele fica travado e o rótulo explica o motivo.
 
-Se o dono quiser trocar um hero atual por uma dessas opções, o caminho é: adaptar cores → confinar `motion` em `components/motion/` → validar reduced-motion → rodar os gates (build, Lighthouse, accesslint) antes de integrar.
+## Responsividade
+
+**Nenhuma peça é desktop-only.** Cada elemento de motion tem geometria mobile
+própria, não versão empobrecida. A única coisa que remove movimento é
+`prefers-reduced-motion` ou o botão, nunca o tamanho da tela.
+
+Isso descarta explicitamente o padrão do projeto anterior, onde a cena
+principal tinha um ramo desktop fixado e um ramo mobile que só empilhava cards.
+
+- **Navio:** horizontal no desktop, serpentina vertical no mobile. O path da
+  serpentina é gerado a partir da altura medida, então o viewBox casa com a
+  caixa em pixels e o casco não distorce.
+- **Oceano:** mesmo shader, orçamento diferente. Mobile trava `dpr` em 1, roda
+  a 40% de resolução interna e limita a 30 fps. Mar é lento, 30 fps é
+  invisível, e corta consumo e aquecimento pela metade.
+- **Mapa:** uma projeção só. Cheguei a gerar duas, paisagem e retrato, mas a
+  rota vai de Xangai a Santos e atravessa quase toda a largura, então recorte
+  retrato corta as origens. Duas projeções ainda custavam 58 kb de landmass
+  duplicado.
+- **Comparadores:** tabela no desktop, `<dl>` empilhada no mobile, mesma fonte
+  de dados. Nada de tabela com rolagem horizontal escondida.
+
+Chaveamento por `useViewportGeometry()`, com snapshot de servidor em `compact`,
+então o telefone nunca renderiza a geometria larga para descartar em seguida.
+Uma quebra só, em 768px.
+
+## Decisões de conteúdo
+
+**O crédito vai cedo na página.** O prazo de 90 a 120 dias contados do B/L nas
+modalidades OA e DA é o único argumento que nenhum dos 12 concorrentes
+auditados oferece. Enterrá-lo no fim seria desperdiçar a única vantagem difícil
+de copiar.
+
+**A seção "onde atuamos na cadeia" existe por dois motivos.** Nenhum
+concorrente explica onde se encaixa, e ela protege juridicamente: deixa
+explícito que a H H Brasil não é despachante credenciado e não registra DUIMP
+em nome próprio.
+
+**O FAQ encara as perguntas desconfortáveis.** "Vocês recebem comissão do
+fornecedor também" é a pergunta mais importante do setor e a que ninguém
+responde. FAQ que só responde pergunta fácil não convence.
+
+**A ressalva do OEA fica.** Dizer que operar sempre via trading trabalha contra
+a certificação OEA de Conformidade custa uma venda de vez em quando e compra a
+credibilidade de quem explica o que não convém.
+
+**Contato só por WhatsApp, com quiz antes.** Formulário filtra lead e WhatsApp
+não, e cinco dos concorrentes brasileiros recebem tudo que aparece. Quatro
+perguntas montam a mensagem, então a conversa começa com contexto. Efeito
+colateral bom: nenhum dado pessoal trafega ou é armazenado pelo site.
+
+## Fotografia
+
+Registro em `src/lib/photos.ts` está vazio nesta fase. Enquanto estiver, os
+componentes caem no `ImageSlot`, que reserva a proporção e garante que a troca
+por foto real não gere CLS.
+
+Duas regras específicas deste domínio:
+
+1. Metade dos resultados de logística no Unsplash é Unsplash+, licença paga da
+   Getty. Conferir o selo antes de baixar.
+2. Casco com livery legível de armador não entra. Licença de foto não é licença
+   de marca, e um MAERSK gigante no herói de uma consultoria sugere uma
+   parceria que não existe.
+
+O slot do retrato fica reservado até a foto real chegar. Retrato de banco de
+imagem ali seria mentira: a página inteira argumenta que existe gente
+responsável atrás da operação.
+
+## Orçamento de qualidade
+
+Inegociável, verificado antes de cada merge:
+
+- Lighthouse 100, CLS 0
+- WCAG 2.2 sem violações
+- Paridade de experiência entre desktop e mobile
+- Nenhuma seção entra sem ter sido percorrida a 375px em aparelho real
+- `content-visibility: auto` sempre acompanhado de `contain-intrinsic-size`
+- Só `transform`, `opacity` e `filter` animam

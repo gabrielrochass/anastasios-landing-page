@@ -18,7 +18,7 @@ export function getAuthor(key: string): Author | undefined {
 
 /**
  * Related posts: override manual do frontmatter quando presente; senão,
- * score por interseção de nrs (peso 2) e tags (peso 1).
+ * score por interseção de temas (peso 2) e tags (peso 1).
  */
 export function getRelatedPosts(post: Post, limit = 3): Post[] {
   const manual = post.related
@@ -33,11 +33,11 @@ export function getRelatedPosts(post: Post, limit = 3): Post[] {
         !manual.some((m) => m.slug === candidate.slug),
     )
     .map((candidate) => {
-      const nrScore = candidate.nrs.filter((nr) => post.nrs.includes(nr)).length;
+      const temaScore = candidate.temas.filter((t) => post.temas.includes(t)).length;
       const tagScore = candidate.tags.filter((tag) =>
         post.tags.includes(tag),
       ).length;
-      return { candidate, score: nrScore * 2 + tagScore };
+      return { candidate, score: temaScore * 2 + tagScore };
     })
     .filter(({ score }) => score > 0)
     .toSorted((a, b) => b.score - a.score)

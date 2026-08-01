@@ -7,12 +7,12 @@ export function AuthorBio({ author }: { author: Author }) {
   return (
     <section
       aria-label={`Sobre ${author.name}`}
-      className="mt-14 rounded-lg bg-surface-tint p-card"
+      className="mt-14 rounded-lg bg-surface-raised p-card"
     >
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
         <div className="w-20 shrink-0">
           <ImageSlot slotId={`autor-${author.key}`} ratio="1/1" className="rounded-full">
-            <div className="flex size-full items-center justify-center bg-petrol-100 text-petrol-700">
+            <div className="flex size-full items-center justify-center bg-surface-raised text-content">
               <span className="text-h3">
                 {author.name.split(" ").map((w) => w[0]).slice(0, 2).join("")}
               </span>
@@ -20,9 +20,9 @@ export function AuthorBio({ author }: { author: Author }) {
           </ImageSlot>
         </div>
         <div className="flex-1">
-          <p className="font-semibold text-petrol-700">{author.name}</p>
-          <p className="text-eyebrow mt-0.5 text-ink-meta">{author.role}</p>
-          <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+          <p className="font-semibold text-content">{author.name}</p>
+          <p className="text-eyebrow mt-0.5 text-content-muted">{author.role}</p>
+          <p className="mt-2 text-sm leading-relaxed text-content-muted">
             {author.bio}
           </p>
         </div>

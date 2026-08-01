@@ -52,7 +52,14 @@
       "Bash(echo \"tsc exit: $?\")",
       "Bash(grep -v \"//\")",
       "WebFetch(domain:donux.com)",
-      "WebFetch(domain:webflow.com)"
+      "WebFetch(domain:webflow.com)",
+      "Bash(rm -rf src/data src/lib/cipa src/lib/trainings src/lib/email src/lib/schemas src/lib/legislation.ts src/lib/risk.ts src/components/icons src/components/interactive/cipa-diagnostic src/components/interactive/training-table src/components/interactive/legislation-timeline src/components/sections/home src/components/sections/services src/components/sections/trainings src/components/sections/blog/related-trainings.tsx src/components/sections/blog/training-cta-link.tsx src/components/sections/shared/related-services.tsx src/components/motion/worker-scene.tsx src/components/illustrations/risk-matrix-pattern.tsx src/components/illustrations/hex-pattern.tsx src/components/illustrations/doc-lines-pattern.tsx src/components/illustrations/mesh-gradient.tsx src/components/ui/dialog.tsx src/components/ui/slider.tsx src/components/ui/sonner.tsx src/app/servicos src/app/treinamentos src/app/sobre src/app/styleguide src/app/contato public/images/photos public/images/logo-full.png public/images/logo-mark.png)",
+      "Bash(rm -f src/content/blog/*.mdx)",
+      "Bash(node -e ' *)",
+      "Bash(sed -i 's/\"name\": \"e-solucoes-website\"/\"name\": \"hh-brasil-website\"/' package.json)",
+      "Bash(npm i *)",
+      "Bash(node scripts/build-map.mjs)",
+      "Bash(node -e \"console.log\\('bruto:', \\(require\\('fs'\\).statSync\\('src/lib/map-paths.ts'\\).size/1024\\).toFixed\\(1\\),'kb'\\)\")"
     ]
   }
 }

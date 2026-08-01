@@ -17,7 +17,7 @@ interface StaggerProps {
 
 /**
  * Revela os filhos diretos em sequência (60ms entre itens) quando o grupo
- * entra no viewport. Com mais de 5 filhos, todos revelam juntos — stagger
+ * entra no viewport. Com mais de 5 filhos, todos revelam juntos , stagger
  * longo vira espera, não polimento.
  */
 export function Stagger({ children, className, itemClassName }: StaggerProps) {

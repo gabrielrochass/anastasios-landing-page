@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu } from "lucide-react";
+import { WhatsappButton } from "@/components/layout/whatsapp-button";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -11,10 +12,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
-import { navLinks, serviceLinks } from "@/lib/site-config";
+import { navLinks } from "@/lib/site-config";
 
-export function MobileNav({ light = false }: { light?: boolean }) {
+export function MobileNav() {
   const [open, setOpen] = useState(false);
 
   return (
@@ -23,49 +23,37 @@ export function MobileNav({ light = false }: { light?: boolean }) {
         <Button
           variant="outline"
           size="icon"
-          className={cn(
-            "md:hidden",
-            light &&
-              "border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white",
-          )}
+          className="size-11 border-rule-strong text-content md:hidden"
           aria-label="Abrir menu"
         >
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent side="right">
+      {/* O painel é sempre modo doc, mesmo aberto por cima do herói escuro.
+          Menu é leitura, não cena. */}
+      <SheetContent side="right" data-mode="doc" className="bg-surface">
         <SheetHeader>
-          <SheetTitle>Menu</SheetTitle>
+          <SheetTitle className="font-serif text-content">Menu</SheetTitle>
         </SheetHeader>
-        <nav aria-label="Navegação principal (móvel)" className="px-4">
-          <ul className="flex flex-col gap-1">
+        <nav aria-label="Principal" className="px-4">
+          <ul className="flex flex-col">
             {navLinks.map((link) => (
-              <li key={link.href}>
+              <li key={link.href} className="border-b border-rule">
                 <Link
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-md px-3 py-2.5 font-medium text-ink hover:bg-petrol-50"
+                  className="flex min-h-14 items-center font-mono text-xs uppercase tracking-[0.14em] text-content"
                 >
                   {link.label}
                 </Link>
-                {link.label === "Serviços" && (
-                  <ul className="ml-3 border-l border-neutral-200 pl-3">
-                    {serviceLinks.map((service) => (
-                      <li key={service.href}>
-                        <Link
-                          href={service.href}
-                          onClick={() => setOpen(false)}
-                          className="block rounded-md px-3 py-2 text-sm text-ink-muted hover:bg-petrol-50 hover:text-petrol-700"
-                        >
-                          {service.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
               </li>
             ))}
           </ul>
+          <WhatsappButton
+            context="mobile-nav"
+            variant="solid"
+            className="mt-6 w-full justify-center"
+          />
         </nav>
       </SheetContent>
     </Sheet>

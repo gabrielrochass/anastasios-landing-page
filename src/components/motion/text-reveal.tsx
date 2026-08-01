@@ -18,7 +18,7 @@ interface TextRevealProps {
  * Frase-manifesto com cascata palavra a palavra ao entrar na viewport
  * (adaptação do Text Reveal do 21st.dev). Deliberadamente whileInView em
  * vez de scrub por scroll: estados intermediários do scrub deixariam
- * palavras semi-transparentes reprovando contraste AA — na cascata cada
+ * palavras semi-transparentes reprovando contraste AA , na cascata cada
  * palavra vai de opacity 0 (ignorada pela auditoria, lida por AT) direto
  * a 1. Com prefers-reduced-motion renderiza tudo opaco. Uso único por
  * página.

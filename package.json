@@ -1,15 +1,16 @@
 {
-  "name": "e-solucoes-website",
+  "name": "hh-brasil-website",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "concurrently \"velite dev\" \"next dev\"",
-    "build": "velite && next build",
+    "build": "node scripts/build-map.mjs && velite && next build",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
     "check:config": "node scripts/check-config.mjs",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build:map": "node scripts/build-map.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
@@ -32,19 +33,24 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/d3-geo": "^3.1.1",
     "@types/mdx": "^2.0.14",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/topojson-client": "^3.1.5",
     "concurrently": "^10.0.3",
+    "d3-geo": "^3.1.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.11",
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "schema-dts": "^2.0.0",
     "tailwindcss": "^4",
+    "topojson-client": "^3.1.0",
     "typescript": "^5",
     "velite": "^0.4.0",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "world-atlas": "^2.0.2"
   }
 }

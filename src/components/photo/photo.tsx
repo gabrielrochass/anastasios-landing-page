@@ -22,7 +22,7 @@ interface PhotoProps {
 
 const treatmentFilter: Record<Treatment, string> = {
   // Cor natural: só uma leve unificação de saturação para coerência entre
-  // fotos de origens diferentes — a foto continua parecendo foto.
+  // fotos de origens diferentes , a foto continua parecendo foto.
   grade: "[filter:saturate(0.94)]",
   overlay: "[filter:saturate(0.94)]",
   // Duotone reservado para uso raro/decorativo (nunca em foto de confiança).
@@ -32,7 +32,7 @@ const treatmentFilter: Record<Treatment, string> = {
 /**
  * Foto tratada para coerência com o design system (ver docs/IMAGE-SOURCES.md §4).
  * Renderiza dentro de um container com dimensão reservada (use ImageSlot ou dê
- * `className` com aspect/height) — `fill` exige pai posicionado.
+ * `className` com aspect/height) , `fill` exige pai posicionado.
  */
 export function Photo({
   photo,
@@ -57,25 +57,25 @@ export function Photo({
       {treatment === "duotone" && (
         <span
           aria-hidden
-          className="absolute inset-0 bg-petrol-700 mix-blend-color"
+          className="absolute inset-0 bg-sea-700 mix-blend-color"
         />
       )}
       {treatment === "duotone" && (
         <span
           aria-hidden
-          className="absolute inset-0 bg-petrol-950/25 mix-blend-multiply"
+          className="absolute inset-0 bg-surface/25 mix-blend-multiply"
         />
       )}
       {treatment === "overlay" && (
         <span
           aria-hidden
-          className="absolute inset-0 bg-linear-to-t from-petrol-950/75 via-petrol-950/20 to-transparent"
+          className="absolute inset-0 bg-linear-to-t from-ocean-950/75 via-ocean-950/20 to-transparent"
         />
       )}
       {accent && (
         <span
           aria-hidden
-          className="absolute inset-x-0 bottom-0 h-1 bg-orange-400"
+          className="absolute inset-x-0 bottom-0 h-1 bg-accent"
         />
       )}
     </div>

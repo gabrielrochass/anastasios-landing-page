@@ -14,7 +14,7 @@ const posts = defineCollection({
       author: s.string(),
       tags: s.array(s.string()),
       /** NRs citadas — alimenta recomendações de treinamento. */
-      nrs: s.array(s.string()).default([]),
+      temas: s.array(s.string()).default([]),
       cover: s.image().optional(),
       /** bullets do TLDR box */
       tldr: s.array(s.string()).min(2).max(5),

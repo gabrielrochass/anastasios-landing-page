@@ -2,7 +2,15 @@ import { describe, expect, it } from "vitest";
 
 /**
  * Regressão de contraste WCAG dos design tokens (src/app/globals.css).
- * Se um token mudar e quebrar um par validado, este teste falha o build.
+ *
+ * O site tem dois modos, ocean e doc, então cada par é validado no modo em que
+ * de fato aparece. Se alguém mexer numa cor e quebrar um par validado, este
+ * teste falha o build antes de o problema chegar num usuário.
+ *
+ * Os testes negativos no fim são tão importantes quanto os positivos: eles
+ * codificam as proibições. Se alguém "consertar" o copper para funcionar em
+ * fundo claro, o teste força uma revisão deliberada do sistema de acento
+ * inteiro em vez de deixar a mudança passar despercebida.
  */
 
 function relativeLuminance(hex: string): number {
@@ -24,32 +32,26 @@ export function contrastRatio(fg: string, bg: string): number {
 }
 
 const tokens = {
-  white: "#ffffff",
-  paper: "#f6f8f9",
-  ink: "#16242c",
-  inkMuted: "#4a5a63",
-  inkMeta: "#4a5a63",
-  petrol50: "#eff6f9",
-  petrol200: "#aed4e3",
-  petrol300: "#7db8cf",
-  petrol500: "#1d7594",
-  petrol600: "#0b5c78",
-  petrol700: "#00465e",
-  petrol950: "#061e28",
-  orange300: "#ffab70",
-  orange400: "#ff8c42",
-  orange600: "#d95d0a",
-  orange700: "#b44a08",
-  riskLowBg: "#e7f6ec",
-  riskLowFg: "#1a7431",
-  riskMediumBg: "#fdf3df",
-  riskMediumFg: "#8a5300",
-  riskHighBg: "#fdeceb",
-  riskHighFg: "#ba2121",
-  riskHighSolid: "#d64545",
-  riskLowOnDark: "#7fd99a",
-  riskMediumOnDark: "#ffce6b",
-  riskHighOnDark: "#ff9d94",
+  // Oceano
+  ocean950: "#07141b",
+  ocean900: "#0e2029",
+  ocean800: "#1c3440",
+  sea700: "#12475c",
+  foam: "#f2efe9",
+  mist: "#8fa3ac",
+  copper: "#e2703a",
+  dataSea: "#7fb5a2",
+  ruleStrongOcean: "#546d78",
+  // Documento
+  paper: "#f5f2ec",
+  paperRaised: "#fbf9f5",
+  ink: "#10161a",
+  slateWarm: "#5c5952",
+  ruleWarm: "#d6d0c4",
+  ruleStrongDoc: "#8a8372",
+  oxide: "#9c3b22",
+  navy: "#1b3a4b",
+  dataLand: "#2f6b57",
 } as const;
 
 const AA_TEXT = 4.5;
@@ -57,43 +59,67 @@ const AA_LARGE_OR_UI = 3;
 
 // [nome, fg, bg, mínimo exigido]
 const pairs: Array<[string, string, string, number]> = [
-  ["body: ink sobre paper", tokens.ink, tokens.paper, AA_TEXT],
-  ["body: ink sobre branco (cards)", tokens.ink, tokens.white, AA_TEXT],
-  ["muted: ink-muted sobre paper", tokens.inkMuted, tokens.paper, AA_TEXT],
-  ["muted: ink-muted sobre tint petrol-50", tokens.inkMuted, tokens.petrol50, AA_TEXT],
-  ["meta: ink-meta sobre branco", tokens.inkMeta, tokens.white, AA_TEXT],
-  ["meta: ink-meta sobre paper", tokens.inkMeta, tokens.paper, AA_TEXT],
-  ["meta: ink-meta sobre tint petrol-50", tokens.inkMeta, tokens.petrol50, AA_TEXT],
-  ["stat decorativo: petrol-400 sobre branco (large text)", "#4796b4", tokens.white, AA_LARGE_OR_UI],
-  ["link: petrol-500 sobre branco", tokens.petrol500, tokens.white, AA_TEXT],
-  ["link hover: petrol-600 sobre branco", tokens.petrol600, tokens.white, AA_TEXT],
-  ["heading/primário: petrol-700 sobre branco", tokens.petrol700, tokens.white, AA_TEXT],
-  ["botão primário: branco sobre petrol-700", tokens.white, tokens.petrol700, AA_TEXT],
-  ["dark: branco sobre petrol-950", tokens.white, tokens.petrol950, AA_TEXT],
-  ["dark muted: petrol-200 sobre petrol-950", tokens.petrol200, tokens.petrol950, AA_TEXT],
-  ["dark secundário: petrol-300 sobre petrol-950", tokens.petrol300, tokens.petrol950, AA_TEXT],
-  ["accent texto claro: orange-700 sobre branco", tokens.orange700, tokens.white, AA_TEXT],
-  ["accent texto dark: orange-300 sobre petrol-950", tokens.orange300, tokens.petrol950, AA_TEXT],
-  ["botão laranja: ink sobre orange-400", tokens.ink, tokens.orange400, AA_TEXT],
-  ["focus ring: orange-600 sobre branco (UI)", tokens.orange600, tokens.white, AA_LARGE_OR_UI],
-  ["badge low: fg sobre bg", tokens.riskLowFg, tokens.riskLowBg, AA_TEXT],
-  ["badge medium: fg sobre bg", tokens.riskMediumFg, tokens.riskMediumBg, AA_TEXT],
-  ["badge high: fg sobre bg", tokens.riskHighFg, tokens.riskHighBg, AA_TEXT],
-  ["badge low fg sobre branco", tokens.riskLowFg, tokens.white, AA_TEXT],
-  ["badge medium fg sobre branco", tokens.riskMediumFg, tokens.white, AA_TEXT],
-  ["badge high fg sobre branco", tokens.riskHighFg, tokens.white, AA_TEXT],
-  ["destructive: branco sobre risk-high-solid", tokens.white, tokens.riskHighSolid, AA_LARGE_OR_UI],
-  ["risk on-dark low sobre petrol-950", tokens.riskLowOnDark, tokens.petrol950, AA_TEXT],
-  ["risk on-dark medium sobre petrol-950", tokens.riskMediumOnDark, tokens.petrol950, AA_TEXT],
-  ["risk on-dark high sobre petrol-950", tokens.riskHighOnDark, tokens.petrol950, AA_TEXT],
+  // Modo Oceano
+  ["ocean texto: foam sobre surface", tokens.foam, tokens.ocean950, AA_TEXT],
+  ["ocean texto: foam sobre surface-raised", tokens.foam, tokens.ocean900, AA_TEXT],
+  ["ocean muted: mist sobre surface", tokens.mist, tokens.ocean950, AA_TEXT],
+  ["ocean muted: mist sobre surface-raised", tokens.mist, tokens.ocean900, AA_TEXT],
+  ["ocean acento: copper sobre surface", tokens.copper, tokens.ocean950, AA_TEXT],
+  ["ocean acento: copper sobre surface-raised", tokens.copper, tokens.ocean900, AA_TEXT],
+  ["ocean dado: data-sea sobre surface", tokens.dataSea, tokens.ocean950, AA_TEXT],
+  ["ocean botão: ocean-950 sobre copper", tokens.ocean950, tokens.copper, AA_TEXT],
+  ["ocean borda interativa: rule-strong sobre surface", tokens.ruleStrongOcean, tokens.ocean950, AA_LARGE_OR_UI],
+  ["ocean foco: copper sobre surface", tokens.copper, tokens.ocean950, AA_LARGE_OR_UI],
+  ["ocean texto sobre foto duotone: foam sobre sea-700", tokens.foam, tokens.sea700, AA_TEXT],
+
+  // Modo Documento
+  ["doc texto: ink sobre surface", tokens.ink, tokens.paper, AA_TEXT],
+  ["doc texto: ink sobre surface-raised", tokens.ink, tokens.paperRaised, AA_TEXT],
+  ["doc muted: slate-warm sobre surface", tokens.slateWarm, tokens.paper, AA_TEXT],
+  ["doc muted: slate-warm sobre surface-raised", tokens.slateWarm, tokens.paperRaised, AA_TEXT],
+  ["doc acento: oxide sobre surface", tokens.oxide, tokens.paper, AA_TEXT],
+  ["doc acento: oxide sobre surface-raised", tokens.oxide, tokens.paperRaised, AA_TEXT],
+  ["doc heading: navy sobre surface", tokens.navy, tokens.paper, AA_TEXT],
+  ["doc dado: data-land sobre surface", tokens.dataLand, tokens.paper, AA_TEXT],
+  ["doc botão: paper sobre oxide", tokens.paper, tokens.oxide, AA_TEXT],
+  ["doc botão: paper sobre navy", tokens.paper, tokens.navy, AA_TEXT],
+  ["doc borda interativa: rule-strong sobre surface", tokens.ruleStrongDoc, tokens.paper, AA_LARGE_OR_UI],
+  ["doc borda interativa: rule-strong sobre surface-raised", tokens.ruleStrongDoc, tokens.paperRaised, AA_LARGE_OR_UI],
+  ["doc foco: oxide sobre surface", tokens.oxide, tokens.paper, AA_LARGE_OR_UI],
 ];
 
 describe("contraste WCAG dos design tokens", () => {
   it.each(pairs)("%s", (_name, fg, bg, minimum) => {
     expect(contrastRatio(fg, bg)).toBeGreaterThanOrEqual(minimum);
   });
+});
 
-  it("documenta a regra dura: orange-400 reprova como texto sobre claro", () => {
-    expect(contrastRatio(tokens.orange400, tokens.white)).toBeLessThan(AA_TEXT);
+describe("regras duras codificadas como teste negativo", () => {
+  it("copper reprova como texto sobre papel: no modo doc o acento de texto é oxide", () => {
+    expect(contrastRatio(tokens.copper, tokens.paper)).toBeLessThan(AA_TEXT);
+  });
+
+  it("oxide reprova como texto sobre oceano: os dois acentos são um par por modo, não intercambiáveis", () => {
+    expect(contrastRatio(tokens.oxide, tokens.ocean950)).toBeLessThan(AA_TEXT);
+  });
+
+  it("foam reprova sobre copper: botão de acento leva texto ocean-950, nunca claro", () => {
+    expect(contrastRatio(tokens.foam, tokens.copper)).toBeLessThan(AA_TEXT);
+  });
+
+  it("mist reprova sobre sea-700: sea-700 é tinta de duotone de foto, não superfície de texto secundário", () => {
+    expect(contrastRatio(tokens.mist, tokens.sea700)).toBeLessThan(AA_TEXT);
+  });
+});
+
+describe("rule é fio decorativo por decisão, não por descuido", () => {
+  // Documenta que rule fica abaixo de 3:1 de propósito. Quem precisar de
+  // limite perceptível (input, componente interativo) usa rule-strong.
+  it("rule do modo doc é sutil", () => {
+    expect(contrastRatio(tokens.ruleWarm, tokens.paper)).toBeLessThan(AA_LARGE_OR_UI);
+  });
+
+  it("rule do modo ocean é sutil", () => {
+    expect(contrastRatio(tokens.ocean800, tokens.ocean950)).toBeLessThan(AA_LARGE_OR_UI);
   });
 });

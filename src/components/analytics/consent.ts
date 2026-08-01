@@ -3,7 +3,7 @@ import { useSyncExternalStore } from "react";
 export const CONSENT_STORAGE_KEY = "esol-consent";
 export const CONSENT_CHANGED_EVENT = "esol-consent-changed";
 
-/** Sentinela do snapshot de servidor — antes da hidratação nada é decidido. */
+/** Sentinela do snapshot de servidor , antes da hidratação nada é decidido. */
 const SERVER_SNAPSHOT = "pending" as const;
 
 function subscribe(callback: () => void) {

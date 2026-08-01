@@ -2,33 +2,36 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ServicesDropdown } from "@/components/layout/services-dropdown";
-import { cn } from "@/lib/utils";
 import { navLinks } from "@/lib/site-config";
+import { cn } from "@/lib/utils";
 
-/** `light` = renderizado sobre hero escuro transparente (texto claro). */
-export function MainNav({ light = false }: { light?: boolean }) {
+/**
+ * Navegação de desktop. A landing é uma página só, então quase tudo aqui é
+ * âncora. A única rota separada é o Painel de Inteligência.
+ *
+ * Sem prop `light`: o header declara data-mode quando está sobre o herói e a
+ * herança de token cuida da cor. Um componente a menos sabendo de tema.
+ */
+export function MainNav() {
   const pathname = usePathname();
-  const rest = navLinks.filter((link) => link.label !== "Serviços");
 
   return (
-    <nav aria-label="Navegação principal" className="hidden md:block">
-      <ul className="flex items-center gap-1">
-        <ServicesDropdown light={light} />
-        {rest.map((link) => {
-          const isActive = pathname.startsWith(
-            link.href.split("/").slice(0, 2).join("/"),
-          );
+    <nav aria-label="Principal" className="hidden md:block">
+      <ul className="flex items-center gap-7">
+        {navLinks.map((link) => {
+          const isRoute = !link.href.includes("#");
+          const current = isRoute && pathname.startsWith(link.href);
+
           return (
             <li key={link.href}>
               <Link
                 href={link.href}
-                aria-current={isActive ? "page" : undefined}
+                aria-current={current ? "page" : undefined}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                  light
-                    ? "text-petrol-100 hover:bg-white/10 hover:text-white aria-[current=page]:text-white"
-                    : "text-ink-muted hover:bg-petrol-50 hover:text-petrol-700 aria-[current=page]:text-petrol-700",
+                  "font-mono text-[11px] uppercase tracking-[0.14em] transition-colors",
+                  current
+                    ? "text-accent"
+                    : "text-content-muted hover:text-content",
                 )}
               >
                 {link.label}

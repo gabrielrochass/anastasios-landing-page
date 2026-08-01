@@ -1,24 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { MainNav } from "@/components/layout/main-nav";
 import { MobileNav } from "@/components/layout/mobile-nav";
+import { WhatsappButton } from "@/components/layout/whatsapp-button";
 import { siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
-/** Rotas cujo hero é escuro (PhotoHero) — a navbar entra transparente por
- * cima da foto e vira sólida ao rolar. Demais rotas: navbar sólida sempre. */
+/**
+ * A home abre com o herói em modo ocean, então a navbar entra transparente por
+ * cima do mar e vira sólida ao rolar. As demais rotas são modo doc do topo,
+ * então a navbar é sólida desde o começo.
+ */
 function isOverlayRoute(pathname: string): boolean {
-  return (
-    pathname === "/" ||
-    pathname.startsWith("/servicos") ||
-    pathname === "/sobre" ||
-    pathname === "/contato"
-  );
+  return pathname === "/";
 }
 
 export function SiteHeader() {
@@ -33,47 +30,46 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Transparente só quando está sobre o hero escuro e no topo.
   const transparent = overlay && !scrolled;
 
   return (
     <header
+      // Enquanto está sobre o herói escuro, o header inteiro é uma ilha em
+      // modo ocean. Assim o anel de foco e o texto leem a mesma paleta do que
+      // está atrás, sem nenhum componente precisar saber disso.
+      data-mode={transparent ? "ocean" : undefined}
       className={cn(
         "inset-x-0 top-0 z-40 transition-colors duration-300",
         overlay ? "fixed" : "sticky",
         transparent
-          ? "bg-linear-to-b from-petrol-950/85 via-petrol-950/50 to-transparent"
-          : "border-b border-neutral-200 bg-surface/90 backdrop-blur-sm",
+          ? "bg-linear-to-b from-ocean-950/85 via-ocean-950/45 to-transparent"
+          : "border-b border-rule bg-surface/90 backdrop-blur-sm",
       )}
+      style={{ paddingTop: "env(safe-area-inset-top)" }}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6">
         <Link
           href="/"
-          className={cn(
-            "flex items-center gap-2.5 font-bold tracking-tight transition-colors",
-            transparent ? "text-white" : "text-petrol-700",
-          )}
+          className="flex items-baseline gap-2 text-content transition-colors"
         >
-          <Image
-            src="/images/logo-mark.png"
-            alt=""
+          <span className="font-serif text-xl tracking-tight">
+            {siteConfig.name}
+          </span>
+          <span
             aria-hidden
-            width={32}
-            height={32}
-            priority
-            className="size-8 shrink-0"
-          />
-          {siteConfig.name}
-        </Link>
-        <MainNav light={transparent} />
-        <div className="flex items-center gap-2">
-          <Button
-            asChild
-            className="hidden bg-orange-400 text-ink hover:bg-orange-500 sm:inline-flex"
+            className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-content-muted sm:inline"
           >
-            <Link href="/contato">Fale com um especialista</Link>
-          </Button>
-          <MobileNav light={transparent} />
+            comex
+          </span>
+        </Link>
+        <MainNav />
+        <div className="flex items-center gap-2">
+          <WhatsappButton
+            context="header"
+            className="hidden sm:inline-flex"
+            label="Falar no WhatsApp"
+          />
+          <MobileNav />
         </div>
       </div>
     </header>

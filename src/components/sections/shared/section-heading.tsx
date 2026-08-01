@@ -33,7 +33,7 @@ export function SectionHeading({
       <h2
         className={cn(
           "mt-3 text-3xl font-semibold tracking-tight sm:text-4xl",
-          tone === "inverse" ? "text-white" : "text-petrol-700",
+          tone === "inverse" ? "text-content" : "text-content",
         )}
       >
         {title}
@@ -42,7 +42,7 @@ export function SectionHeading({
         <p
           className={cn(
             "mt-4 leading-relaxed",
-            tone === "inverse" ? "text-ink-muted-on-inverse" : "text-ink-muted",
+            tone === "inverse" ? "text-content-muted-on-inverse" : "text-content-muted",
           )}
         >
           {lead}

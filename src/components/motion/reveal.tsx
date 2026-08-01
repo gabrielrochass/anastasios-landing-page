@@ -16,7 +16,7 @@ interface RevealProps {
 
 /**
  * Scroll-reveal padrão do site: opacity + translateY quando entra no
- * viewport, uma única vez. Única infra client de reveal — seções continuam
+ * viewport, uma única vez. Única infra client de reveal , seções continuam
  * Server Components e envolvem o conteúdo com <Reveal>.
  */
 export function Reveal({ children, delay = 0, y = 12, className }: RevealProps) {

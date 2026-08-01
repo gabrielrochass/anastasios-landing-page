@@ -14,15 +14,15 @@ export function ConsentBanner() {
     <div
       role="region"
       aria-label="Consentimento de cookies"
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-petrol-900 bg-surface-inverse p-4 text-ink-on-inverse"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-rule-strong bg-surface p-4 text-content"
     >
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 sm:px-2">
-        <p className="max-w-xl text-sm leading-relaxed text-ink-muted-on-inverse">
+        <p className="max-w-xl text-sm leading-relaxed text-content-muted-on-inverse">
           Usamos cookies de análise (Google Analytics) apenas com o seu
           consentimento, para entender o uso do site. Detalhes na{" "}
           <Link
             href="/politica-de-privacidade"
-            className="font-medium text-white underline underline-offset-4"
+            className="font-medium text-content underline underline-offset-4"
           >
             Política de Privacidade
           </Link>
@@ -33,14 +33,14 @@ export function ConsentBanner() {
             variant="outline"
             size="sm"
             onClick={() => setConsent("denied")}
-            className="border-petrol-400 bg-transparent text-white hover:bg-petrol-900 hover:text-white"
+            className="border-rule-strong bg-transparent text-content hover:bg-surface-raised hover:text-content"
           >
             Recusar
           </Button>
           <Button
             size="sm"
             onClick={() => setConsent("granted")}
-            className="bg-orange-400 text-ink hover:bg-orange-500"
+            className="bg-accent text-content hover:bg-accent"
           >
             Aceitar
           </Button>

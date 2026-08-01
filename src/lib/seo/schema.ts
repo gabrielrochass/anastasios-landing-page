@@ -1,13 +1,34 @@
 import type {
   Article,
   BreadcrumbList,
-  Course,
   LocalBusiness,
   Organization,
+  Service,
   WithContext,
 } from "schema-dts";
 import { siteConfig } from "@/lib/site-config";
-import type { Training } from "@/lib/trainings/types";
+
+/**
+ * JSON-LD do site.
+ *
+ * Sem `sameAs`: a H H Brasil não tem LinkedIn nem Instagram ativos, e apontar
+ * para perfil vazio ou de terceiro é pior que não apontar. O sinal de
+ * legitimidade aqui é o CNPJ, que entra como `identifier` e aparece visível no
+ * rodapé.
+ *
+ * Sem `email`: o contato acontece só por WhatsApp.
+ */
+
+const postalAddress = {
+  "@type": "PostalAddress",
+  ...siteConfig.address,
+} as const;
+
+const cnpjIdentifier = {
+  "@type": "PropertyValue",
+  propertyID: "CNPJ",
+  value: siteConfig.cnpj,
+} as const;
 
 export function organizationSchema(): WithContext<Organization> {
   return {
@@ -15,13 +36,11 @@ export function organizationSchema(): WithContext<Organization> {
     "@type": "Organization",
     name: siteConfig.name,
     legalName: siteConfig.legalName,
+    description: siteConfig.description,
     url: siteConfig.url,
-    email: siteConfig.email,
     telephone: siteConfig.phone,
-    address: {
-      "@type": "PostalAddress",
-      ...siteConfig.address,
-    },
+    identifier: cnpjIdentifier,
+    address: postalAddress,
   };
 }
 
@@ -33,13 +52,43 @@ export function localBusinessSchema(): WithContext<LocalBusiness> {
     legalName: siteConfig.legalName,
     description: siteConfig.description,
     url: siteConfig.url,
-    email: siteConfig.email,
     telephone: siteConfig.phone,
-    address: {
-      "@type": "PostalAddress",
-      ...siteConfig.address,
+    identifier: cnpjIdentifier,
+    address: postalAddress,
+    areaServed: {
+      "@type": "Country",
+      name: "Brasil",
     },
-    areaServed: "Recife e Região Metropolitana, PE",
+  };
+}
+
+interface ServiceSchemaInput {
+  name: string;
+  description: string;
+  anchor: string;
+}
+
+/**
+ * Substitui o `courseSchema` do projeto anterior. Cada pilar da operação vira
+ * um `Service` do provedor, o que é o tipo correto para consultoria.
+ */
+export function serviceSchema(input: ServiceSchemaInput): WithContext<Service> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: input.name,
+    description: input.description,
+    serviceType: "Consultoria em comércio exterior",
+    url: `${siteConfig.url}/#${input.anchor}`,
+    areaServed: {
+      "@type": "Country",
+      name: "Brasil",
+    },
+    provider: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
   };
 }
 
@@ -73,30 +122,6 @@ export function articleSchema(post: ArticleSchemaInput): WithContext<Article> {
       name: siteConfig.name,
       url: siteConfig.url,
     },
-  };
-}
-
-export function courseSchema(training: Training): WithContext<Course> {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Course",
-    name: training.title,
-    description: training.shortDescription,
-    courseCode: training.slug,
-    timeRequired: `PT${training.hours}H`,
-    provider: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteConfig.url,
-    },
-    ...(training.priceCents !== null && {
-      offers: {
-        "@type": "Offer",
-        price: (training.priceCents / 100).toFixed(2),
-        priceCurrency: "BRL",
-        url: training.externalUrl,
-      },
-    }),
   };
 }
 

@@ -4,7 +4,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { useConsent } from "@/components/analytics/consent";
 
 /**
- * GA4 só monta com consentimento LGPD explícito — sem consent, zero
+ * GA4 só monta com consentimento LGPD explícito , sem consent, zero
  * script third-party no carregamento.
  */
 export function AnalyticsGate() {

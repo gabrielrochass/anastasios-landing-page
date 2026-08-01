@@ -1,46 +1,51 @@
-# ASSETS.md — Slots de imagem aguardando assets reais
+# ASSETS.md, slots de imagem aguardando assets reais
 
-Todo lugar do site que espera foto/vídeo real usa o componente
+Todo lugar do site que espera foto real usa o componente
 [`ImageSlot`](src/components/illustrations/image-slot.tsx) com um `slotId`
-desta tabela. O slot reserva o aspect-ratio (zero CLS) e mostra um
-placeholder projetado (ilustração SVG da marca) até o asset chegar.
+desta tabela. O slot reserva a proporção, então a troca por foto real acontece
+sem nenhum layout shift.
 
 **Como trocar um placeholder por foto real:**
 
-1. Otimize a imagem (webp/avif, 1x e 2x das dimensões da tabela).
-2. Coloque em `public/images/<área>/`.
-3. No componente que usa o `ImageSlot`, substitua o child (ilustração) por
-   `<Image src=... alt=... fill className="object-cover" />` — as dimensões
-   do slot não mudam.
-4. Escreva `alt` descritivo (pt-BR) — obrigatório.
+1. Corte na proporção do slot **antes** de qualquer coisa. Nunca deixe
+   `object-cover` decidir o enquadramento.
+2. Gere AVIF e WebP em 1x e 2x das dimensões da tabela, com `sharp`.
+3. Coloque em `public/images/photos/`.
+4. Registre em `src/lib/photos.ts` com `src`, `alt` em pt-BR e `credit`.
+5. Documente em [docs/IMAGE-SOURCES.md](docs/IMAGE-SOURCES.md): URL de origem,
+   autor, licença, data de download, e se é livre ou Unsplash+.
 
-> **Stock interino aplicado (jul/2026):** os slots de *case* dos 4 serviços já
-> usam fotos de stock tratadas em duotone (`src/lib/photos.ts`, arquivos em
-> `public/images/photos/`, componente [`Photo`](src/components/photo/photo.tsx)).
-> São tapa-buraco de licença livre — substituir pela sessão própria quando
-> houver. Slots de pessoas reais (retrato Adna, equipe, `sobre-hero`, cases com
-> paciente/equipe identificável) **seguem placeholder** por exigirem foto própria.
+## Slots
 
-| slotId | Página / seção | Dimensões (1x) | Ratio | Conteúdo esperado | Direção de arte |
-| ------ | -------------- | -------------- | ----- | ----------------- | --------------- |
-| `home-especialista` | Home / CTA final | 480×640 | 3/4 | Retrato de Adna Correia | Fundo neutro claro, luz lateral suave, olhar à câmera, enquadramento busto |
-| `sobre-especialista` | /sobre / seção "Quem responde" | 480×640 | 3/4 | Retrato de Adna Correia (pode ser a mesma foto do slot da home ou variação) | Mesma sessão do retrato principal |
-| `servico-departamento-pessoal-case` | /servicos/departamento-pessoal / case | 640×480 | 4/3 | Foto de operação de DP ou infográfico do case | Ambiente de trabalho real, sem stock genérico |
-| `servico-clinica-ocupacional-case` | /servicos/clinica-ocupacional / case | 640×480 | 4/3 | Foto da clínica (recepção/atendimento) | Acolhedora e profissional; com autorização de imagem |
-| `servico-engenharia-sst-case` | /servicos/engenharia-sst / case | 640×480 | 4/3 | Foto de campo (EPI, inspeção) | Equipe própria em atividade real |
-| `servico-complementares-case` | /servicos/complementares / case | 640×480 | 4/3 | Foto de perícia/laudo ou infográfico | Documento/atividade técnica |
-| `autor-adna` | Blog / bio de autor | 160×160 | 1/1 | Avatar de Adna Correia | Recorte quadrado do retrato principal |
-| `autor-equipe` | Blog / bio de autor | 160×160 | 1/1 | Marca/foto da equipe | Pode ser monograma da marca |
-| `blog-cover-<slug>` | Cards e capas do blog | 1280×720 | 16/9 | Capa por artigo (opcional — placeholder por domínio já cobre) | Infográfico ou foto temática; adicionar via frontmatter `cover` |
-| `servico-<slug>-hero-1` e `-3` | Hero de cada serviço (leque de cards, posições laterais) | 480×600 | 4/5 | 2 fotos verticais do domínio do serviço (ver IMAGE-SOURCES.md) | Retrato/ambiente real; card central do leque é o ícone, não é foto |
-| `sobre-hero-1..3` | Hero do /sobre (leque de 3 cards) | 480×600 | 4/5 | Equipe, clínica e ambiente de trabalho | Fotos próprias da E-Soluções, coerentes entre si |
+| slotId | Onde | Dimensões (1x) | Proporção | Conteúdo esperado | Direção de arte |
+| --- | --- | --- | --- | --- | --- |
+| `anastasios-retrato` | Home, seção "Quem somos" | 480×600 | 4/5 | Retrato profissional de Anastasios | Fundo neutro escuro, luz lateral, olhar à câmera, enquadramento busto. É a foto mais importante do site |
+| `blog-cover-<slug>` | Cards e capas do Painel de Inteligência | 1280×720 | 16/9 | Capa por artigo, opcional | Porto, contêiner ou operação. Tratamento duotone para uniformizar |
 
 ## Assets pendentes fora de slots
 
 | Asset | Onde entra | Status |
-| ----- | ---------- | ------ |
-| Logo oficial (SVG) | Header/footer (hoje: wordmark tipográfico + células de matriz) | Aguardando brand guidelines |
-| Foto Adna Correia (retrato) | Home CTA final, blog author bio, /sobre | Aguardando foto high-res |
-| Fotos clínica (mín. 20) | /servicos/clinica-ocupacional, home | Aguardando sessão |
-| Vídeo clínica 30–60s | Hero /servicos/clinica-ocupacional (fase futura) | Aguardando produção |
-| OG image de marca 1200×630 | `src/app/opengraph-image.png` | Placeholder gerado entra na F8 |
+| --- | --- | --- |
+| Logo oficial em SVG | Header e rodapé | Hoje é wordmark tipográfico em Instrument Serif. Aguardando definição de marca |
+| Retrato de Anastasios em alta resolução | Seção "Quem somos" | Aguardando. Bloqueia a maior lacuna do mercado: só 3 de 12 concorrentes mostram rosto |
+| Fotos de operação real | Seções de travessia e cases | Aguardando. Foto própria de inspeção, contêiner ou porto vale mais que dez aéreas genéricas |
+| OG image de marca 1200×630 | `src/app/opengraph-image.png` | Pendente. O template dos posts já existe e usa o motivo da rota |
+| Favicon e ícone | `src/app/favicon.ico`, `src/app/icon.png` | Ainda são os do projeto anterior. Trocar |
+
+## Duas regras duras deste projeto
+
+**1. Unsplash+ é licença paga.** Metade dos resultados de logística no Unsplash
+carrega o selo Unsplash+, que é conteúdo licenciado da Getty e não pode ser
+usado sob a licença gratuita. Confira o selo na página da foto antes de baixar,
+e anote em IMAGE-SOURCES.md qual das duas é.
+
+**2. Nada de livery legível de armador.** As melhores fotos de contêiner
+mostram cascos MAERSK, MSC, CMA CGM ou Evergreen. Licença de foto não é licença
+de marca, e num site de consultoria um casco desses no herói sugere uma
+parceria comercial que não existe. Prefira aéreas, vistas de topo e pilhas onde
+a marca fique ilegível, ou trate a imagem para apagá-la.
+
+**3. Ninguém de banco de imagem posa de cliente ou de equipe.** O slot do
+retrato fica vazio até a foto real chegar. A página inteira argumenta que
+existe gente responsável atrás da operação, e ilustrar isso com um desconhecido
+de stock derruba o argumento junto.

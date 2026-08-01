@@ -5,10 +5,10 @@ interface PullQuoteProps {
 
 export function PullQuote({ children, author }: PullQuoteProps) {
   return (
-    <blockquote className="my-10 border-l-2 border-orange-400 pl-6">
-      <p className="text-h3 text-petrol-700 italic">{children}</p>
+    <blockquote className="my-10 border-l-2 border-accent pl-6">
+      <p className="text-h3 text-content italic">{children}</p>
       {author && (
-        <footer className="text-eyebrow mt-3 text-ink-meta">{author}</footer>
+        <footer className="text-eyebrow mt-3 text-content-muted">{author}</footer>
       )}
     </blockquote>
   );

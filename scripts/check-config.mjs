@@ -14,11 +14,13 @@ const file = join(root, "src", "lib", "site-config.ts");
 const content = readFileSync(file, "utf8");
 
 const patterns = [
+  { re: /\[CONFIRMAR/, label: "marcador [CONFIRMAR] não resolvido" },
   { re: /\[VALIDAR/, label: "marcador [VALIDAR] não resolvido" },
-  { re: /5581900000000/, label: "WhatsApp placeholder (5581900000000)" },
-  { re: /\+55 81 0000-0000/, label: "telefone placeholder (0000-0000)" },
-  { re: /50000-000/, label: "CEP placeholder (50000-000)" },
-  { re: /Endereço a confirmar/, label: "endereço placeholder" },
+  { re: /hhbrasil\.com\.br/, label: "domínio placeholder (hhbrasil.com.br)" },
+  {
+    re: /name: "Anastasios",/,
+    label: "nome do especialista sem sobrenome (precisa do nome completo)",
+  },
 ];
 
 const hits = patterns.filter((p) => p.re.test(content));

@@ -9,7 +9,7 @@ interface ChecklistProps {
   items: string[];
 }
 
-/** Checklist interativo dentro de artigos — estado local, não persiste. */
+/** Checklist interativo dentro de artigos , estado local, não persiste. */
 export function Checklist({ title, items }: ChecklistProps) {
   const baseId = useId();
   const [checked, setChecked] = useState<Set<number>>(new Set());
@@ -31,8 +31,8 @@ export function Checklist({ title, items }: ChecklistProps) {
       aria-label={title}
       className="my-8 rounded-lg bg-surface-raised p-card shadow-card"
     >
-      <p className="text-eyebrow text-petrol-700">{title}</p>
-      <p className="text-eyebrow mt-1 text-ink-meta" aria-live="polite">
+      <p className="text-eyebrow text-content">{title}</p>
+      <p className="text-eyebrow mt-1 text-content-muted" aria-live="polite">
         {checked.size} de {items.length} concluídos
       </p>
       <ul className="mt-4 space-y-3">
@@ -50,7 +50,7 @@ export function Checklist({ title, items }: ChecklistProps) {
               <Label
                 id={`${id}-label`}
                 htmlFor={id}
-                className="text-sm leading-relaxed font-normal text-ink"
+                className="text-sm leading-relaxed font-normal text-content"
               >
                 {item}
               </Label>

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { BlogHero } from "@/components/sections/blog/blog-hero";
 import { PostRow } from "@/components/sections/blog/post-row";
-import { RelatedServices } from "@/components/sections/shared/related-services";
 import { Section } from "@/components/sections/shared/section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { publishedPosts } from "@/lib/posts";
@@ -20,7 +19,7 @@ export default function BlogPage() {
 
       <Section>
         {publishedPosts.length === 0 ? (
-          <p className="text-ink-muted">Primeiros artigos chegando em breve.</p>
+          <p className="text-content-muted">Primeiros artigos chegando em breve.</p>
         ) : (
           <div className="flex flex-col divide-y divide-neutral-200">
             {publishedPosts.map((post, index) => (
@@ -31,12 +30,6 @@ export default function BlogPage() {
           </div>
         )}
       </Section>
-
-      <RelatedServices
-        eyebrow="Do conteúdo à prática"
-        title="Onde a E-Soluções resolve o que você acabou de ler"
-        lead="Estes artigos saem da mesma operação que cuida da conformidade das empresas. Veja como isso vira serviço."
-      />
 
       <JsonLd
         data={breadcrumbSchema([

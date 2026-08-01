@@ -18,8 +18,8 @@ export function Section({
       id={id}
       className={cn(
         "py-section",
-        tone === "tint" && "bg-surface-tint",
-        tone === "inverse" && "bg-surface-inverse text-ink-on-inverse",
+        tone === "tint" && "bg-surface-raised",
+        tone === "inverse" && "bg-surface text-content",
         className,
       )}
     >

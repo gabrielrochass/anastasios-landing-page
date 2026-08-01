@@ -13,7 +13,7 @@ interface PhotoHeroProps {
   children?: React.ReactNode;
   /** Altura da dobra. */
   size?: "default" | "tall";
-  /** Alinhamento do conteúdo — "center" para heros-manifesto. */
+  /** Alinhamento do conteúdo , "center" para heros-manifesto. */
   align?: "left" | "center";
   /** LCP: primeira dobra da navegação. */
   priority?: boolean;
@@ -39,7 +39,7 @@ export function PhotoHero({
   const centered = align === "center";
 
   return (
-    <section className="relative isolate overflow-hidden bg-surface-inverse text-ink-on-inverse">
+    <section className="relative isolate overflow-hidden bg-surface text-content">
       <div className="absolute inset-0">
         <Photo
           photo={photo}
@@ -48,16 +48,16 @@ export function PhotoHero({
           sizes="100vw"
         />
         {centered ? (
-          <span aria-hidden className="absolute inset-0 bg-petrol-950/72" />
+          <span aria-hidden className="absolute inset-0 bg-surface/72" />
         ) : (
           <span
             aria-hidden
-            className="absolute inset-0 bg-linear-to-r from-petrol-950 from-15% via-petrol-950/85 via-45% to-petrol-950/35"
+            className="absolute inset-0 bg-linear-to-r from-ocean-950 from-15% via-ocean-950/85 via-45% to-ocean-950/35"
           />
         )}
         <span
           aria-hidden
-          className="absolute inset-0 bg-linear-to-t from-petrol-950/70 to-transparent"
+          className="absolute inset-0 bg-linear-to-t from-ocean-950/70 to-transparent"
         />
       </div>
 
@@ -76,16 +76,16 @@ export function PhotoHero({
           )}
         >
           <EntranceItem eager>
-            <p className="text-eyebrow text-petrol-200">{eyebrow}</p>
+            <p className="text-eyebrow text-content-muted">{eyebrow}</p>
           </EntranceItem>
           <EntranceItem eager>
-            <h1 className="text-display mt-4 text-white">{title}</h1>
+            <h1 className="text-display mt-4 text-content">{title}</h1>
           </EntranceItem>
           {lead && (
             <EntranceItem>
               <p
                 className={cn(
-                  "mt-5 max-w-xl text-lg leading-relaxed text-ink-muted-on-inverse",
+                  "mt-5 max-w-xl text-lg leading-relaxed text-content-muted-on-inverse",
                   centered && "mx-auto",
                 )}
               >
