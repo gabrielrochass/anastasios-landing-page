@@ -1,0 +1,312 @@
+[
+  {
+    "id": "t-nr35-basico",
+    "nr": "NR-35",
+    "slug": "nr-35-trabalho-em-altura-basico",
+    "title": "NR-35: Trabalho em Altura (Básico)",
+    "shortDescription": "Capacitação obrigatória para trabalhadores que executam atividades acima de 2 metros do nível inferior, com risco de queda.",
+    "hours": 8,
+    "modalities": ["presencial", "semipresencial"],
+    "priceCents": 18900,
+    "riskGrades": [],
+    "recyclingMonths": 24,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-35-trabalho-em-altura-basico",
+    "featured": true,
+    "details": {
+      "audience": "Trabalhadores que realizam atividades em altura acima de 2 metros, como montadores, eletricistas, pintores, técnicos de manutenção e equipes de limpeza de fachada.",
+      "syllabus": [
+        "Normas e regulamentos aplicáveis ao trabalho em altura",
+        "Análise de risco e condições impeditivas",
+        "Riscos potenciais inerentes ao trabalho em altura e medidas de prevenção e controle",
+        "Sistemas, equipamentos e procedimentos de proteção coletiva",
+        "Equipamentos de proteção individual: seleção, inspeção, conservação e limitação de uso",
+        "Acidentes típicos em trabalho em altura e condutas em situações de emergência, incluindo noções de resgate e primeiros socorros"
+      ],
+      "certification": "Certificado digital com validade nacional, emitido após aprovação na avaliação, com conteúdo programático e carga horária impressos no verso. Reciclagem bienal obrigatória."
+    }
+  },
+  {
+    "id": "t-nr10-basico",
+    "nr": "NR-10",
+    "slug": "nr-10-seguranca-em-instalacoes-eletricas-basico",
+    "title": "NR-10: Segurança em Instalações e Serviços em Eletricidade (Básico)",
+    "shortDescription": "Curso básico de 40 horas para profissionais que interagem com instalações elétricas ou executam serviços com eletricidade.",
+    "hours": 40,
+    "modalities": ["ead", "semipresencial"],
+    "priceCents": 34900,
+    "riskGrades": [],
+    "recyclingMonths": 24,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-10-seguranca-em-instalacoes-eletricas-basico",
+    "featured": true,
+    "details": {
+      "audience": "Eletricistas, técnicos, engenheiros e demais profissionais que interajam direta ou indiretamente com instalações elétricas e serviços com eletricidade.",
+      "syllabus": [
+        "Introdução à segurança com eletricidade e riscos em instalações e serviços",
+        "Técnicas de análise de risco e medidas de controle do risco elétrico",
+        "Normas técnicas brasileiras aplicáveis (NBR 5410 e correlatas)",
+        "Equipamentos de proteção coletiva e individual em serviços com eletricidade",
+        "Rotinas de trabalho, procedimentos e documentação de instalações",
+        "Proteção e combate a incêndios, acidentes de origem elétrica e primeiros socorros"
+      ],
+      "certification": "Certificado digital com validade nacional, com carga horária de 40 horas e conteúdo programático no verso. Reciclagem bienal obrigatória conforme a NR-10."
+    }
+  },
+  {
+    "id": "t-nr10-sep",
+    "nr": "NR-10",
+    "slug": "nr-10-sep-sistema-eletrico-de-potencia",
+    "title": "NR-10 SEP: Segurança no Sistema Elétrico de Potência (Complementar)",
+    "shortDescription": "Curso complementar para profissionais que atuam no Sistema Elétrico de Potência (SEP) e em suas proximidades.",
+    "hours": 40,
+    "modalities": ["semipresencial"],
+    "priceCents": 44900,
+    "riskGrades": [],
+    "recyclingMonths": 24,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-10-sep-sistema-eletrico-de-potencia",
+    "featured": false,
+    "details": {
+      "audience": "Profissionais previamente aprovados no curso básico da NR-10 que intervenham no Sistema Elétrico de Potência ou em instalações em suas proximidades.",
+      "syllabus": [
+        "Organização do Sistema Elétrico de Potência (SEP) e do trabalho",
+        "Aspectos comportamentais e condições impeditivas para serviços no SEP",
+        "Riscos típicos no SEP e técnicas de análise de risco",
+        "Procedimentos de trabalho: em linha viva, ao potencial, em áreas internas e linhas subterrâneas",
+        "Equipamentos e ferramentas de trabalho: escolha, uso, conservação, verificação e ensaios",
+        "Acidentes típicos no SEP e responsabilidades legais"
+      ],
+      "certification": "Certificado digital com validade nacional, condicionado à comprovação do curso básico NR-10, com carga horária e conteúdo programático no verso. Reciclagem bienal obrigatória."
+    }
+  },
+  {
+    "id": "t-nr33-trabalhador-autorizado",
+    "nr": "NR-33",
+    "slug": "nr-33-trabalhador-autorizado-e-vigia",
+    "title": "NR-33 Espaços Confinados: Trabalhador Autorizado e Vigia",
+    "shortDescription": "Capacitação de 16 horas para trabalhadores autorizados e vigias que atuam em espaços confinados.",
+    "hours": 16,
+    "modalities": ["presencial", "semipresencial"],
+    "priceCents": 29900,
+    "riskGrades": [],
+    "recyclingMonths": 12,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-33-trabalhador-autorizado-e-vigia",
+    "featured": false,
+    "details": {
+      "audience": "Trabalhadores autorizados a entrar em espaços confinados e vigias responsáveis pelo acompanhamento externo das atividades.",
+      "syllabus": [
+        "Definições e reconhecimento de espaços confinados",
+        "Identificação, avaliação e controle de riscos atmosféricos e físicos",
+        "Funcionamento de equipamentos de medição e monitoramento de atmosfera",
+        "Permissão de Entrada e Trabalho (PET) e procedimentos operacionais",
+        "Deveres do trabalhador autorizado e do vigia",
+        "Noções de resgate e primeiros socorros em espaços confinados"
+      ],
+      "certification": "Certificado digital com validade nacional, com carga horária de 16 horas e conteúdo programático no verso. Inclui atividades práticas obrigatórias. Reciclagem anual conforme a NR-33."
+    }
+  },
+  {
+    "id": "t-nr33-supervisor",
+    "nr": "NR-33",
+    "slug": "nr-33-supervisor-de-entrada",
+    "title": "NR-33 Espaços Confinados: Supervisor de Entrada",
+    "shortDescription": "Capacitação de 40 horas para supervisores de entrada responsáveis pela emissão da Permissão de Entrada e Trabalho.",
+    "hours": 40,
+    "modalities": ["presencial", "semipresencial"],
+    "priceCents": 49900,
+    "riskGrades": [],
+    "recyclingMonths": 12,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-33-supervisor-de-entrada",
+    "featured": false,
+    "details": {
+      "audience": "Profissionais designados como supervisores de entrada em espaços confinados, responsáveis por emitir e encerrar a Permissão de Entrada e Trabalho (PET).",
+      "syllabus": [
+        "Identificação e cadastro dos espaços confinados da empresa",
+        "Critérios de indicação e uso de equipamentos para controle de riscos",
+        "Elaboração e gestão da Permissão de Entrada e Trabalho (PET)",
+        "Técnicas de avaliação e monitoramento contínuo da atmosfera",
+        "Gestão de emergências: plano de resgate e acionamento de equipes",
+        "Legislação, responsabilidades e gestão de segurança em espaços confinados"
+      ],
+      "certification": "Certificado digital com validade nacional, com carga horária de 40 horas e conteúdo programático no verso. Inclui atividades práticas obrigatórias. Reciclagem anual conforme a NR-33."
+    }
+  },
+  {
+    "id": "t-nr05-cipa-gr1-2",
+    "nr": "NR-05",
+    "slug": "nr-05-cipa-graus-de-risco-1-e-2",
+    "title": "NR-05: CIPA para Empresas de Graus de Risco 1 e 2",
+    "shortDescription": "Formação de membros da CIPA e nomeados para empresas enquadradas nos graus de risco 1 e 2 da NR-4.",
+    "hours": 12,
+    "modalities": ["ead"],
+    "priceCents": 14900,
+    "riskGrades": [1, 2],
+    "recyclingMonths": null,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-05-cipa-graus-de-risco-1-e-2",
+    "featured": true,
+    "details": {
+      "audience": "Membros eleitos e indicados da CIPA e trabalhadores nomeados em empresas de graus de risco 1 e 2 (escritórios, comércio, serviços e atividades administrativas).",
+      "syllabus": [
+        "Organização, atribuições e funcionamento da CIPA conforme a NR-05",
+        "Estudo do ambiente e das condições de trabalho: identificação de perigos",
+        "Noções de acidentes e doenças do trabalho e medidas de prevenção",
+        "Prevenção e combate ao assédio sexual e outras formas de violência no trabalho",
+        "Noções sobre o Programa de Gerenciamento de Riscos (PGR)",
+        "Metodologia de investigação e análise de acidentes de trabalho"
+      ],
+      "certification": "Certificado digital com validade nacional, com carga horária e conteúdo programático no verso, válido para o mandato da CIPA. Treinamento realizado a cada nova gestão."
+    }
+  },
+  {
+    "id": "t-nr05-cipa-gr3-4",
+    "nr": "NR-05",
+    "slug": "nr-05-cipa-graus-de-risco-3-e-4",
+    "title": "NR-05: CIPA para Empresas de Graus de Risco 3 e 4",
+    "shortDescription": "Formação ampliada de membros da CIPA para empresas enquadradas nos graus de risco 3 e 4 da NR-4.",
+    "hours": 20,
+    "modalities": ["ead", "semipresencial"],
+    "priceCents": 19900,
+    "riskGrades": [3, 4],
+    "recyclingMonths": null,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-05-cipa-graus-de-risco-3-e-4",
+    "featured": false,
+    "details": {
+      "audience": "Membros eleitos e indicados da CIPA em empresas de graus de risco 3 e 4 (indústria, construção, transporte e atividades de maior risco ocupacional).",
+      "syllabus": [
+        "Organização, atribuições e funcionamento da CIPA conforme a NR-05",
+        "Estudo aprofundado do ambiente e das condições de trabalho em atividades de maior risco",
+        "Acidentes e doenças ocupacionais: causas, consequências e prevenção",
+        "Prevenção e combate ao assédio sexual e outras formas de violência no trabalho",
+        "Noções sobre o PGR e integração da CIPA com o gerenciamento de riscos ocupacionais",
+        "Investigação e análise de acidentes e mapeamento participativo de riscos"
+      ],
+      "certification": "Certificado digital com validade nacional, com carga horária e conteúdo programático no verso, válido para o mandato da CIPA. Treinamento realizado a cada nova gestão."
+    }
+  },
+  {
+    "id": "t-nr06-epi",
+    "nr": "NR-06",
+    "slug": "nr-06-equipamento-de-protecao-individual",
+    "title": "NR-06: Uso, Guarda e Conservação de EPI",
+    "shortDescription": "Treinamento sobre seleção, uso correto, guarda, higienização e conservação dos Equipamentos de Proteção Individual.",
+    "hours": 4,
+    "modalities": ["ead"],
+    "priceCents": 9900,
+    "riskGrades": [],
+    "recyclingMonths": null,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-06-equipamento-de-protecao-individual",
+    "featured": true,
+    "details": {
+      "audience": "Trabalhadores de todos os setores que utilizam EPI, líderes de equipe e responsáveis pela gestão e entrega de equipamentos de proteção.",
+      "syllabus": [
+        "Conceito, finalidade e classificação dos EPI conforme a NR-06",
+        "Certificado de Aprovação (CA) e responsabilidades do empregador e do trabalhador",
+        "Seleção do EPI adequado ao risco de cada atividade",
+        "Uso correto, ajuste, guarda, higienização e conservação",
+        "Registro de entrega e controle de vida útil dos equipamentos"
+      ],
+      "certification": "Certificado digital com validade nacional, com carga horária e conteúdo programático no verso, apto a compor as evidências de capacitação do PGR."
+    }
+  },
+  {
+    "id": "t-nr18-admissional",
+    "nr": "NR-18",
+    "slug": "nr-18-treinamento-admissional-construcao",
+    "title": "NR-18: Treinamento Admissional para a Indústria da Construção",
+    "shortDescription": "Treinamento admissional de 4 horas obrigatório para todos os trabalhadores antes do início das atividades no canteiro de obras.",
+    "hours": 4,
+    "modalities": ["ead", "semipresencial"],
+    "priceCents": 11900,
+    "riskGrades": [],
+    "recyclingMonths": null,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-18-treinamento-admissional-construcao",
+    "featured": false,
+    "details": {
+      "audience": "Trabalhadores recém-admitidos na indústria da construção, antes do início das atividades no canteiro de obras.",
+      "syllabus": [
+        "Condições e meio ambiente de trabalho na indústria da construção",
+        "Riscos inerentes à função e às atividades do canteiro de obras",
+        "Uso adequado dos equipamentos de proteção individual e coletiva",
+        "Informações sobre as áreas de vivência e organização do canteiro",
+        "Procedimentos em situações de emergência e comunicação de incidentes"
+      ],
+      "certification": "Certificado digital com validade nacional, com carga horária de 4 horas e conteúdo programático no verso, para arquivamento no dossiê de SST do trabalhador."
+    }
+  },
+  {
+    "id": "t-nr12-maquinas",
+    "nr": "NR-12",
+    "slug": "nr-12-seguranca-em-maquinas-e-equipamentos",
+    "title": "NR-12: Segurança no Trabalho em Máquinas e Equipamentos",
+    "shortDescription": "Capacitação para operação segura de máquinas e equipamentos, com foco em proteções, dispositivos de segurança e procedimentos.",
+    "hours": 8,
+    "modalities": ["semipresencial", "presencial"],
+    "priceCents": null,
+    "riskGrades": [],
+    "recyclingMonths": null,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-12-seguranca-em-maquinas-e-equipamentos",
+    "featured": false,
+    "details": {
+      "audience": "Operadores de máquinas e equipamentos, equipes de manutenção e inspeção e lideranças de produção. Turmas in company com conteúdo adaptado às máquinas da empresa. Valores sob consulta.",
+      "syllabus": [
+        "Princípios da NR-12 e responsabilidades do empregador e do trabalhador",
+        "Riscos mecânicos: zonas de perigo, pontos de prensamento e arraste",
+        "Proteções fixas e móveis e dispositivos de segurança (intertravamento, parada de emergência)",
+        "Procedimentos seguros de operação, ajuste, limpeza e manutenção",
+        "Bloqueio e etiquetagem de fontes de energia",
+        "Boas práticas e lições aprendidas de acidentes com máquinas"
+      ],
+      "certification": "Certificado digital com validade nacional, com carga horária e conteúdo programático no verso, vinculado às máquinas e equipamentos objeto da capacitação."
+    }
+  },
+  {
+    "id": "t-nr01-gro-introducao",
+    "nr": "NR-01",
+    "slug": "nr-01-disposicoes-gerais-e-gro-introducao",
+    "title": "NR-01: Disposições Gerais e Introdução ao GRO/PGR",
+    "shortDescription": "Visão geral das disposições da NR-01, do Gerenciamento de Riscos Ocupacionais (GRO) e do PGR para gestores e equipes de SST.",
+    "hours": 6,
+    "modalities": ["ead"],
+    "priceCents": 12900,
+    "riskGrades": [],
+    "recyclingMonths": null,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-01-disposicoes-gerais-e-gro-introducao",
+    "featured": false,
+    "details": {
+      "audience": "Gestores, profissionais de RH e departamento pessoal, técnicos de segurança e demais envolvidos na implantação do GRO e do PGR na empresa.",
+      "syllabus": [
+        "Estrutura das Normas Regulamentadoras e disposições gerais da NR-01",
+        "Direitos e deveres de empregadores e trabalhadores",
+        "Gerenciamento de Riscos Ocupacionais (GRO): identificação de perigos e avaliação de riscos",
+        "Programa de Gerenciamento de Riscos (PGR): inventário de riscos e plano de ação",
+        "Capacitação e treinamentos: modalidades, registros e certificados",
+        "Tratamento diferenciado para MEI, ME e EPP"
+      ],
+      "certification": "Certificado digital com validade nacional, com carga horária e conteúdo programático no verso."
+    }
+  },
+  {
+    "id": "t-nr23-brigada-de-incendio",
+    "nr": "NR-23",
+    "slug": "nr-23-brigada-de-incendio",
+    "title": "NR-23: Brigada de Incêndio e Emergências",
+    "shortDescription": "Formação de brigadistas para prevenção e combate a princípios de incêndio, abandono de área e primeiros socorros.",
+    "hours": 8,
+    "modalities": ["presencial", "semipresencial"],
+    "priceCents": null,
+    "riskGrades": [],
+    "recyclingMonths": 12,
+    "externalUrl": "https://host-69e6b3473a.isesmt.com/productDetails/nr-23-brigada-de-incendio",
+    "featured": false,
+    "details": {
+      "audience": "Trabalhadores designados como brigadistas de emergência em empresas, condomínios e indústrias. Turmas in company com prática de combate a fogo real. Valores sob consulta.",
+      "syllabus": [
+        "Teoria do fogo: classes de incêndio e métodos de extinção",
+        "Equipamentos de prevenção e combate: extintores, hidrantes e alarmes",
+        "Procedimentos de abandono de área e pontos de encontro",
+        "Prática de combate a princípio de incêndio com extintores",
+        "Noções de primeiros socorros e suporte básico de vida",
+        "Plano de resposta a emergências e simulados"
+      ],
+      "certification": "Certificado digital com validade nacional, com carga horária e conteúdo programático no verso. Reciclagem anual recomendada conforme o plano de emergência da empresa."
+    }
+  }
+]
