@@ -8,6 +8,7 @@ import { useReducedMotion } from "@/hooks/use-motion-preference";
 import { useViewportGeometry } from "@/hooks/use-viewport-geometry";
 import { cameraAt, doorOpening, explosion } from "./camera-path";
 import { ContainerMesh } from "./container-mesh";
+import { ContactShadow, Cyclorama, ProceduralEnvironment } from "./studio";
 
 /**
  * A cena: UM contêiner, estudado.
@@ -47,13 +48,15 @@ export function JourneyScene({ progress, className }: SceneProps) {
         onCreated={({ gl }) => {
           gl.setClearColor(BACKDROP, 1);
           gl.toneMapping = THREE.ACESFilmicToneMapping;
-          gl.toneMappingExposure = 1.05;
+          gl.toneMappingExposure = 1.0;
         }}
       >
         <Rig progress={progress} reduced={reduced} wide={wide} />
+        <ProceduralEnvironment />
         <Lighting />
         <Subject progress={progress} />
-        <Ground />
+        <Cyclorama />
+        <ContactShadow />
       </Canvas>
     </div>
   );
@@ -140,21 +143,6 @@ function Subject({ progress }: { progress: MotionValue<number> }) {
 }
 
 /**
- * Chão neutro com sombra recebida.
- *
- * A sombra é o que assenta o objeto. Sem ela ele flutua e lê como render
- * solto, não como coisa pousada em algum lugar.
- */
-function Ground() {
-  return (
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.32, 0]} receiveShadow>
-      <planeGeometry args={[80, 80]} />
-      <meshStandardMaterial color="#ddd8ce" roughness={1} metalness={0} />
-    </mesh>
-  );
-}
-
-/**
  * Luz de estúdio: principal, preenchimento e contorno.
  *
  * Sem luz dentro do objeto. A versão anterior tinha uma, e ela vazava pelas
@@ -164,7 +152,9 @@ function Ground() {
 function Lighting() {
   return (
     <>
-      <ambientLight intensity={1.5} color="#e8eef2" />
+      {/* Ambiente baixa: quem preenche agora é o mapa de ambiente, que traz
+          direção. Manter 1.5 aqui achataria o volume que o mapa cria. */}
+      <ambientLight intensity={0.35} color="#e8eef2" />
       <directionalLight
         position={[7, 11, 8]}
         intensity={2.4}
