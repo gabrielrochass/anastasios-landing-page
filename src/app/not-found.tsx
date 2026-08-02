@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 export default function NotFound() {
   return (
     <section className="mx-auto flex max-w-6xl flex-col items-start gap-6 px-4 py-24 sm:px-6">
-      <p className="text-eyebrow text-accent-text">Erro 404</p>
+      <p className="text-eyebrow text-accent">Erro 404</p>
       <h1 className="text-display text-content">
         Página não encontrada.
       </h1>

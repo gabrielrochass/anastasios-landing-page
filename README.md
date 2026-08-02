@@ -87,6 +87,8 @@ Ambas mudam a redação da oferta e estão marcadas com `[CONFIRMAR]` no código
 
 ## Deploy
 
-Pronto para Vercel sem configuração especial. Antes: definir
-`NEXT_PUBLIC_GA_ID`, atualizar `siteConfig.url` para o domínio final e passar
-no `npm run check:config`.
+Pronto para Vercel sem configuração especial. Antes: atualizar
+`siteConfig.url` para o domínio final e passar no `npm run check:config`.
+
+Não há variável de ambiente para definir. O site não usa analytics, não tem
+backend e não guarda nenhum dado.

@@ -85,7 +85,7 @@ export function PhotoHero({
             <EntranceItem>
               <p
                 className={cn(
-                  "mt-5 max-w-xl text-lg leading-relaxed text-content-muted-on-inverse",
+                  "mt-5 max-w-xl text-lg leading-relaxed text-content-muted",
                   centered && "mx-auto",
                 )}
               >

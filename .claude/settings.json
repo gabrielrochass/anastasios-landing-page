@@ -59,7 +59,12 @@
       "Bash(sed -i 's/\"name\": \"e-solucoes-website\"/\"name\": \"hh-brasil-website\"/' package.json)",
       "Bash(npm i *)",
       "Bash(node scripts/build-map.mjs)",
-      "Bash(node -e \"console.log\\('bruto:', \\(require\\('fs'\\).statSync\\('src/lib/map-paths.ts'\\).size/1024\\).toFixed\\(1\\),'kb'\\)\")"
+      "Bash(node -e \"console.log\\('bruto:', \\(require\\('fs'\\).statSync\\('src/lib/map-paths.ts'\\).size/1024\\).toFixed\\(1\\),'kb'\\)\")",
+      "Bash(claude plugin *)",
+      "Bash(npx shadcn@latest mcp init --client claude)"
     ]
+  },
+  "enabledPlugins": {
+    "playwright@claude-plugins-official": true
   }
 }

@@ -166,8 +166,6 @@ Se esse é o seu número pessoal, vale considerar uma linha comercial separada,
 ou pelo menos um WhatsApp Business com mensagem automática de triagem. A
 decisão é sua, mas queria que fosse tomada sabendo disso.
 
-**5.3. Google Analytics.** Se você quiser acompanhar quantas pessoas visitam e
-de onde vêm, eu configuro. É gratuito e leva alguns minutos.
 
 ---
 

@@ -75,7 +75,7 @@ export function PostRow({
           <span>{date}</span>
           <span>{post.metadata.readingTime} min de leitura</span>
         </p>
-        <span className="mt-4 inline-flex items-center gap-1.5 font-medium text-accent">
+        <span className="mt-4 inline-flex items-center gap-1.5 font-semibold text-accent">
           Ler artigo
           <ArrowRight
             aria-hidden

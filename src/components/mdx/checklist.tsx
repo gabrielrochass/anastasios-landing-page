@@ -29,7 +29,7 @@ export function Checklist({ title, items }: ChecklistProps) {
   return (
     <section
       aria-label={title}
-      className="my-8 rounded-lg bg-surface-raised p-card shadow-card"
+      className="my-8 rounded-lg bg-surface-raised p-card border border-rule"
     >
       <p className="text-eyebrow text-content">{title}</p>
       <p className="text-eyebrow mt-1 text-content-muted" aria-live="polite">

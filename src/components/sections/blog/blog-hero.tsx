@@ -10,7 +10,7 @@ export function BlogHero() {
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <Entrance>
           <EntranceItem eager>
-            <p className="text-eyebrow text-accent-text">SST na prática</p>
+            <p className="text-eyebrow text-accent">SST na prática</p>
           </EntranceItem>
           <EntranceItem eager>
             <h1 className="text-display mt-4 max-w-3xl text-content">

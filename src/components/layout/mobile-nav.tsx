@@ -50,7 +50,6 @@ export function MobileNav() {
             ))}
           </ul>
           <WhatsappButton
-            context="mobile-nav"
             variant="solid"
             className="mt-6 w-full justify-center"
           />

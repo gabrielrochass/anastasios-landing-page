@@ -53,11 +53,11 @@ export function Hero() {
         <div className="mt-10 flex flex-wrap items-center gap-3">
           <a
             href="#contato"
-            className="inline-flex min-h-12 items-center rounded-sm bg-accent px-6 py-3 text-sm font-medium text-accent-contrast transition-opacity hover:opacity-90"
+            className="inline-flex min-h-12 items-center rounded-sm bg-accent px-6 py-3 text-sm font-semibold text-accent-contrast transition-opacity hover:opacity-90"
           >
             Quero estruturar minha importação
           </a>
-          <WhatsappButton context="hero" />
+          <WhatsappButton />
         </div>
 
         {/* Separação por estrutura com borda de 1px, nunca por midpoint. */}

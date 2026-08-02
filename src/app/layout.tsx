@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Instrument_Serif, Inter } from "next/font/google";
 import "./globals.css";
-import { AnalyticsGate } from "@/components/analytics/analytics-gate";
-import { ConsentBanner } from "@/components/analytics/consent-banner";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -82,8 +80,6 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
-        <ConsentBanner />
-        <AnalyticsGate />
         <JsonLd data={organizationSchema()} />
         <JsonLd data={localBusinessSchema()} />
       </body>

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { MessageCircle } from "lucide-react";
-import { trackEvent } from "@/lib/analytics";
 import { whatsappUrl } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 import {
@@ -105,10 +104,9 @@ export function Qualifier({ className }: { className?: string }) {
               event.preventDefault();
               return;
             }
-            trackEvent("whatsapp_click", { context: "qualifier" });
           }}
           className={cn(
-            "mt-8 inline-flex min-h-12 items-center gap-2 rounded-sm px-6 py-3 text-sm font-medium transition-opacity",
+            "mt-8 inline-flex min-h-12 items-center gap-2 rounded-sm px-6 py-3 text-sm font-semibold transition-opacity",
             complete
               ? "bg-accent text-accent-contrast hover:opacity-90"
               : "cursor-not-allowed border border-rule-strong text-content-muted",

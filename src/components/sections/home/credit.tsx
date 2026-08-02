@@ -103,7 +103,6 @@ export function Credit() {
 
       <div className="mt-12 flex flex-wrap items-center gap-4">
         <WhatsappButton
-          context="credito"
           variant="solid"
           label="Quero simular o prazo na minha operação"
           message="Olá! Vim pelo site e quero entender as modalidades de pagamento de 90 a 120 dias do B/L."

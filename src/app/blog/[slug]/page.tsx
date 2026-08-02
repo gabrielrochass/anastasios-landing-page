@@ -55,7 +55,7 @@ export default async function PostPage({
       <ReadingProgress />
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
       <header>
-        <p className="text-eyebrow flex flex-wrap gap-x-2 text-accent-text">
+        <p className="text-eyebrow flex flex-wrap gap-x-2 text-accent">
           {post.temas.length > 0 ? (
             post.temas.map((nr) => <span key={nr}>{nr}</span>)
           ) : (

@@ -1,131 +1,142 @@
 import type { Metadata } from "next";
 import { ReadingProgress } from "@/components/motion/reading-progress";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Termos de Uso",
   description:
-    "Condições de uso do site da E-Soluções: conteúdo informativo de SST, diagnóstico CIPA, propriedade intelectual e responsabilidades.",
+    "Condições de uso deste site institucional da H H Brasil Ltda. e limites do que é publicado aqui.",
 };
 
-export default function TermosUsoPage() {
+/**
+ * Reescrita do zero.
+ *
+ * A versão anterior era template de outro projeto: falava de normas
+ * regulamentadoras, diagnóstico de CIPA, checkout de curso e foro em Recife.
+ * Nada disso existe aqui.
+ *
+ * O ponto que de fato importa neste site é o item 4: conteúdo do Painel de
+ * Inteligência é leitura de mercado com data, não consultoria, e a regra
+ * tributária e aduaneira muda rápido. Dizer isso protege o cliente de verdade.
+ *
+ * [CONFIRMAR] revisão jurídica antes do go-live.
+ */
+export default function TermosDeUsoPage() {
   return (
     <>
       <ReadingProgress />
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-      {/* [VALIDAR] template — requer revisão jurídica antes do go-live */}
-      <p className="text-eyebrow text-accent-text">Legal</p>
-      <h1 className="text-display mt-4 text-content">Termos de Uso</h1>
-      <p className="text-eyebrow mt-4 text-content-muted">Última atualização: julho de 2026</p>
+        <p className="text-eyebrow text-accent">Legal</p>
+        <h1 className="mt-4 font-serif text-display text-content">
+          Termos de Uso
+        </h1>
+        <p className="mt-4 text-eyebrow text-content-muted">
+          Última atualização: agosto de 2026
+        </p>
 
-      <p className="mt-4 leading-relaxed text-content">
-        Estes Termos de Uso regulam o acesso e a utilização do site da E-Soluções
-        [VALIDAR razão social e CNPJ], com sede em Recife/PE. Leia-os com atenção antes de
-        navegar.
-      </p>
+        <p className="mt-8 text-lead leading-relaxed text-content">
+          Este é um site institucional. Ele apresenta os serviços da{" "}
+          {siteConfig.legalName} e publica leitura de mercado. Não vende nada,
+          não processa pagamento e não cria vínculo contratual.
+        </p>
 
-      <h2 className="text-h2 mt-10 text-content">1. Aceitação</h2>
-      <p className="mt-4 leading-relaxed text-content">
-        Ao acessar e usar este site, você declara ter lido e aceito estes Termos de Uso e a
-        nossa Política de Privacidade. Se você não concorda com alguma condição aqui
-        prevista, pedimos que não utilize o site.
-      </p>
+        <h2 className="mt-14 font-serif text-h2 text-content">
+          1. Quem publica este site
+        </h2>
+        <p className="mt-4 leading-relaxed text-content-muted">
+          {siteConfig.legalName}, CNPJ {siteConfig.cnpj},{" "}
+          {siteConfig.address.addressLocality},{" "}
+          {siteConfig.address.addressRegion}. Contato pelo WhatsApp{" "}
+          {siteConfig.phone}.
+        </p>
 
-      <h2 className="text-h2 mt-10 text-content">2. O que o site oferece</h2>
-      <p className="mt-4 leading-relaxed text-content">
-        Este é um site institucional e informativo sobre Saúde e Segurança do Trabalho
-        (SST), medicina ocupacional e departamento pessoal. Nele você encontra:
-      </p>
-      <ul className="mt-4 list-disc space-y-2 pl-6 text-content">
-        <li>conteúdo informativo sobre nossos serviços, artigos e ferramentas de diagnóstico;</li>
-        <li>
-          um catálogo de cursos cujo checkout acontece em plataforma EAD parceira, fora
-          deste site; as compras, pagamentos, acessos e certificados são regidos pelos
-          termos e políticas da própria plataforma parceira;
-        </li>
-        <li>canais de contato com a nossa equipe (formulário e WhatsApp).</li>
-      </ul>
-      <p className="mt-4 leading-relaxed text-content">
-        Não há venda direta de produtos ou serviços neste site, nem área de acesso restrito
-        com login.
-      </p>
+        <h2 className="mt-14 font-serif text-h2 text-content">
+          2. O que este site é, e o que não é
+        </h2>
+        <p className="mt-4 leading-relaxed text-content-muted">
+          O conteúdo aqui tem finalidade informativa e comercial. Descrever um
+          serviço não é ofertá-lo em condições fixas: prazo, preço, modalidade
+          de pagamento e viabilidade de qualquer operação dependem de análise do
+          caso concreto e são definidos em contrato próprio.
+        </p>
+        <p className="mt-4 leading-relaxed text-content-muted">
+          Nada nesta página constitui proposta vinculante, e iniciar uma
+          conversa pelo WhatsApp não cria obrigação para nenhuma das partes.
+        </p>
 
-      <h2 className="text-h2 mt-10 text-content">3. Aviso importante sobre o conteúdo técnico</h2>
-      <p className="mt-4 leading-relaxed text-content">
-        <strong>
-          Todo o conteúdo técnico publicado neste site (artigos, guias e ferramentas de
-          diagnóstico, incluindo o diagnóstico CIPA) tem caráter exclusivamente
-          orientativo e educacional. Ele não substitui a avaliação técnica realizada por
-          profissional habilitado em Saúde e Segurança do Trabalho, tampouco consultoria
-          jurídica.
-        </strong>{" "}
-        Cada empresa possui realidade própria (atividade econômica, grau de risco, número de
-        empregados, convenções coletivas), e decisões sobre conformidade com Normas
-        Regulamentadoras devem sempre ser tomadas com apoio profissional especializado. A
-        E-Soluções não se responsabiliza por decisões tomadas exclusivamente com base no
-        conteúdo informativo deste site.
-      </p>
+        <h2 className="mt-14 font-serif text-h2 text-content">
+          3. Escopo de atuação
+        </h2>
+        <p className="mt-4 leading-relaxed text-content-muted">
+          A {siteConfig.name} atua na homologação de fornecedores, negociação,
+          estruturação da operação e acompanhamento da carga. Coordenamos a
+          operação junto aos demais participantes da cadeia.
+        </p>
+        <p className="mt-4 leading-relaxed text-content-muted">
+          Não somos despachante aduaneiro credenciado e não executamos o
+          despacho. Essa atividade é privativa de profissional habilitado
+          perante a Receita Federal, com quem trabalhamos em conjunto.
+        </p>
 
-      <h2 className="text-h2 mt-10 text-content">4. Propriedade intelectual</h2>
-      <p className="mt-4 leading-relaxed text-content">
-        Os textos autorais, a marca, o layout, as ilustrações e as ferramentas deste site
-        pertencem à E-Soluções e são protegidos pela legislação de propriedade intelectual.
-        É permitido citar e compartilhar trechos do conteúdo com indicação da fonte; a
-        reprodução integral para fins comerciais depende de autorização prévia por escrito.
-      </p>
-      <p className="mt-4 leading-relaxed text-content">
-        As Normas Regulamentadoras (NRs) e demais atos normativos citados no site são normas
-        públicas, de titularidade do poder público, e não são objeto de qualquer reivindicação
-        de propriedade pela E-Soluções.
-      </p>
+        <h2 className="mt-14 font-serif text-h2 text-content">
+          4. Sobre o Painel de Inteligência
+        </h2>
+        <p className="mt-4 leading-relaxed text-content-muted">
+          Os textos publicados são leitura de mercado, com fonte e data
+          indicadas. Não são consultoria tributária, aduaneira, jurídica ou de
+          investimento, e não substituem análise da sua operação específica.
+        </p>
+        <p className="mt-4 leading-relaxed text-content-muted">
+          Frete, câmbio, alíquota, medida antidumping, cronograma de sistema e
+          rota mudam rápido. Um texto correto na data de publicação pode estar
+          desatualizado em semanas. Confira as fontes citadas antes de tomar
+          qualquer decisão com base neles.
+        </p>
 
-      <h2 className="text-h2 mt-10 text-content">5. Limitação de responsabilidade</h2>
-      <p className="mt-4 leading-relaxed text-content">
-        Trabalhamos para manter o site disponível, atualizado e correto, mas, dentro dos
-        limites permitidos pela lei:
-      </p>
-      <ul className="mt-4 list-disc space-y-2 pl-6 text-content">
-        <li>
-          não garantimos disponibilidade ininterrupta: o site pode ficar temporariamente
-          fora do ar por manutenção, atualizações ou fatores fora do nosso controle;
-        </li>
-        <li>
-          não nos responsabilizamos pelo conteúdo, pela disponibilidade ou pelas práticas de
-          sites e serviços de terceiros acessados por links externos (como WhatsApp e a
-          plataforma EAD parceira);
-        </li>
-        <li>
-          o conteúdo informativo pode ser atualizado ou removido a qualquer momento, sem
-          aviso prévio.
-        </li>
-      </ul>
-      <p className="mt-4 leading-relaxed text-content">
-        Nada nestes termos exclui ou limita responsabilidades que não possam ser excluídas
-        ou limitadas pela legislação brasileira, em especial pelo Código de Defesa do
-        Consumidor.
-      </p>
+        <h2 className="mt-14 font-serif text-h2 text-content">
+          5. Propriedade intelectual
+        </h2>
+        <p className="mt-4 leading-relaxed text-content-muted">
+          Textos, ilustrações, marca e código deste site pertencem à{" "}
+          {siteConfig.legalName} ou são usados sob licença. Citação com
+          atribuição e link é bem-vinda. Reprodução integral ou uso comercial
+          exige autorização por escrito.
+        </p>
 
-      <h2 className="text-h2 mt-10 text-content">6. Alterações destes termos</h2>
-      <p className="mt-4 leading-relaxed text-content">
-        Estes Termos de Uso podem ser alterados a qualquer momento para refletir mudanças no
-        site ou na legislação. A versão vigente estará sempre publicada nesta página, com a
-        data da última atualização indicada no topo. O uso continuado do site após a
-        publicação de alterações significa concordância com a nova versão.
-      </p>
+        <h2 className="mt-14 font-serif text-h2 text-content">
+          6. Disponibilidade e links externos
+        </h2>
+        <p className="mt-4 leading-relaxed text-content-muted">
+          O site pode ficar indisponível para manutenção ou por falha de
+          terceiros, sem aviso prévio. Links para sites externos, incluindo as
+          fontes citadas nos artigos e o WhatsApp, levam a conteúdo que não
+          controlamos e que tem termos próprios.
+        </p>
 
-      <h2 className="text-h2 mt-10 text-content">7. Contato</h2>
-      <p className="mt-4 leading-relaxed text-content">
-        Dúvidas sobre estes termos podem ser enviadas para{" "}
-        <strong>contato@esolucoes.com.br</strong> [VALIDAR e-mail de contato] ou pelos
-        canais indicados na página de contato do site.
-      </p>
+        <h2 className="mt-14 font-serif text-h2 text-content">
+          7. Privacidade
+        </h2>
+        <p className="mt-4 leading-relaxed text-content-muted">
+          Este site não usa cookies e não coleta dados pessoais. O detalhe está
+          na{" "}
+          <a
+            href="/politica-de-privacidade"
+            className="text-accent underline underline-offset-4"
+          >
+            Política de Privacidade
+          </a>
+          .
+        </p>
 
-      <h2 className="text-h2 mt-10 text-content">8. Legislação aplicável e foro</h2>
-      <p className="mt-4 leading-relaxed text-content">
-        Estes termos são regidos pela legislação brasileira. Fica eleito o foro da comarca
-        de Recife/PE [VALIDAR foro] para dirimir eventuais controvérsias decorrentes do uso
-        deste site, ressalvado ao consumidor o direito de optar pelo foro do seu domicílio,
-        nos termos da lei.
-      </p>
+        <h2 className="mt-14 font-serif text-h2 text-content">
+          8. Lei aplicável
+        </h2>
+        <p className="mt-4 leading-relaxed text-content-muted">
+          Estes termos são regidos pela lei brasileira. Fica eleito o foro da
+          comarca de {siteConfig.address.addressLocality},{" "}
+          {siteConfig.address.addressRegion}, para dirimir controvérsias
+          decorrentes deste site.
+        </p>
       </article>
     </>
   );

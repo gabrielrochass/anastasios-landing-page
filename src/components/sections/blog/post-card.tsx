@@ -19,7 +19,7 @@ export function PostCard({ post }: { post: Post }) {
   );
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-xl bg-surface-raised shadow-card transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-card-hover focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-xl bg-surface-raised border border-rule transition-[box-shadow,transform] duration-300 hover:-translate-y-1  focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
       <ImageSlot
         slotId={`blog-cover-${post.slug}`}
         ratio="16/9"

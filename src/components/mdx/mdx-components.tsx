@@ -36,7 +36,7 @@ export const mdxComponents: MDXComponents = {
   a: ({ href = "", ...props }) => (
     <Link
       href={href}
-      className="font-medium text-accent underline underline-offset-4 hover:text-accent"
+      className="font-semibold text-accent underline underline-offset-4 hover:text-accent"
       {...props}
     />
   ),

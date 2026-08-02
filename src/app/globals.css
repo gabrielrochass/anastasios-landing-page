@@ -52,40 +52,62 @@
   --color-navy: #1b3a4b;
   --color-data-land: #2f6b57;
 
-  /* Escala tipográfica fluida.
-     O piso de display é maior que o de uma sans porque Instrument Serif tem
-     contraste de traço alto e fica frágil abaixo de 36px. */
+  /* Escala tipográfica.
+     Métricas medidas das páginas de produto da Apple, aplicadas a fontes
+     livres. Três decisões carregam quase todo o efeito:
+
+     1. A escada de peso é 300, 400, 600, 700. O 500 está BANIDO de propósito.
+        500 é o peso "SaaS seguro", e sem ele cada elemento é obrigado a ser
+        ou discreto ou convicto.
+     2. Corpo em 17px com entrelinha 1.47, não 16px com 1.5. Lê em ritmo
+        editorial em vez de ritmo de varredura, e ninguém sabe dizer por quê.
+     3. Tracking negativo em tudo acima de 17px, POSITIVO na faixa de tagline.
+        A inversão nessa faixa é o detalhe que imitação não pega.
+
+     Só o display escala de forma contínua. Corpo tem passo discreto, porque
+     legibilidade é absoluta e não relativa. */
   --text-display: clamp(2.25rem, 1.4rem + 3.6vw, 4rem);
-  --text-display--line-height: 1.04;
-  --text-display--letter-spacing: -0.02em;
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.022em;
   --text-display--font-weight: 400;
-  --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
-  --text-lead--line-height: 1.5;
   --text-h2: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
-  --text-h2--line-height: 1.12;
-  --text-h2--letter-spacing: -0.015em;
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.018em;
   --text-h2--font-weight: 400;
-  --text-h3: clamp(1.125rem, 1.05rem + 0.35vw, 1.375rem);
-  --text-h3--line-height: 1.25;
+  /* Faixa de tagline: o único lugar com tracking positivo. */
+  --text-tagline: clamp(1.3125rem, 1.15rem + 0.7vw, 1.75rem);
+  --text-tagline--line-height: 1.19;
+  --text-tagline--letter-spacing: 0.011em;
+  --text-tagline--font-weight: 600;
+  --text-h3: 1.0625rem;
+  --text-h3--line-height: 1.24;
+  --text-h3--letter-spacing: -0.022em;
   --text-h3--font-weight: 600;
-  --text-body: 1rem;
-  --text-body--line-height: 1.55;
+  --text-lead: clamp(1.3125rem, 1.2rem + 0.5vw, 1.5rem);
+  --text-lead--line-height: 1.4;
+  --text-lead--letter-spacing: -0.008em;
+  --text-lead--font-weight: 300;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.47;
+  --text-body--letter-spacing: -0.022em;
   --text-meta: 0.75rem;
   --text-meta--line-height: 1.35;
-  --text-meta--font-weight: 500;
+  --text-meta--font-weight: 600;
   --text-stat: clamp(2.5rem, 1.8rem + 3vw, 4rem);
   --text-stat--line-height: 1;
-  --text-stat--letter-spacing: -0.02em;
+  --text-stat--letter-spacing: -0.022em;
   --text-stat--font-weight: 400;
 
   --spacing-card: 1.5rem;
-  --spacing-section: clamp(3.5rem, 2.4rem + 3.2vw, 6rem);
+  --spacing-section: clamp(3rem, 2rem + 2.7vw, 5rem);
 
   /* Quase reto: linguagem de documento técnico, não de app */
   --radius-badge: 0.125rem;
 
-  --shadow-card: 0 1px 2px rgb(7 20 27 / 0.05), 0 4px 12px rgb(7 20 27 / 0.05);
-  --shadow-card-hover: 0 2px 4px rgb(7 20 27 / 0.07), 0 12px 28px rgb(7 20 27 / 0.09);
+  /* UMA sombra em todo o sistema, e só em objeto de destaque.
+     Cromo, cartão, botão e nav usam fio de 1px. Sombra em card é o segundo
+     maior sinal de "template" depois de gradiente decorativo. */
+  --shadow-raised: 3px 5px 30px 0 rgb(4 7 11 / 0.22);
 
   /* Balanço do navio. Fica num <g> aninhado, independente do transform de
      scroll, para os dois nunca disputarem a mesma propriedade.
@@ -274,10 +296,171 @@
   }
 }
 
+/*
+ * As portas do contêiner.
+ *
+ * Único lugar do site com CSS 3D. A jornada roda em escala pura porque
+ * preserve-3d achata o contexto quando um filho tem opacity ou filter, e os
+ * planos precisam dos dois. Aqui o volume é isolado e a rotação é real.
+ */
+.container-face {
+  perspective: 1400px;
+  perspective-origin: 50% 50%;
+  --open: 0;
+}
+
+.door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.door--l {
+  left: 0;
+  transform-origin: left center;
+  transform: rotateY(calc(var(--open) * -108deg));
+}
+
+.door--r {
+  right: 0;
+  transform-origin: right center;
+  transform: rotateY(calc(var(--open) * 108deg));
+}
+
+.door__face,
+.door__back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+
+.door__face {
+  background-color: var(--color-ocean-900);
+  border: 1px solid var(--color-ocean-800);
+}
+
+/* Face interna: aço nu, sem a corrugação nem o código. */
+.door__back {
+  transform: rotateY(180deg);
+  background-color: var(--color-ocean-950);
+  border: 1px solid var(--color-ocean-800);
+}
+
+/* Perfil corrugado real, por gradiente repetido em vez de imagem. */
+.door__corrugation {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgb(255 255 255 / 0.04) 0 2px,
+    transparent 2px 7px,
+    rgb(0 0 0 / 0.16) 7px 9px,
+    transparent 9px 14px
+  );
+}
+
+.door__code {
+  position: absolute;
+  left: 8%;
+  top: 12%;
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 0.6rem + 0.7vw, 1rem);
+  letter-spacing: 0.14em;
+  color: var(--color-mist);
+}
+
+/* Iluminação falsa. Vive no pseudo, nunca no painel: opacity no painel
+   achataria o contexto 3D e a face de trás sumiria. */
+.door--l::after,
+.door--r::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--open);
+}
+
+.door--l::after {
+  background: linear-gradient(90deg, rgb(0 0 0 / 0.62), rgb(0 0 0 / 0));
+}
+
+.door--r::after {
+  background: linear-gradient(270deg, rgb(0 0 0 / 0.62), rgb(0 0 0 / 0));
+}
+
+/* Sombra de contato que encolhe conforme as portas saem do caminho. */
+.door-shadow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3%;
+  height: 10%;
+  background: radial-gradient(
+    ellipse 60% 100% at 50% 0%,
+    rgb(4 7 11 / 0.55),
+    transparent 70%
+  );
+  opacity: calc(1 - var(--open) * 0.7);
+  transform: scaleX(calc(1 - var(--open) * 0.18));
+}
+
+/*
+ * O conteúdo revelado.
+ *
+ * Nunca escondido da árvore de acessibilidade, só atenuado visualmente. Leitor
+ * de tela lineariza a página e usuário de teclado tabula por ela: os dois
+ * precisam chegar aqui sem depender de scroll.
+ */
+.reveal {
+  opacity: var(--reveal, 1);
+  transform: translate3d(0, calc((1 - var(--reveal, 1)) * 12px), 0);
+}
+
+/* Se qualquer coisa aqui dentro receber foco, aparece por inteiro. Sem esta
+   linha, usuário de teclado tabula para um link invisível. É a falha mais
+   comum deste padrão. */
+.reveal:focus-within {
+  --reveal: 1 !important;
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    --reveal: 1 !important;
+    transform: none !important;
+  }
+}
+
+[data-motion="reduced"] .reveal {
+  --reveal: 1 !important;
+  transform: none !important;
+}
+
+@media print {
+  .reveal {
+    --reveal: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Alto contraste do sistema: a cena decorativa sai, o conteúdo fica. */
+@media (forced-colors: active) {
+  .reveal {
+    --reveal: 1 !important;
+    transform: none !important;
+  }
+  .container-face {
+    display: none;
+  }
+}
+
 @utility text-eyebrow {
   font-family: var(--font-mono);
   font-size: var(--text-meta);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }

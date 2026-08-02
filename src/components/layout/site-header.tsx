@@ -65,7 +65,6 @@ export function SiteHeader() {
         <MainNav />
         <div className="flex items-center gap-2">
           <WhatsappButton
-            context="header"
             className="hidden sm:inline-flex"
             label="Falar no WhatsApp"
           />
