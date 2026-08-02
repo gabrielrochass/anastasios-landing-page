@@ -5,8 +5,11 @@
  * estética: a batida ativa é derivada da posição do scroll como função pura, e
  * um buraco entre faixas produziria um estado indefinido no meio da página.
  *
- * O último `end` é 1.001 de propósito, para o topo do intervalo incluir
- * exatamente 1.0 quando o usuário chega ao fim.
+ * Todo `end` fica dentro de [0, 1]. Já tentei 1.001 na última batida para o
+ * intervalo incluir o 1.0 exato, e isso quebrou: o mesmo valor vira offset de
+ * keyframe no Web Animations API, que rejeita qualquer coisa acima de 1 com
+ * "Offsets must be null or in the range [0,1]". A inclusão do extremo é
+ * tratada na resolução da batida, que é onde o problema de fato mora.
  */
 
 export interface Beat {
@@ -26,7 +29,7 @@ export const BEATS = [
   { id: "corredor", start: 0.44, end: 0.575, label: "Corredor" },
   { id: "abertura", start: 0.575, end: 0.735, label: "Abertura" },
   { id: "manifesto", start: 0.735, end: 0.885, label: "Manifesto" },
-  { id: "partida", start: 0.885, end: 1.001, label: "Partida" },
+  { id: "partida", start: 0.885, end: 1.0, label: "Partida" },
 ] as const satisfies readonly Beat[];
 
 export type BeatId = (typeof BEATS)[number]["id"];

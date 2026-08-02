@@ -40,9 +40,13 @@ function resolveBeat(
   for (let i = 0; i < beats.length; i++) {
     // A batida atual defende o próprio território com uma margem extra.
     const isCurrent = i === current;
+    const isLast = i === beats.length - 1;
     const low = beats[i].start - (isCurrent ? HYSTERESIS : 0);
     const high = beats[i].end + (isCurrent ? HYSTERESIS : 0);
-    if (value >= low && value < high) return i;
+    // A última batida inclui o extremo direito, senão o progresso exatamente
+    // igual a 1 não cairia em nenhuma faixa.
+    const inside = isLast ? value >= low && value <= high : value >= low && value < high;
+    if (inside) return i;
   }
   return value < beats[0].start ? 0 : beats.length - 1;
 }

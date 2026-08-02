@@ -1,71 +1,58 @@
 import { Qualifier } from "@/components/interactive/contact/qualifier";
+import { BEAT_CONTENT } from "@/components/journey/beat-content";
+import { Journey } from "@/components/journey/journey";
 import { About } from "@/components/sections/home/about";
-import { Credit } from "@/components/sections/home/credit";
-import { Crossing } from "@/components/sections/home/crossing";
 import { Faq } from "@/components/sections/home/faq";
-import { Hero } from "@/components/sections/home/hero";
 import { Intelligence } from "@/components/sections/home/intelligence";
-import { Manifesto } from "@/components/sections/home/manifesto";
-import { Origins } from "@/components/sections/home/origins";
-import { PortsSectors } from "@/components/sections/home/ports-sectors";
-import { Problem } from "@/components/sections/home/problem";
-import { ProofBar } from "@/components/sections/home/proof-bar";
-import { SupplyChain } from "@/components/sections/home/supply-chain";
 import { TaxStructure } from "@/components/sections/home/tax-structure";
 import { JsonLd } from "@/components/seo/json-ld";
 import { serviceSchema } from "@/lib/seo/schema";
 
 /**
- * A ordem das seções é o argumento comercial, nesta sequência:
- * reconhecer o problema, entender quem somos na cadeia, ver a operação
- * inteira, descobrir o crédito, entender a conta tributária, conferir alcance,
- * conhecer a pessoa, checar competência atual e só então falar.
+ * A home tem duas metades, e isso é intencional.
  *
- * O crédito aparece cedo de propósito. É o único argumento que nenhum dos 12
- * concorrentes auditados oferece, e enterrá-lo no fim seria desperdiçar a
- * única vantagem difícil de copiar.
+ * A jornada é a superfície: sete batidas, uma ideia por tela, cerca de 400
+ * palavras no total. É o que a maioria vai ver e é o que faz a pessoa se
+ * autoqualificar em menos de vinte segundos.
+ *
+ * Abaixo dela, em `#detalhe`, fica o material técnico completo para quem
+ * clicar em "ver em detalhe". A pesquisa de mercado é clara: 61% dos
+ * compradores B2B preferem decidir sem falar com vendedor, e o campeão precisa
+ * de algo que ele possa encaminhar para as outras quatro pessoas do comitê.
+ * Deletar esse conteúdo machucaria de forma mensurável. Colapsar não.
  */
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <ProofBar />
-      <Manifesto />
-      <Problem />
-      <SupplyChain />
-      <Crossing />
-      <Credit />
-      <TaxStructure />
-      <Origins />
-      <PortsSectors />
-      <About />
-      <Intelligence />
-      <Faq />
+      <Journey>{BEAT_CONTENT}</Journey>
 
-      <section
-        id="contato"
-        data-mode="ocean"
-        className="section-cv bg-surface py-section text-content"
-      >
-        <div className="mx-auto max-w-3xl px-4 sm:px-6">
-          <p className="text-eyebrow text-accent">Contato</p>
-          <h2 className="mt-4 font-serif text-h2">
-            Quatro perguntas, e a conversa já começa com contexto.
-          </h2>
-          <p className="mt-5 text-lead text-content-muted">
-            Toda conversa acontece no WhatsApp. As respostas abaixo montam a
-            mensagem, então ninguém perde tempo se apresentando duas vezes.
-          </p>
-          <Qualifier className="mt-14" />
-        </div>
-      </section>
+      <div id="detalhe" style={{ scrollMarginTop: "6rem" }}>
+        <TaxStructure />
+        <About />
+        <Intelligence />
+        <Faq />
+
+        <section
+          id="contato"
+          data-mode="ocean"
+          className="bg-surface py-section text-content"
+        >
+          <div className="mx-auto max-w-3xl px-4 sm:px-6">
+            <p className="text-eyebrow text-accent">Contato</p>
+            <h2 className="mt-4 font-serif text-h2">
+              Quatro perguntas. A conversa começa com contexto.
+            </h2>
+            <Qualifier className="mt-14" />
+          </div>
+        </section>
+      </div>
 
       <JsonLd
         data={serviceSchema({
           name: "Sourcing e homologação de fornecedores",
           description:
             "Prospecção, auditoria de fábrica e homologação de fornecedores na China, Índia e Leste Europeu.",
-          anchor: "travessia",
+          anchor: "conves",
         })}
       />
       <JsonLd

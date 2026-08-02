@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu } from "lucide-react";
 import { WhatsappButton } from "@/components/layout/whatsapp-button";
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -20,14 +19,19 @@ export function MobileNav() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          className="size-11 border-rule-strong text-content md:hidden"
+        {/*
+          Botão nativo, não a primitiva do shadcn. O bloco :root do shadcn
+          mapeia background, border e input à paleta clara e NÃO segue o
+          data-mode, então dentro do header em modo ocean a primitiva
+          renderizava um quadrado branco vazio.
+        */}
+        <button
+          type="button"
           aria-label="Abrir menu"
+          className="inline-flex size-11 items-center justify-center rounded-sm border border-rule-strong bg-transparent text-content transition-colors hover:bg-surface-raised md:hidden"
         >
-          <Menu />
-        </Button>
+          <Menu className="size-5" aria-hidden />
+        </button>
       </SheetTrigger>
       {/* O painel é sempre modo doc, mesmo aberto por cima do herói escuro.
           Menu é leitura, não cena. */}

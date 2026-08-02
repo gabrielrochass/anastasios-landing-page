@@ -7,9 +7,15 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { localBusinessSchema, organizationSchema } from "@/lib/seo/schema";
 import { siteConfig } from "@/lib/site-config";
 
+/**
+ * Só `latin`, não `latin-ext`.
+ * Medido: `latin` cobre U+0000 a U+00FF, e os 30 codepoints do português
+ * estão todos ali. `latin-ext` é peso que não serve para nada aqui, e é o
+ * tipo de "correção" que alguém refaz achando que acento precisa dela.
+ */
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -17,13 +23,13 @@ const inter = Inter({
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
   weight: "400",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   display: "swap",
 });
 

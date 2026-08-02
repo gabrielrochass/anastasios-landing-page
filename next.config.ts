@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // O three.js publica ESM moderno que o bundler precisa transpilar.
+  transpilePackages: ["three"],
 };
 
 export default nextConfig;

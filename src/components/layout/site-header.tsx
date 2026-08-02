@@ -37,13 +37,16 @@ export function SiteHeader() {
       // Enquanto está sobre o herói escuro, o header inteiro é uma ilha em
       // modo ocean. Assim o anel de foco e o texto leem a mesma paleta do que
       // está atrás, sem nenhum componente precisar saber disso.
-      data-mode={transparent ? "ocean" : undefined}
+      // A cena passou a ser de dia, então o header segue o modo documento
+      // como todo o resto. Manter ocean aqui deixava uma faixa escura
+      // atravessando um céu claro.
+      data-mode={undefined}
       className={cn(
         "inset-x-0 top-0 z-40 transition-colors duration-300",
         overlay ? "fixed" : "sticky",
         transparent
-          ? "bg-linear-to-b from-ocean-950/85 via-ocean-950/45 to-transparent"
-          : "border-b border-rule bg-surface/90 backdrop-blur-sm",
+          ? "bg-linear-to-b from-paper/80 via-paper/40 to-transparent"
+          : "border-b border-rule bg-surface/85 backdrop-blur-md",
       )}
       style={{ paddingTop: "env(safe-area-inset-top)" }}
     >

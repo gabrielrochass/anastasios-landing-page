@@ -42,3 +42,10 @@ next-env.d.ts
 
 # velite
 .velite/
+
+# saída do script de verificação visual (scripts/journey-shots.mjs)
+/shots/
+
+# brief do cliente: fica local, não versionado
+/anastasios-landing-page.pdf
+/anastasios-questionario.txt

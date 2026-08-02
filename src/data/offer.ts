@@ -131,6 +131,13 @@ export const chainDisclaimer =
 export interface PaymentTerm {
   code: string;
   name: string;
+  /**
+   * O mesmo acordo dito em português claro. O termo técnico continua no
+   * `code` e no `name`, porque quem já é do ramo procura por ele, mas quem
+   * está chegando não deveria precisar decifrar uma sigla para entender uma
+   * condição de pagamento.
+   */
+  plain: string;
   term: string;
   documents: string;
   bestFor: string;
@@ -144,7 +151,8 @@ export const paymentTerms: PaymentTerm[] = [
   {
     code: "CAD",
     name: "Cash Against Documents",
-    term: "Pagamento contra apresentação dos documentos",
+    plain: "Pagar à vista, contra os documentos",
+    term: "Pagamento no momento em que os documentos são apresentados",
     documents: "Documentos liberados na quitação",
     bestFor:
       "Quem quer o menor custo financeiro e tem caixa disponível no embarque",
@@ -152,7 +160,8 @@ export const paymentTerms: PaymentTerm[] = [
   {
     code: "OA",
     name: "Open Account",
-    term: "De 90 a 120 dias contados do B/L",
+    plain: "Pagar em até 120 dias, direto para nós",
+    term: "De 90 a 120 dias, contados do embarque",
     documents: "Documentos originais enviados direto ao importador",
     bestFor:
       "Quem já tem histórico conosco e quer o giro mais longo com o mínimo de intermediação",
@@ -160,7 +169,8 @@ export const paymentTerms: PaymentTerm[] = [
   {
     code: "DA",
     name: "Documents Against Acceptance",
-    term: "De 90 a 120 dias contados do B/L",
+    plain: "Pagar em até 120 dias, com o banco no meio",
+    term: "De 90 a 120 dias, contados do embarque",
     documents: "Documentos originais enviados ao banco indicado pelo cliente",
     bestFor:
       "Quem precisa do prazo longo com a segurança de ter o banco no circuito",

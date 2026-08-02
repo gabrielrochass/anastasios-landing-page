@@ -67,11 +67,20 @@
      Só o display escala de forma contínua. Corpo tem passo discreto, porque
      legibilidade é absoluta e não relativa. */
   --text-display: clamp(2.25rem, 1.4rem + 3.6vw, 4rem);
-  --text-display--line-height: 1.05;
+  /* 1.17 e não 1.05.
+     Medindo os contornos da fonte: maiúscula acentuada tem topo em 0,950 em e
+     cedilha tem base em -0,215 em, o que dá 1,165 em de tinta. Com entrelinha
+     1,05 isso é sobreposição real, cerca de 7px num display de 64px. Em caixa
+     baixa não colide, então os títulos atuais escapam por sorte, não por
+     projeto: basta uma manchete começando por Ó, Á ou Ê para quebrar.
+     1.20 e não 1.17: a 1.17 a folga é de 0.005 em, cerca de 0.32px em 64px,
+     ou seja encostado. 1.20 sobe para 2.24px e mantém a escala monotônica
+     contra h2 em 1.18 e tagline em 1.19. */
+  --text-display--line-height: 1.2;
   --text-display--letter-spacing: -0.022em;
   --text-display--font-weight: 400;
   --text-h2: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
-  --text-h2--line-height: 1.1;
+  --text-h2--line-height: 1.18;
   --text-h2--letter-spacing: -0.018em;
   --text-h2--font-weight: 400;
   /* Faixa de tagline: o único lugar com tracking positivo. */
@@ -94,7 +103,10 @@
   --text-meta--line-height: 1.35;
   --text-meta--font-weight: 600;
   --text-stat: clamp(2.5rem, 1.8rem + 3vw, 4rem);
-  --text-stat--line-height: 1;
+  /* 1.17 e não 1. Está 0.165 em abaixo do limiar de colisão de acento e é
+     usado com font-serif. Só escapa hoje porque o conteúdo é um numeral sem
+     acento: uma estatística de duas linhas com acento colidiria. */
+  --text-stat--line-height: 1.17;
   --text-stat--letter-spacing: -0.022em;
   --text-stat--font-weight: 400;
 
@@ -294,117 +306,6 @@
       animation-range: entry 15% cover 40%;
     }
   }
-}
-
-/*
- * As portas do contêiner.
- *
- * Único lugar do site com CSS 3D. A jornada roda em escala pura porque
- * preserve-3d achata o contexto quando um filho tem opacity ou filter, e os
- * planos precisam dos dois. Aqui o volume é isolado e a rotação é real.
- */
-.container-face {
-  perspective: 1400px;
-  perspective-origin: 50% 50%;
-  --open: 0;
-}
-
-.door {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 50%;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-}
-
-.door--l {
-  left: 0;
-  transform-origin: left center;
-  transform: rotateY(calc(var(--open) * -108deg));
-}
-
-.door--r {
-  right: 0;
-  transform-origin: right center;
-  transform: rotateY(calc(var(--open) * 108deg));
-}
-
-.door__face,
-.door__back {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-}
-
-.door__face {
-  background-color: var(--color-ocean-900);
-  border: 1px solid var(--color-ocean-800);
-}
-
-/* Face interna: aço nu, sem a corrugação nem o código. */
-.door__back {
-  transform: rotateY(180deg);
-  background-color: var(--color-ocean-950);
-  border: 1px solid var(--color-ocean-800);
-}
-
-/* Perfil corrugado real, por gradiente repetido em vez de imagem. */
-.door__corrugation {
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    90deg,
-    rgb(255 255 255 / 0.04) 0 2px,
-    transparent 2px 7px,
-    rgb(0 0 0 / 0.16) 7px 9px,
-    transparent 9px 14px
-  );
-}
-
-.door__code {
-  position: absolute;
-  left: 8%;
-  top: 12%;
-  font-family: var(--font-mono);
-  font-size: clamp(0.75rem, 0.6rem + 0.7vw, 1rem);
-  letter-spacing: 0.14em;
-  color: var(--color-mist);
-}
-
-/* Iluminação falsa. Vive no pseudo, nunca no painel: opacity no painel
-   achataria o contexto 3D e a face de trás sumiria. */
-.door--l::after,
-.door--r::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: var(--open);
-}
-
-.door--l::after {
-  background: linear-gradient(90deg, rgb(0 0 0 / 0.62), rgb(0 0 0 / 0));
-}
-
-.door--r::after {
-  background: linear-gradient(270deg, rgb(0 0 0 / 0.62), rgb(0 0 0 / 0));
-}
-
-/* Sombra de contato que encolhe conforme as portas saem do caminho. */
-.door-shadow {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -3%;
-  height: 10%;
-  background: radial-gradient(
-    ellipse 60% 100% at 50% 0%,
-    rgb(4 7 11 / 0.55),
-    transparent 70%
-  );
-  opacity: calc(1 - var(--open) * 0.7);
-  transform: scaleX(calc(1 - var(--open) * 0.18));
 }
 
 /*

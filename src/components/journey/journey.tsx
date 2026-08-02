@@ -11,18 +11,8 @@ import {
 } from "motion/react";
 import { useReducedMotion } from "@/hooks/use-motion-preference";
 import { BEATS, BEAT_HEIGHT_SVH, BEAT_HEIGHT_SVH_REDUCED, type Beat } from "./beats";
-import { Atmosphere } from "./atmosphere";
-import { DollyAct, type Plate } from "./dolly-act";
 import { useBeat } from "./use-beat";
-import {
-  arrivalPlates,
-  corridorActPlates,
-  deckPlates,
-  departurePlates,
-  doorPlates,
-  hullPlates,
-  manifestPlates,
-} from "./plates";
+import { JourneySceneLazy } from "./scene-lazy";
 
 /**
  * A jornada. Sete atos contínuos, do mar aberto ao porto.
@@ -34,16 +24,6 @@ import {
  * A altura do track é função pura de BEATS.length, então nunca muda, então o
  * `useScroll` nunca precisa remedir.
  */
-
-const ACT_PLATES: Record<string, readonly Plate[]> = {
-  chegada: arrivalPlates,
-  casco: hullPlates,
-  conves: deckPlates,
-  corredor: corridorActPlates,
-  abertura: doorPlates,
-  manifesto: manifestPlates,
-  partida: departurePlates,
-};
 
 interface JourneyProps {
   /** Uma seção de conteúdo por batida, na mesma ordem de BEATS. */
@@ -78,20 +58,24 @@ function JourneyInner({ children }: JourneyProps) {
       // ignora a barra de URL do mobile e `dvh` redimensiona durante o scroll,
       // que gera CLS justamente no Android intermediário.
       style={{ height: `${BEATS.length * perBeat}svh` }}
-      data-mode="ocean"
+      // Cena de dia: o texto vira tinta sobre claro, que é onde leitura
+      // longa funciona melhor.
+      data-mode="doc"
+      data-journey-track=""
       className="relative bg-surface text-content"
     >
       <div className="sticky top-0 h-svh overflow-hidden">
-        {BEATS.map((beat, index) => (
-          <Act
-            key={beat.id}
-            beat={beat}
-            progress={scrollYProgress}
-            active={index === activeBeat}
-          />
-        ))}
+        {/*
+          UMA cena para os sete atos, não sete cenas coladas. Em 3D a câmera
+          atravessa o mundo inteiro de forma contínua, então o corte por
+          abertura entre atos deixou de ser necessário: não existe costura
+          para esconder.
+        */}
+        <JourneySceneLazy
+          progress={scrollYProgress}
+          className="absolute inset-0"
+        />
 
-        <Atmosphere dolly={scrollYProgress} />
 
         {/*
           O conteúdo. Todas as batidas montadas, sempre, em ordem narrativa.
@@ -111,36 +95,6 @@ function JourneyInner({ children }: JourneyProps) {
         ))}
       </div>
     </div>
-  );
-}
-
-function Act({
-  beat,
-  progress,
-  active,
-}: {
-  beat: Beat;
-  progress: MotionValue<number>;
-  active: boolean;
-}) {
-  const plates = ACT_PLATES[beat.id] ?? [];
-
-  // Progresso local do ato. Fora da faixa fica travado em 0 ou 1, então o ato
-  // que ainda não chegou já está montado no estado inicial correto.
-  const local = useTransform(progress, [beat.start, beat.end], [0, 1], {
-    clamp: true,
-  });
-
-  // Só o ato ativo e o vizinho seguinte ficam visíveis. Manter os sete
-  // desenhados ao mesmo tempo passaria do orçamento de camadas compostas.
-  const visibility = useTransform(progress, (p) =>
-    p >= beat.start - 0.06 && p <= beat.end + 0.02 ? 1 : 0,
-  );
-
-  return (
-    <m.div className="absolute inset-0" style={{ opacity: visibility }}>
-      <DollyAct progress={local} plates={plates} active={active} />
-    </m.div>
   );
 }
 
@@ -173,9 +127,11 @@ function BeatSection({
       aria-current={isActive ? "step" : undefined}
       aria-label={beat.label}
       style={{ opacity, scrollMarginTop: "6rem" }}
-      className="pointer-events-none absolute inset-0 flex items-center"
+      // Mobile: o texto vive na metade de BAIXO, porque o objeto ocupa a de
+      // cima. Desktop: centrado, com o objeto à direita.
+      className="pointer-events-none absolute inset-0 flex items-end pb-16 md:items-center md:pb-0"
     >
-      <div className="pointer-events-auto mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <div className="pointer-events-auto mx-auto w-full max-w-6xl px-5 sm:px-6">
         {children}
       </div>
     </m.section>
