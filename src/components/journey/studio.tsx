@@ -23,10 +23,10 @@ import * as THREE from "three";
  */
 export function Cyclorama() {
   const geometry = useMemo(() => {
-    const FLOOR = 26; // quanto o chão avança na direção da câmera
-    const FILLET = 9; // raio da curva onde chão vira parede
-    const WALL = 34; // altura da parede
-    const WIDTH = 90;
+    const FLOOR = 72; // precisa passar do maior raio de câmera da jornada
+    const FILLET = 14; // raio da curva onde chão vira parede
+    const WALL = 46; // altura da parede
+    const WIDTH = 150;
 
     // Perfil no plano XY, onde X vira profundidade e Y vira altura.
     const shape = new THREE.Shape();
@@ -44,8 +44,20 @@ export function Cyclorama() {
       steps: 1,
     });
     geo.translate(0, 0, -WIDTH / 2);
-    // O perfil está em XY extrudado em Z. Girar leva a profundidade para Z e a
-    // largura para X, que é a orientação que a cena espera.
+    /*
+     * O perfil está em XY extrudado em Z. Girar leva a largura da extrusão
+     * para X e a profundidade do perfil para Z.
+     *
+     * Cheguei a inverter o sinal achando que a profundidade estava trocada.
+     * Não estava, e inverter piorou. O defeito era de ESCALA: a câmera chega a
+     * raio 30 no mobile e o chão só avançava 26, então ela saía de dentro da
+     * concha e passava a ver o verso da parede, que é DoubleSide. Nas batidas
+     * de raio curto nada aparecia de errado. Medido: com o ciclorama desligado
+     * a batida de chegada voltava a aparecer normalmente.
+     *
+     * Regra que fica: a concha precisa comportar o MAIOR raio de câmera da
+     * jornada, com folga.
+     */
     geo.rotateY(-Math.PI / 2);
     geo.computeVertexNormals();
     return geo;

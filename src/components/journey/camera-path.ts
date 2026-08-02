@@ -21,51 +21,47 @@ import * as THREE from "three";
  */
 
 /**
- * O objeto vive à DIREITA do quadro, não no centro.
+ * Onde o objeto se apoia no quadro.
  *
- * Centralizado, ele passava por cima da coluna de texto e a leitura morria.
- * A saída anterior foi um degradê branco por cima da cena, que piorou: virou
- * uma mancha leitosa no meio da tela. A correção certa é de composição, não de
- * camada: a câmera mira num alvo deslocado, então o objeto se apoia à direita
- * e a esquerda fica livre para o texto.
+ * DESKTOP: à direita, com a coluna da esquerda livre para o texto.
  *
- * Em telas estreitas o deslocamento é desligado (ver `targetFor`), porque ali
- * o texto fica ABAIXO e não ao lado.
+ * MOBILE: em cima, com o texto embaixo. E aqui estava um erro meu que só
+ * apareceu medindo: eu usava deslocamento FIXO em unidades de mundo (-6.3).
+ * Mas o raio da câmera muda a cada batida, e deslocamento fixo em mundo dá
+ * posição VARIÁVEL na tela. O objeto subia demais, o topo entrava atrás do
+ * header e sobravam cerca de 290px de vazio até o texto.
+ *
+ * A correção é ancorar na TELA, não no mundo. Dado um alvo de fração vertical
+ * `f`, o deslocamento de mundo que o coloca ali é:
+ *
+ *     y = -(0.5 - f) * 2 * raio * tan(fov / 2)
+ *
+ * Com fov 38 e f = 0.235, isso dá y = -0.1823 * raio. Como escala com o raio,
+ * o objeto fica no mesmo lugar da tela em todas as sete batidas.
  */
 const OFFSET_X = -2.7;
 
-/**
- * No mobile a divisão é VERTICAL, não lateral.
- *
- * Tela estreita não tem lado: deslocar o objeto para a direita só o empurra
- * para fora do quadro. O que existe é altura, então o objeto sobe e o texto
- * ocupa a metade de baixo.
- *
- * Deslocar o ALVO para baixo é o que sobe o objeto na tela, porque a câmera
- * passa a mirar abaixo dele. Mover a câmera faria o mesmo, mas quebraria a
- * órbita, que é calculada em volta do alvo.
- *
- * O -4.9 é derivado, não tateado. Medindo a batida "conves" no mobile, o
- * objeto descia até y=338 e o texto começava em y=219, invadindo 119px. Com
- * raio 16.5, fov 38 e viewport de 844, cada unidade de mundo vale 74.3px, logo
- * os 119px pedem 1.79 unidade. Sem isso o eyebrow em oxide caía sobre a
- * lataria oxidada e media 1.03:1, ou seja, a mesma cor.
- *
- * Depois de -4.9 o eyebrow saiu, mas a headline ainda encostava na base do
- * objeto na batida em que ele vira de perfil e fica mais alto na tela. O -6.3
- * limpa também esse caso.
- */
-export function targetFor(wide: boolean, exploded = 0): THREE.Vector3 {
+/** Fração vertical em que o centro do objeto pousa no mobile. */
+const MOBILE_CENTER_F = 0.235;
+const HALF_FOV_TAN = Math.tan((38 * Math.PI) / 180 / 2);
+
+function mobileTargetY(radius: number): number {
+  return -(0.5 - MOBILE_CENTER_F) * 2 * radius * HALF_FOV_TAN;
+}
+
+export function targetFor(
+  wide: boolean,
+  exploded = 0,
+  radius = 10,
+): THREE.Vector3 {
   return wide
     ? // Na vista explodida as portas se afastam 1.1 unidade CADA, então o
-      // objeto fica 2.2 mais largo. Com o deslocamento fixo, a porta esquerda
+      // objeto fica 2.2 mais largo. Com deslocamento fixo a porta esquerda
       // pousava em cima do texto: a coluna limpa caía para 442px onde o lead
       // pede 672px. O alvo agora acompanha a abertura.
       new THREE.Vector3(OFFSET_X - exploded * 1.1, 0, 0)
-    : new THREE.Vector3(0, -6.3, 0);
+    : new THREE.Vector3(0, mobileTargetY(radius), 0);
 }
-
-export const TARGET = new THREE.Vector3(0, 0, 0);
 
 export interface CameraState {
   position: THREE.Vector3;
@@ -86,10 +82,18 @@ function orbit(
   angle: number,
   height: number,
   radius: number,
-  target: THREE.Vector3,
+  wide: boolean,
+  exploded: number,
 ): CameraState {
+  // O alvo é montado AQUI porque só aqui o raio é conhecido, e no mobile o
+  // deslocamento vertical depende dele.
+  const target = targetFor(wide, exploded, radius);
   _pos.set(
     target.x + Math.sin(angle) * radius,
+    // A altura da câmera é ABSOLUTA, não relativa ao alvo. Somar target.y aqui
+    // faz câmera e alvo descerem juntos, o que cancela o deslocamento: o
+    // objeto não sai do lugar na tela. É o alvo abaixo de uma câmera parada
+    // que inclina o olhar e sobe o objeto no quadro.
     height,
     target.z + Math.cos(angle) * radius,
   );
@@ -109,22 +113,27 @@ export function explosion(p: number): number {
 }
 
 export function cameraAt(p: number, wide = true): CameraState {
-  const target = targetFor(wide, explosion(p));
+  const e = explosion(p);
   // O contêiner tem 6 metros de comprimento e o quadro estreito não o comporta
   // na mesma distância do desktop. Um fator sobre o raio resolve sem duplicar
   // os sete trechos.
-  const k = wide ? 1 : 1.62;
+  // No mobile o objeto precisa caber na faixa de cima, entre o header e o
+  // texto. 1.62 ainda o deixava descendo até y=838 num quadro de 844, ou
+  // seja, atravessando o texto inteiro. 2.35 encolhe o suficiente para a base
+  // parar antes da coluna de leitura. 2.35 foi longe demais: em 4 das 7
+  // batidas o objeto ficou pequeno a ponto de sumir. 1.75 é o meio-termo.
+  const k = wide ? 1 : 1.75;
   // 1. Frontal, fechado. Só a distância diminui: o objeto se apresenta.
   if (p < 0.145) {
     const t = smooth(span(p, 0, 0.145));
-    return orbit(0, 0.6 + t * 0.4, THREE.MathUtils.lerp(17, 11, t) * k, target);
+    return orbit(0, 0.6 + t * 0.4, THREE.MathUtils.lerp(17, 11, t) * k, wide, e);
   }
 
   // 2. Giro para três quartos. É o ângulo em que uma caixa deixa de ler como
   //    retângulo e passa a ler como volume.
   if (p < 0.29) {
     const t = smooth(span(p, 0.145, 0.29));
-    return orbit(t * 0.72, 1 + t * 0.9, THREE.MathUtils.lerp(11, 14.5, t) * k, target);
+    return orbit(t * 0.72, 1 + t * 0.9, THREE.MathUtils.lerp(11, 14.5, t) * k, wide, e);
   }
 
   // 3. A órbita continua e sobe. Ver de cima informa o comprimento, que a
@@ -135,7 +144,7 @@ export function cameraAt(p: number, wide = true): CameraState {
     // perfil e a largura projetada salta de 2.44m para 6.51m, 2.7 vezes. Com o
     // raio antigo a coluna limpa caía para 239px, e a headline em 64px precisa
     // de cerca de 590px.
-    return orbit(0.72 + t * 0.55, 1.9 + t * 2.2, THREE.MathUtils.lerp(14.5, 16, t) * k, target);
+    return orbit(0.72 + t * 0.55, 1.9 + t * 2.2, THREE.MathUtils.lerp(14.5, 16, t) * k, wide, e);
   }
 
   // 4. Batida silenciosa. A câmera volta devagar para a frente, e o objeto
@@ -146,25 +155,26 @@ export function cameraAt(p: number, wide = true): CameraState {
       THREE.MathUtils.lerp(1.27, 0.34, t),
       THREE.MathUtils.lerp(4.1, 1.1, t),
       THREE.MathUtils.lerp(16, 9.2, t) * k,
-      target,
+      wide,
+      e,
     );
   }
 
   // 5. Abertura. A câmera quase para: quem se move são as portas.
   if (p < 0.735) {
     const t = smooth(span(p, 0.575, 0.735));
-    return orbit(0.34 - t * 0.16, 1.1 - t * 0.25, (9.2 - t * 0.6) * k, target);
+    return orbit(0.34 - t * 0.16, 1.1 - t * 0.25, (9.2 - t * 0.6) * k, wide, e);
   }
 
   // 6. Vista explodida. Recua um pouco para caber o objeto desmontado.
   if (p < 0.885) {
     const t = smooth(span(p, 0.735, 0.885));
-    return orbit(0.18 + t * 0.42, 0.85 + t * 1.4, THREE.MathUtils.lerp(8.6, 13, t) * k, target);
+    return orbit(0.18 + t * 0.42, 0.85 + t * 1.4, THREE.MathUtils.lerp(8.6, 13, t) * k, wide, e);
   }
 
   // 7. Recompõe e afasta.
   const t = smooth(span(p, 0.885, 1));
-  return orbit(0.6 - t * 0.28, 2.25 - t * 0.9, THREE.MathUtils.lerp(13, 17, t) * k, target);
+  return orbit(0.6 - t * 0.28, 2.25 - t * 0.9, THREE.MathUtils.lerp(13, 17, t) * k, wide, e);
 }
 
 /** As portas, de 0 a 1. Ease cúbico: os últimos graus são lentos, aço é pesado. */

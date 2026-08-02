@@ -129,7 +129,9 @@ function BeatSection({
       style={{ opacity, scrollMarginTop: "6rem" }}
       // Mobile: o texto vive na metade de BAIXO, porque o objeto ocupa a de
       // cima. Desktop: centrado, com o objeto à direita.
-      className="pointer-events-none absolute inset-0 flex items-end pb-16 md:items-center md:pb-0"
+      // Mobile: o texto começa logo abaixo da faixa do objeto, não colado na
+      // base. Preso na base sobravam cerca de 290px de vazio no meio.
+      className="pointer-events-none absolute inset-0 flex items-start pt-[46svh] md:items-center md:pt-0"
     >
       <div className="pointer-events-auto mx-auto w-full max-w-6xl px-5 sm:px-6">
         {children}
