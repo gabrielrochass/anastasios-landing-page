@@ -21,6 +21,10 @@ const SCANNED_DIRS = [
   join(ROOT, "content"),
   join(ROOT, "data"),
   join(ROOT, "components", "sections"),
+  // A jornada ficou de fora desde sempre, e é a copy MAIS lida do site: sete
+  // batidas em tela cheia. Passa limpa hoje, então incluir é de graça agora e
+  // caro depois.
+  join(ROOT, "components", "journey"),
   join(ROOT, "components", "interactive"),
   join(ROOT, "components", "layout"),
   join(ROOT, "components", "mdx"),

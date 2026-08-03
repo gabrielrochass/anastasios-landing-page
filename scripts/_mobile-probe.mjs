@@ -38,13 +38,13 @@ for (let i = 0; i < BEATS.length; i++) {
   // saturado do contêiner, então a detecção por saturação os contava como
   // objeto e a base dava sempre 670, que era o botão.
   await p.evaluate(() => {
-    document.querySelectorAll("section[aria-label], header, [data-journey-track] > div > section")
+    document.querySelectorAll("section[aria-label], header, [data-journey-track] > div > section, [data-journey-progress]")
       .forEach((e) => (e.style.visibility = "hidden"));
   });
   await p.waitForTimeout(120);
   const png = (await p.screenshot()).toString("base64");
   await p.evaluate(() => {
-    document.querySelectorAll("section[aria-label], header, [data-journey-track] > div > section")
+    document.querySelectorAll("section[aria-label], header, [data-journey-track] > div > section, [data-journey-progress]")
       .forEach((e) => (e.style.visibility = ""));
   });
 

@@ -232,7 +232,7 @@ export const oeaCaveat =
 export const sectors = [
   {
     title: "Insumos industriais",
-    body: "Matéria-prima e componentes para linha de produção, onde lead time furado para a fábrica inteira.",
+    body: "Matéria-prima e componentes para linha de produção, onde prazo de entrega furado é linha parada.",
   },
   {
     title: "Produtos acabados",

@@ -24,7 +24,10 @@ import * as THREE from "three";
 export function Cyclorama() {
   const geometry = useMemo(() => {
     const FLOOR = 72; // precisa passar do maior raio de câmera da jornada
-    const FILLET = 14; // raio da curva onde chão vira parede
+    // Dobra larga de propósito: com 14 a transição de chão para parede virava
+    // um vinco curvo visível no canto do quadro em vez de gradiente. Ciclorama
+    // de estúdio real tem a curva generosa pelo mesmo motivo.
+    const FILLET = 30; // raio da curva onde chão vira parede
     const WALL = 46; // altura da parede
     const WIDTH = 150;
 

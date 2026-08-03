@@ -1,5 +1,4 @@
 import { WhatsappButton } from "@/components/layout/whatsapp-button";
-import { paymentTerms, supplyChain, chainDisclaimer } from "@/data/offer";
 import { siteConfig } from "@/lib/site-config";
 
 /**
@@ -12,11 +11,21 @@ import { siteConfig } from "@/lib/site-config";
  * Apple: eyebrow curto, headline em fragmento, e o par "Frase. Virada." onde a
  * segunda sentença vira a primeira.
  *
- * O conteúdo técnico não sumiu, migrou para dentro de <details> nativo. Zero
- * JS, teclado funciona de fábrica, o texto continua no DOM (indexável pelo
- * Google e pelos buscadores de IA), e zero CLS desde que a altura não seja
- * animada. Colapsar preserva o trabalho que aquele conteúdo faz para o
- * comprador que não quer falar com vendedor, e remove o peso visual.
+ * O conteúdo técnico NÃO mora aqui, e essa é a regra que este arquivo
+ * existe para respeitar: o palco não hospeda documento.
+ *
+ * Já morou. Ficava dentro de um `<details>` nativo, e a escolha estava certa
+ * isoladamente e errada no contexto. O palco é `sticky h-svh overflow-hidden`,
+ * de altura fixa e recorte rígido, e o único scroll disponível pertence ao
+ * track da jornada, que é o mesmo scroll que apaga a batida. Ou seja: o estado
+ * expandido não tinha para onde ir e não havia gesto que o alcançasse. Medido
+ * a 375 por 844: a caixa útil é cerca de 409px e o estado FECHADO já usava
+ * cerca de 385px.
+ *
+ * A batida faz uma afirmação e aponta. Comparação, tabela, definição e
+ * ressalva jurídica vivem em `#credito` e `#cadeia`, em fluxo normal, onde a
+ * página pode crescer. Lá o conteúdo também funciona sem JavaScript, é
+ * indexável, imprime e tem endereço próprio para encaminhar.
  */
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
@@ -25,37 +34,9 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 function Headline({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="mt-3 max-w-3xl font-serif text-display text-content">
+    <h2 className="text-display text-content mt-3 max-w-3xl font-serif">
       {children}
     </h2>
-  );
-}
-
-/** Divulgação progressiva. `<details>` nativo, nada de acordeão em JS. */
-function Detail({
-  summary,
-  children,
-}: {
-  summary: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <details className="group border-b border-rule">
-      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-4 text-content marker:hidden">
-        <span className="font-mono text-[11px] uppercase tracking-widest">
-          {summary}
-        </span>
-        <span
-          aria-hidden
-          className="text-accent transition-transform group-open:rotate-45"
-        >
-          +
-        </span>
-      </summary>
-      <div className="pb-6 text-sm leading-relaxed text-content-muted">
-        {children}
-      </div>
-    </details>
   );
 }
 
@@ -65,17 +46,25 @@ export function BeatChegada() {
   return (
     <div>
       <Eyebrow>Comércio exterior</Eyebrow>
-      <h1 className="mt-3 max-w-3xl font-serif text-display text-content">
+      <h1 className="text-display text-content mt-3 max-w-3xl font-serif">
         Sorte não é método.
       </h1>
-      <p className="mt-6 max-w-xl text-lead text-content-muted">
+      <p className="text-lead text-content-muted mt-6 max-w-xl">
         {siteConfig.years.foreignTrade} anos trazendo carga da Ásia e da Europa
         para o Brasil. Da escolha da fábrica até a entrega no porto.
       </p>
       <div className="mt-10 flex flex-wrap items-center gap-3">
+        {/*
+          `#contato` e não `#partida`. Medido com scripts/_anchors.mjs: a
+          batida `partida` é `absolute` dentro de um `sticky`, então não tem
+          posição de documento própria e resolve para o topo do track. O CTA
+          principal da página não navegava. `#contato` também é o destino
+          semanticamente certo: quem clica em "quero estruturar" quer o
+          formulário, não outra tela de cena.
+        */}
         <a
-          href="#partida"
-          className="inline-flex min-h-12 items-center rounded-sm bg-accent px-6 py-3 text-sm font-semibold text-accent-contrast transition-opacity hover:opacity-90"
+          href="#contato"
+          className="bg-accent text-accent-contrast inline-flex min-h-12 items-center rounded-sm px-6 py-3 text-sm font-semibold transition-opacity hover:opacity-90"
         >
           Quero estruturar minha importação
         </a>
@@ -90,12 +79,12 @@ export function BeatCasco() {
   return (
     <div>
       <Eyebrow>Trajetória</Eyebrow>
-      <p className="mt-6 font-serif text-stat tabular-stat text-content">
+      <p className="text-stat tabular-stat text-content mt-6 font-serif">
         {siteConfig.years.brazil}
       </p>
-      <p className="mt-4 max-w-md text-lead text-content-muted">
-        anos de comércio na família. Os últimos{" "}
-        {siteConfig.years.foreignTrade} deles fora do país.
+      <p className="text-lead text-content-muted mt-4 max-w-md">
+        anos de comércio na família. Os últimos {siteConfig.years.foreignTrade}{" "}
+        deles fora do país.
       </p>
     </div>
   );
@@ -128,17 +117,35 @@ const FRENTES = [
 
 export function BeatConves() {
   return (
-    <div>
+    // max-w-2xl e não largura livre: a grade de três colunas ocupava os 1152px
+    // inteiros do contêiner, então não sobrava coluna limpa nenhuma e o objeto
+    // atravessava os cartões por falta de lugar para onde ir.
+    <div className="max-w-2xl">
       <Eyebrow>O que fazemos</Eyebrow>
       <Headline>Três frentes. Um responsável.</Headline>
-      <ul className="mt-12 grid gap-px bg-rule sm:grid-cols-3">
+      {/*
+        Duas formas para a mesma lista, e não uma esticada.
+
+        MOBILE: linha com fio, ordinal na mesma linha do título, corpo justo
+        embaixo. Três cartões com p-6 empilhados pedem cerca de 447px, e do
+        início do texto até o botão flutuante existem cerca de 382px. O terceiro
+        ficava cortado na dobra.
+
+        SM E ACIMA: a grade de três colunas, onde o cartão faz sentido porque
+        eles ficam lado a lado e o fio separa em vez de empilhar.
+      */}
+      <ul className="divide-rule border-rule sm:bg-rule mt-7 divide-y border-y sm:mt-12 sm:grid sm:grid-cols-3 sm:gap-px sm:divide-y-0 sm:border-0">
         {FRENTES.map((f) => (
-          <li key={f.ordinal} className="bg-surface p-6">
-            <span className="font-mono text-[11px] tabular-stat tracking-widest text-accent">
-              {f.ordinal}
-            </span>
-            <h3 className="mt-3 text-h3 text-content">{f.title}</h3>
-            <p className="mt-2 text-sm text-content-muted">{f.body}</p>
+          <li key={f.ordinal} className="sm:bg-surface py-3 sm:p-6">
+            <div className="flex items-baseline gap-2.5 sm:block">
+              <span className="tabular-stat text-accent font-mono text-[11px] tracking-widest">
+                {f.ordinal}
+              </span>
+              <h3 className="text-h3 text-content sm:mt-3">{f.title}</h3>
+            </div>
+            <p className="text-content-muted mt-1 text-[13px] leading-snug sm:mt-2 sm:text-sm sm:leading-relaxed">
+              {f.body}
+            </p>
           </li>
         ))}
       </ul>
@@ -166,35 +173,22 @@ export function BeatAbertura() {
     <div className="max-w-2xl">
       <Eyebrow>Crédito</Eyebrow>
       <Headline>Embarca agora. Paga depois.</Headline>
-      <p className="mt-5 text-lead text-content-muted">
+      <p className="text-lead text-content-muted mt-5">
         O prazo conta do dia do embarque, não do dia da chegada. Você recebe a
         mercadoria e libera na alfândega antes de o pagamento vencer.
       </p>
 
-      <div className="mt-7">
-        {paymentTerms.map((term) => (
-          <Detail key={term.code} summary={term.plain}>
-            <dl className="flex flex-col gap-3">
-              <div>
-                <dt className="text-eyebrow text-content-muted">Prazo</dt>
-                <dd className="mt-1 text-content">{term.term}</dd>
-              </div>
-              <div>
-                <dt className="text-eyebrow text-content-muted">
-                  Documentos originais
-                </dt>
-                <dd className="mt-1">{term.documents}</dd>
-              </div>
-              <div>
-                <dt className="text-eyebrow text-content-muted">
-                  Costuma servir para
-                </dt>
-                <dd className="mt-1">{term.bestFor}</dd>
-              </div>
-            </dl>
-          </Detail>
-        ))}
-      </div>
+      {/*
+        `inline-flex items-center` e não um `<a>` solto: `min-height` não se
+        aplica a caixa inline não substituída (CSS 2.1 secao 10.7), então o
+        alvo de 44px de `min-h-11` seria letra morta num anchor padrão.
+      */}
+      <a
+        href="#credito"
+        className="border-rule-strong text-content-muted hover:text-content mt-9 inline-flex min-h-11 items-center border-b pb-1 text-sm transition-colors"
+      >
+        Comparar as três formas de pagamento
+      </a>
     </div>
   );
 }
@@ -203,36 +197,19 @@ export function BeatAbertura() {
 
 export function BeatManifesto() {
   return (
-    // max-w-lg e não max-w-2xl: mesmo com o alvo acompanhando a explosão, a
-    // coluna limpa nesta batida mede 548px e o lead em 2xl pede 672px.
     <div className="max-w-lg">
       <Eyebrow>Onde atuamos</Eyebrow>
       <Headline>Não somos despachante. Nem trading.</Headline>
-      <p className="mt-5 text-lead text-content-muted">
+      <p className="text-lead text-content-muted mt-5">
         Somos quem coordena todo mundo e responde quando alguma coisa trava.
       </p>
 
-      <div className="mt-7">
-        <Detail summary="A cadeia, e onde entramos">
-          <ol className="flex flex-col gap-3">
-            {supplyChain.map((node) => (
-              <li
-                key={node.id}
-                className={
-                  node.isUs
-                    ? "border-l-2 border-accent pl-4 text-content"
-                    : "border-l border-rule pl-4"
-                }
-              >
-                <strong className="font-semibold">{node.label}</strong>
-                <br />
-                {node.detail}
-              </li>
-            ))}
-          </ol>
-          <p className="mt-5 border-t border-rule pt-4">{chainDisclaimer}</p>
-        </Detail>
-      </div>
+      <a
+        href="#cadeia"
+        className="border-rule-strong text-content-muted hover:text-content mt-9 inline-flex min-h-11 items-center border-b pb-1 text-sm transition-colors"
+      >
+        Ver a cadeia inteira e onde entramos
+      </a>
     </div>
   );
 }
@@ -244,7 +221,7 @@ export function BeatPartida() {
     <div className="max-w-xl">
       <Eyebrow>Contato</Eyebrow>
       <Headline>A conversa começa por mensagem.</Headline>
-      <p className="mt-6 text-lead text-content-muted">
+      <p className="text-lead text-content-muted mt-6">
         Sem formulário e sem cadastro. Você escreve, a gente responde.
       </p>
       <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -254,7 +231,7 @@ export function BeatPartida() {
         />
         <a
           href="#detalhe"
-          className="min-h-11 border-b border-rule-strong pb-1 text-sm text-content-muted transition-colors hover:text-content"
+          className="border-rule-strong text-content-muted hover:text-content inline-flex min-h-11 items-center border-b pb-1 text-sm transition-colors"
         >
           Ver tudo em detalhe
         </a>

@@ -13,6 +13,7 @@ import { useReducedMotion } from "@/hooks/use-motion-preference";
 import { BEATS, BEAT_HEIGHT_SVH, BEAT_HEIGHT_SVH_REDUCED, type Beat } from "./beats";
 import { useBeat } from "./use-beat";
 import { JourneySceneLazy } from "./scene-lazy";
+import { JourneyProgress } from "./journey-progress";
 
 /**
  * A jornada. Sete atos contínuos, do mar aberto ao porto.
@@ -83,6 +84,12 @@ function JourneyInner({ children }: JourneyProps) {
           lineariza a página e usuário de teclado tabula por ela, e os dois
           precisam alcançar a última batida sem depender de scroll.
         */}
+        <JourneyProgress
+          progress={scrollYProgress}
+          activeBeat={activeBeat}
+          reduced={reduced}
+        />
+
         {BEATS.map((beat, index) => (
           <BeatSection
             key={beat.id}
@@ -131,7 +138,7 @@ function BeatSection({
       // cima. Desktop: centrado, com o objeto à direita.
       // Mobile: o texto começa logo abaixo da faixa do objeto, não colado na
       // base. Preso na base sobravam cerca de 290px de vazio no meio.
-      className="pointer-events-none absolute inset-0 flex items-start pt-[46svh] md:items-center md:pt-0"
+      className="pointer-events-none absolute inset-0 flex items-start pt-[44svh] pb-16 md:items-center md:pt-0 md:pb-12"
     >
       <div className="pointer-events-auto mx-auto w-full max-w-6xl px-5 sm:px-6">
         {children}

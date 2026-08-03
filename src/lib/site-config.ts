@@ -55,7 +55,10 @@ export interface NavLink {
  * Inteligência, que é a única rota separada.
  */
 export const navLinks: NavLink[] = [
-  { label: "A operação", href: "/#travessia" },
+  // Apontava para /#travessia, id que não existe em lugar nenhum. A âncora de
+  // batida também não serve: as batidas são `absolute` dentro de um `sticky`,
+  // então todas resolvem para a mesma posição de documento, o topo do track.
+  { label: "A operação", href: "/#cadeia" },
   { label: "Crédito", href: "/#credito" },
   { label: "Tributário", href: "/#tributario" },
   { label: "Quem somos", href: "/#quem-somos" },

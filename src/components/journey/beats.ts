@@ -44,8 +44,17 @@ export type BeatId = (typeof BEATS)[number]["id"];
  * Sob movimento reduzido o track colapsa para uma tela por batida: sete telas
  * de planos estáticos empilhados, mesma ordem, mesma copy, um sétimo do
  * scroll.
+ *
+ * Já foi 220, que dava 1540svh de track, ou seja quinze telas de scroll para
+ * ler sete ideias. Cansava, e cansaço não é imersão.
+ *
+ * 130 corta o track para 910svh, 41% menos. Mas encurtar o track NÃO encurta o
+ * caminho da câmera, então a velocidade por pixel de scroll sobe na mesma
+ * proporção, e movimento rápido é exatamente o que causa desconforto
+ * vestibular. Por isso a redução vem acompanhada de corte no percurso da
+ * câmera em `camera-path.ts`, e não sozinha.
  */
-export const BEAT_HEIGHT_SVH = 220;
+export const BEAT_HEIGHT_SVH = 130;
 export const BEAT_HEIGHT_SVH_REDUCED = 100;
 
 /** Converte progresso global (0 a 1) em progresso local de uma batida. */

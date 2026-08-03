@@ -23,7 +23,8 @@ import * as THREE from "three";
 /**
  * Onde o objeto se apoia no quadro.
  *
- * DESKTOP: à direita, com a coluna da esquerda livre para o texto.
+ * DESKTOP: à direita, com a coluna da esquerda livre para o texto. O eixo do
+ * afastamento é o da TELA, não o do mundo, e o porquê está em `targetFor`.
  *
  * MOBILE: em cima, com o texto embaixo. E aqui estava um erro meu que só
  * apareceu medindo: eu usava deslocamento FIXO em unidades de mundo (-6.3).
@@ -36,13 +37,19 @@ import * as THREE from "three";
  *
  *     y = -(0.5 - f) * 2 * raio * tan(fov / 2)
  *
- * Com fov 38 e f = 0.235, isso dá y = -0.1823 * raio. Como escala com o raio,
+ * Com fov 38 e f = 0.255, isso dá y = -0.1685 * raio. Como escala com o raio,
  * o objeto fica no mesmo lugar da tela em todas as sete batidas.
  */
-const OFFSET_X = -2.7;
+/**
+ * Quanto do RAIO o objeto se afasta do centro na horizontal, no desktop.
+ *
+ * Proporcional ao raio pelo mesmo motivo da vertical: fator fixo em unidades de
+ * mundo produz posição variável na tela conforme a câmera aproxima e afasta.
+ */
+const DESKTOP_X_F = 0.31;
 
 /** Fração vertical em que o centro do objeto pousa no mobile. */
-const MOBILE_CENTER_F = 0.235;
+const MOBILE_CENTER_F = 0.255;
 const HALF_FOV_TAN = Math.tan((38 * Math.PI) / 180 / 2);
 
 function mobileTargetY(radius: number): number {
@@ -53,14 +60,34 @@ export function targetFor(
   wide: boolean,
   exploded = 0,
   radius = 10,
+  angle = 0,
 ): THREE.Vector3 {
-  return wide
-    ? // Na vista explodida as portas se afastam 1.1 unidade CADA, então o
-      // objeto fica 2.2 mais largo. Com deslocamento fixo a porta esquerda
-      // pousava em cima do texto: a coluna limpa caía para 442px onde o lead
-      // pede 672px. O alvo agora acompanha a abertura.
-      new THREE.Vector3(OFFSET_X - exploded * 1.1, 0, 0)
-    : new THREE.Vector3(0, mobileTargetY(radius), 0);
+  if (!wide) return new THREE.Vector3(0, mobileTargetY(radius), 0);
+
+  /*
+   * O afastamento acompanha a abertura das portas: na vista explodida elas se
+   * separam 1.1 unidade CADA, então o objeto fica 2.2 mais largo e sem isso a
+   * porta esquerda pousa em cima do texto.
+   */
+  const d = DESKTOP_X_F * radius + exploded * 1.1;
+
+  /*
+   * O afastamento é ao longo do eixo DIREITA DA TELA, não do X de mundo.
+   *
+   * Este era o defeito, e é a mesma classe de erro que eu já tinha cometido na
+   * vertical do mobile: âncora no mundo em vez de na tela. A câmera orbita em
+   * volta do alvo, então conforme o ângulo cresce o X de mundo deixa de apontar
+   * para a direita da tela, e o afastamento que sobra é só a projeção. No
+   * trecho 3 o ângulo é 1.27rad e cos(1.27) vale 0.296: apenas 30% do
+   * afastamento sobrevivia. Resultado: o objeto voltava para o meio do quadro
+   * exatamente na batida em que ele é mais largo, de perfil, e atravessava a
+   * headline e os três cartões.
+   *
+   * Para uma câmera em `target + (sin a, _, cos a) * raio` olhando o alvo, o
+   * vetor direita-da-tela é `(cos a, 0, -sin a)`. Colocar o objeto (que vive na
+   * origem) a `d` à direita do alvo quer dizer `alvo = -d * direita`.
+   */
+  return new THREE.Vector3(-d * Math.cos(angle), 0, d * Math.sin(angle));
 }
 
 export interface CameraState {
@@ -87,7 +114,7 @@ function orbit(
 ): CameraState {
   // O alvo é montado AQUI porque só aqui o raio é conhecido, e no mobile o
   // deslocamento vertical depende dele.
-  const target = targetFor(wide, exploded, radius);
+  const target = targetFor(wide, exploded, radius, angle);
   _pos.set(
     target.x + Math.sin(angle) * radius,
     // A altura da câmera é ABSOLUTA, não relativa ao alvo. Somar target.y aqui
@@ -126,14 +153,14 @@ export function cameraAt(p: number, wide = true): CameraState {
   // 1. Frontal, fechado. Só a distância diminui: o objeto se apresenta.
   if (p < 0.145) {
     const t = smooth(span(p, 0, 0.145));
-    return orbit(0, 0.6 + t * 0.4, THREE.MathUtils.lerp(17, 11, t) * k, wide, e);
+    return orbit(0, 0.6 + t * 0.35, THREE.MathUtils.lerp(15.5, 11.5, t) * k, wide, e);
   }
 
   // 2. Giro para três quartos. É o ângulo em que uma caixa deixa de ler como
   //    retângulo e passa a ler como volume.
   if (p < 0.29) {
     const t = smooth(span(p, 0.145, 0.29));
-    return orbit(t * 0.72, 1 + t * 0.9, THREE.MathUtils.lerp(11, 14.5, t) * k, wide, e);
+    return orbit(t * 0.72, 1 + t * 0.75, THREE.MathUtils.lerp(11.5, 15.5, t) * k, wide, e);
   }
 
   // 3. A órbita continua e sobe. Ver de cima informa o comprimento, que a
@@ -144,17 +171,29 @@ export function cameraAt(p: number, wide = true): CameraState {
     // perfil e a largura projetada salta de 2.44m para 6.51m, 2.7 vezes. Com o
     // raio antigo a coluna limpa caía para 239px, e a headline em 64px precisa
     // de cerca de 590px.
-    return orbit(0.72 + t * 0.55, 1.9 + t * 2.2, THREE.MathUtils.lerp(14.5, 16, t) * k, wide, e);
+    //
+    // Ao encurtar o track eu aparei o percurso da câmera e derrubei o valor
+    // ABSOLUTO do raio junto, o que reabriu esse defeito: no desktop o objeto
+    // voltou a atravessar a headline e os três cartões. São duas coisas
+    // diferentes. Aparar percurso é o que tira velocidade; o valor absoluto é o
+    // que garante a coluna de leitura. A cadeia de raios agora tem percurso
+    // curto E piso alto onde existe texto ao lado.
+    return orbit(0.72 + t * 0.55, 1.75 + t * 1.5, THREE.MathUtils.lerp(15.5, 16.2, t) * k, wide, e);
   }
 
   // 4. Batida silenciosa. A câmera volta devagar para a frente, e o objeto
   //    fica sozinho no quadro sem nada escrito ao lado.
   if (p < 0.575) {
     const t = smooth(span(p, 0.44, 0.575));
+    // Este trecho era o mais agitado de todos, e com o track mais curto virava
+    // o momento de chacoalhada: 0.93rad de giro, 3.0 de altura e 6.8 de dolly
+    // na mesma batida. Fica sendo o maior movimento da jornada de propósito,
+    // porque é a batida silenciosa e não tem texto para acompanhar, mas agora
+    // com percurso aparado.
     return orbit(
-      THREE.MathUtils.lerp(1.27, 0.34, t),
-      THREE.MathUtils.lerp(4.1, 1.1, t),
-      THREE.MathUtils.lerp(16, 9.2, t) * k,
+      THREE.MathUtils.lerp(1.27, 0.4, t),
+      THREE.MathUtils.lerp(3.25, 1.2, t),
+      THREE.MathUtils.lerp(16.2, 10.2, t) * k,
       wide,
       e,
     );
@@ -163,18 +202,18 @@ export function cameraAt(p: number, wide = true): CameraState {
   // 5. Abertura. A câmera quase para: quem se move são as portas.
   if (p < 0.735) {
     const t = smooth(span(p, 0.575, 0.735));
-    return orbit(0.34 - t * 0.16, 1.1 - t * 0.25, (9.2 - t * 0.6) * k, wide, e);
+    return orbit(0.4 - t * 0.18, 1.2 - t * 0.25, (10.2 - t * 0.6) * k, wide, e);
   }
 
   // 6. Vista explodida. Recua um pouco para caber o objeto desmontado.
   if (p < 0.885) {
     const t = smooth(span(p, 0.735, 0.885));
-    return orbit(0.18 + t * 0.42, 0.85 + t * 1.4, THREE.MathUtils.lerp(8.6, 13, t) * k, wide, e);
+    return orbit(0.22 + t * 0.38, 0.95 + t * 1.1, THREE.MathUtils.lerp(9.6, 13, t) * k, wide, e);
   }
 
   // 7. Recompõe e afasta.
   const t = smooth(span(p, 0.885, 1));
-  return orbit(0.6 - t * 0.28, 2.25 - t * 0.9, THREE.MathUtils.lerp(13, 17, t) * k, wide, e);
+  return orbit(0.6 - t * 0.26, 2.05 - t * 0.8, THREE.MathUtils.lerp(13, 15.5, t) * k, wide, e);
 }
 
 /** As portas, de 0 a 1. Ease cúbico: os últimos graus são lentos, aço é pesado. */

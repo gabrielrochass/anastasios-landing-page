@@ -95,7 +95,11 @@ function Rig({
       place(camera, target.current, wide);
       return;
     }
-    const next = eased.current + (target.current - eased.current) * 0.12;
+    // 0.10 e nao 0.12: com o track 41% mais curto a camera recebe mais
+    // deslocamento por pixel de scroll, e amortecer mais devolve parte da
+    // suavidade que o track curto tirou. Abaixo de 0.09 comeca a parecer
+    // desconectado do dedo.
+    const next = eased.current + (target.current - eased.current) * 0.1;
     eased.current = next;
     place(camera, next, wide);
     if (Math.abs(target.current - next) > 0.0002) invalidate();
