@@ -7,22 +7,30 @@ export function AuthorBio({ author }: { author: Author }) {
   return (
     <section
       aria-label={`Sobre ${author.name}`}
-      className="mt-14 rounded-lg bg-surface-raised p-card"
+      className="bg-surface-raised p-card mt-14 rounded-lg"
     >
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
         <div className="w-20 shrink-0">
-          <ImageSlot slotId={`autor-${author.key}`} ratio="1/1" className="rounded-full">
-            <div className="flex size-full items-center justify-center bg-surface-raised text-content">
+          <ImageSlot
+            slotId={`autor-${author.key}`}
+            ratio="1/1"
+            className="rounded-full"
+          >
+            <div className="bg-surface-raised text-content flex size-full items-center justify-center">
               <span className="text-h3">
-                {author.name.split(" ").map((w) => w[0]).slice(0, 2).join("")}
+                {author.name
+                  .split(" ")
+                  .map((w) => w[0])
+                  .slice(0, 2)
+                  .join("")}
               </span>
             </div>
           </ImageSlot>
         </div>
         <div className="flex-1">
-          <p className="font-semibold text-content">{author.name}</p>
-          <p className="text-eyebrow mt-0.5 text-content-muted">{author.role}</p>
-          <p className="mt-2 text-sm leading-relaxed text-content-muted">
+          <p className="text-content font-semibold">{author.name}</p>
+          <p className="eyebrow text-content-muted mt-0.5">{author.role}</p>
+          <p className="text-content-muted text-body mt-2 leading-relaxed">
             {author.bio}
           </p>
         </div>

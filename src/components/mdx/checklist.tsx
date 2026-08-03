@@ -29,10 +29,10 @@ export function Checklist({ title, items }: ChecklistProps) {
   return (
     <section
       aria-label={title}
-      className="my-8 rounded-lg bg-surface-raised p-card border border-rule"
+      className="bg-surface-raised p-card border-rule my-8 rounded-lg border"
     >
-      <p className="text-eyebrow text-content">{title}</p>
-      <p className="text-eyebrow mt-1 text-content-muted" aria-live="polite">
+      <p className="eyebrow text-content">{title}</p>
+      <p className="eyebrow text-content-muted mt-1" aria-live="polite">
         {checked.size} de {items.length} concluídos
       </p>
       <ul className="mt-4 space-y-3">
@@ -50,7 +50,7 @@ export function Checklist({ title, items }: ChecklistProps) {
               <Label
                 id={`${id}-label`}
                 htmlFor={id}
-                className="text-sm leading-relaxed font-normal text-content"
+                className="text-content text-body leading-relaxed font-normal"
               >
                 {item}
               </Label>

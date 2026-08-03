@@ -6,19 +6,19 @@ import { Entrance, EntranceItem } from "@/components/motion/entrance";
  */
 export function BlogHero() {
   return (
-    <section className="border-b border-rule bg-surface">
+    <section className="border-rule bg-surface border-b">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <Entrance>
           <EntranceItem eager>
-            <p className="text-eyebrow text-accent">SST na prática</p>
+            <p className="eyebrow text-accent">SST na prática</p>
           </EntranceItem>
           <EntranceItem eager>
-            <h1 className="text-display mt-4 max-w-3xl text-content">
+            <h1 className="text-display text-content mt-4 max-w-3xl">
               Legislação explicada por quem aplica.
             </h1>
           </EntranceItem>
           <EntranceItem>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-content-muted">
+            <p className="text-content-muted text-lead mt-5 max-w-2xl leading-relaxed">
               NRs, eSocial, PGR e rotinas de departamento pessoal destrinchados
               por quem assina os laudos e responde tecnicamente por eles.
             </p>

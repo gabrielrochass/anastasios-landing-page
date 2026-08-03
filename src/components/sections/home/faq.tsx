@@ -33,12 +33,12 @@ export function Faq() {
           <AccordionItem
             key={item.question}
             value={`item-${index}`}
-            className="border-b border-rule"
+            className="border-rule border-b"
           >
-            <AccordionTrigger className="py-6 text-left font-sans text-base text-content hover:no-underline">
+            <AccordionTrigger className="text-content text-body py-6 text-left font-sans hover:no-underline">
               {item.question}
             </AccordionTrigger>
-            <AccordionContent className="max-w-3xl pb-8 text-sm leading-relaxed text-content-muted">
+            <AccordionContent className="text-content-muted text-body max-w-3xl pb-8 leading-relaxed">
               {item.answer}
             </AccordionContent>
           </AccordionItem>

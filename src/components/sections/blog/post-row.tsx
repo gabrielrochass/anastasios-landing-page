@@ -26,7 +26,7 @@ export function PostRow({
   return (
     <article
       className={cn(
-        "group relative grid gap-6 rounded-xl focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-4 focus-within:ring-offset-surface md:grid-cols-12 md:items-center",
+        "group focus-within:ring-accent focus-within:ring-offset-surface relative grid gap-6 rounded-xl focus-within:ring-2 focus-within:ring-offset-4 md:grid-cols-12 md:items-center",
         featured && "md:gap-8",
       )}
     >
@@ -55,27 +55,24 @@ export function PostRow({
           ))}
         </div>
         <h2
-          className={cn(
-            "mt-3 text-content",
-            featured ? "text-h2" : "text-h3",
-          )}
+          className={cn("text-content mt-3", featured ? "text-h2" : "text-h3")}
         >
           <Link
             href={post.permalink}
-            className="decoration-orange-400 decoration-2 underline-offset-4 after:absolute after:inset-0 focus-visible:outline-none group-hover:underline"
+            className="decoration-orange-400 decoration-2 underline-offset-4 group-hover:underline after:absolute after:inset-0 focus-visible:outline-none"
           >
             {post.title}
           </Link>
         </h2>
-        <p className="mt-2 leading-relaxed text-content-muted">
+        <p className="text-content-muted mt-2 leading-relaxed">
           {post.description}
         </p>
-        <p className="text-eyebrow mt-4 flex flex-wrap gap-x-3 text-content-muted">
+        <p className="eyebrow text-content-muted mt-4 flex flex-wrap gap-x-3">
           {author && <span>{author.name}</span>}
           <span>{date}</span>
           <span>{post.metadata.readingTime} min de leitura</span>
         </p>
-        <span className="mt-4 inline-flex items-center gap-1.5 font-semibold text-accent">
+        <span className="text-accent mt-4 inline-flex items-center gap-1.5 font-semibold">
           Ler artigo
           <ArrowRight
             aria-hidden

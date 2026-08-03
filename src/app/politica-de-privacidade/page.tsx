@@ -28,40 +28,37 @@ export default function PoliticaPrivacidadePage() {
     <>
       <ReadingProgress />
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-        <p className="text-eyebrow text-accent">Legal</p>
-        <h1 className="mt-4 font-serif text-display text-content">
+        <p className="eyebrow text-accent">Legal</p>
+        <h1 className="text-display text-content mt-4">
           Política de Privacidade
         </h1>
-        <p className="mt-4 text-eyebrow text-content-muted">
+        <p className="eyebrow text-content-muted mt-4">
           Última atualização: agosto de 2026
         </p>
 
-        <p className="mt-8 text-lead leading-relaxed text-content">
+        <p className="text-lead text-content mt-8 leading-relaxed">
           Resumo, para quem não quer ler o resto: este site não usa cookies, não
           tem formulário e não envia nenhum dado seu para nenhum servidor. Não
           há o que vazar porque não há o que guardar.
         </p>
 
-        <h2 className="mt-14 font-serif text-h2 text-content">
-          1. Quem é o controlador
-        </h2>
-        <p className="mt-4 leading-relaxed text-content-muted">
+        <h2 className="text-h2 text-content mt-14">1. Quem é o controlador</h2>
+        <p className="text-content-muted mt-4 leading-relaxed">
           {siteConfig.legalName}, CNPJ {siteConfig.cnpj}, com sede em{" "}
           {siteConfig.address.streetAddress},{" "}
           {siteConfig.address.addressLocality},{" "}
           {siteConfig.address.addressRegion}, CEP{" "}
           {siteConfig.address.postalCode}.
         </p>
-        <p className="mt-4 leading-relaxed text-content-muted">
+        <p className="text-content-muted mt-4 leading-relaxed">
           Contato para qualquer assunto relativo a esta política, inclusive
-          exercício de direitos previstos na LGPD: WhatsApp{" "}
-          {siteConfig.phone}.
+          exercício de direitos previstos na LGPD: WhatsApp {siteConfig.phone}.
         </p>
 
-        <h2 className="mt-14 font-serif text-h2 text-content">
+        <h2 className="text-h2 text-content mt-14">
           2. O que este site não faz
         </h2>
-        <p className="mt-4 leading-relaxed text-content-muted">
+        <p className="text-content-muted mt-4 leading-relaxed">
           Vale começar pelo que não acontece, porque é a maior parte:
         </p>
         <ul className="mt-4 flex flex-col gap-3">
@@ -75,53 +72,53 @@ export default function PoliticaPrivacidadePage() {
           ].map((item) => (
             <li
               key={item}
-              className="border-l border-rule pl-4 leading-relaxed text-content-muted"
+              className="border-rule text-content-muted border-l pl-4 leading-relaxed"
             >
               {item}
             </li>
           ))}
         </ul>
 
-        <h2 className="mt-14 font-serif text-h2 text-content">
+        <h2 className="text-h2 text-content mt-14">
           3. A única coisa guardada no seu navegador
         </h2>
-        <p className="mt-4 leading-relaxed text-content-muted">
+        <p className="text-content-muted mt-4 leading-relaxed">
           O site tem um botão para reduzir animações. Se você usar esse botão, a
           escolha fica salva no <strong>localStorage</strong> do seu próprio
           navegador, sob a chave <code className="font-mono">hh-motion</code>,
           para que a página lembre da preferência na próxima visita.
         </p>
-        <p className="mt-4 leading-relaxed text-content-muted">
+        <p className="text-content-muted mt-4 leading-relaxed">
           Isso não é cookie, não identifica você e nunca sai do seu aparelho.
           Não conseguimos ler esse valor. Para apagá-lo, basta limpar os dados
           do site nas configurações do navegador.
         </p>
 
-        <h2 className="mt-14 font-serif text-h2 text-content">
+        <h2 className="text-h2 text-content mt-14">
           4. Quando você fala com a gente
         </h2>
-        <p className="mt-4 leading-relaxed text-content-muted">
+        <p className="text-content-muted mt-4 leading-relaxed">
           Todo contato acontece pelo WhatsApp. Os botões e o questionário do
           site apenas montam uma mensagem e abrem o aplicativo com ela escrita.
           A mensagem só é enviada quando você aperta enviar, dentro do WhatsApp.
         </p>
-        <p className="mt-4 leading-relaxed text-content-muted">
+        <p className="text-content-muted mt-4 leading-relaxed">
           As respostas do questionário existem apenas na memória do seu
           navegador enquanto a página está aberta. Fechou a aba, sumiram.
         </p>
-        <p className="mt-4 leading-relaxed text-content-muted">
+        <p className="text-content-muted mt-4 leading-relaxed">
           A partir do momento em que a conversa começa, ela acontece na
           plataforma do WhatsApp e passa a ser regida também pela política de
           privacidade da Meta. Os dados que você nos enviar por lá são tratados
-          por nós para responder e conduzir a operação comercial, com base
-          legal no interesse legítimo e na execução de contrato, e ficam
-          guardados enquanto a relação comercial durar.
+          por nós para responder e conduzir a operação comercial, com base legal
+          no interesse legítimo e na execução de contrato, e ficam guardados
+          enquanto a relação comercial durar.
         </p>
 
-        <h2 className="mt-14 font-serif text-h2 text-content">
+        <h2 className="text-h2 text-content mt-14">
           5. Hospedagem e registros técnicos
         </h2>
-        <p className="mt-4 leading-relaxed text-content-muted">
+        <p className="text-content-muted mt-4 leading-relaxed">
           O site é estático e fica hospedado em um provedor de infraestrutura
           que, como qualquer servidor da internet, registra requisições
           incluindo endereço IP, para segurança e funcionamento do serviço.
@@ -129,10 +126,8 @@ export default function PoliticaPrivacidadePage() {
           para perfilar, identificar ou contatar visitantes.
         </p>
 
-        <h2 className="mt-14 font-serif text-h2 text-content">
-          6. Seus direitos
-        </h2>
-        <p className="mt-4 leading-relaxed text-content-muted">
+        <h2 className="text-h2 text-content mt-14">6. Seus direitos</h2>
+        <p className="text-content-muted mt-4 leading-relaxed">
           A LGPD garante a você confirmação de tratamento, acesso, correção,
           anonimização, portabilidade, eliminação e informação sobre
           compartilhamento. Como este site não coleta dados, na prática esses
@@ -140,10 +135,10 @@ export default function PoliticaPrivacidadePage() {
           pedir pelo mesmo canal.
         </p>
 
-        <h2 className="mt-14 font-serif text-h2 text-content">
+        <h2 className="text-h2 text-content mt-14">
           7. Mudanças nesta política
         </h2>
-        <p className="mt-4 leading-relaxed text-content-muted">
+        <p className="text-content-muted mt-4 leading-relaxed">
           Se o site passar a usar alguma ferramenta que colete dados, esta
           página será atualizada antes, e não depois. A data no topo indica a
           última revisão.

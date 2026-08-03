@@ -15,19 +15,19 @@ export function Problem() {
       <BandHeading
         ordinal="01"
         eyebrow="O problema"
-        title="Importação não costuma dar errado no preço. Dá errado no meio do caminho."
-        lead="Três situações que todo importador reconhece, e que têm em comum o fato de a conta só aparecer depois que já não dá para negociar."
+        title="A conta que dói aparece depois que a carga já saiu."
+        lead="Três situações que todo importador reconhece, e nas três a alavanca de negociação já era."
       />
 
       <ol className="bg-rule mt-16 grid gap-px md:grid-cols-3">
         {problemScenarios.map((scenario) => (
           <li key={scenario.code} className="bg-surface">
             <article className="flex h-full flex-col p-8">
-              <span className="rounded-badge border-rule-strong text-content-muted inline-flex w-fit items-center border px-2 py-0.5 font-mono text-[10px] tracking-widest uppercase">
+              <span className="rounded-badge border-rule-strong text-content-muted eyebrow inline-flex w-fit items-center border px-2 py-0.5">
                 {scenario.code}
               </span>
-              <h3 className="text-h3 mt-6 font-serif">{scenario.title}</h3>
-              <p className="text-content-muted mt-4 text-sm leading-relaxed">
+              <h3 className="text-h3 mt-6">{scenario.title}</h3>
+              <p className="text-content-muted text-body mt-4 leading-relaxed">
                 {scenario.body}
               </p>
             </article>

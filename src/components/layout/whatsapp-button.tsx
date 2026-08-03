@@ -36,10 +36,10 @@ export function WhatsappButton({
       className={cn(
         // min-h-11 são os 44px de alvo de toque. Não é o mínimo da WCAG 2.2,
         // que é 24, mas é o número que evita erro de polegar de verdade.
-        "inline-flex min-h-11 items-center gap-2 rounded-sm px-4 py-2 text-sm font-semibold transition-colors",
+        "text-body inline-flex min-h-11 items-center gap-2 rounded-sm px-4 py-2 font-semibold transition-colors",
         variant === "solid"
           ? "bg-accent text-accent-contrast hover:opacity-90"
-          : "border border-rule-strong text-content hover:bg-surface-raised",
+          : "border-rule-strong text-content hover:bg-surface-raised border",
         className,
       )}
     >

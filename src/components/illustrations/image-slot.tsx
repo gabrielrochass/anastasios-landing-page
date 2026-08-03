@@ -26,7 +26,12 @@ export function ImageSlot({
       data-slot-id={slotId}
       style={{ aspectRatio: ratio }}
       className={cn(
-        "relative overflow-hidden rounded-lg [&>*]:h-full [&>*]:w-full",
+        // Canto reto. `rounded-lg` são 8px de raio de aplicativo, e todo
+        // cartão, faixa e tabela deste site é canto vivo: o sistema define
+        // --radius-badge em 0.125rem e a direção é linguagem de documento
+        // técnico. Uma foto arredondada no meio disso lê como peça de outro
+        // projeto.
+        "relative overflow-hidden [&>*]:h-full [&>*]:w-full",
         className,
       )}
     >

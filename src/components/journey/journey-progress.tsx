@@ -22,6 +22,8 @@ import { BEATS } from "./beats";
  * Segmento vencido fica cheio. O da vez preenche conforme o scroll, então o
  * dedo tem retorno contínuo sem que a peça pareça barra de download.
  *
+ * Em tinta, nunca em acento. Ver o comentário no corpo.
+ *
  * Decorativo para tecnologia assistiva: `aria-hidden`. O estado real vive no
  * `aria-current="step"` de cada batida, que é o mecanismo padrão. Progresso
  * anunciado a cada pixel de scroll é justamente o que atrapalha leitor de tela.
@@ -69,21 +71,32 @@ export function JourneyProgress({
       className="pointer-events-none absolute inset-x-0 top-0 z-10 px-5 pt-[calc(4rem+0.875rem+env(safe-area-inset-top))] sm:px-6 md:top-auto md:bottom-0 md:pt-0 md:pb-7"
     >
       <div className="mx-auto flex w-full max-w-6xl items-center gap-3">
-        <div className="flex flex-1 items-center gap-1.5">
+        {/*
+          Fio de 1px e tinta, não acento.
+
+          A versão anterior usava `bg-accent` em segmentos de 2px, e o acento é
+          a cor mais alta do sistema, reservada para o que pede ação. Numa barra
+          que fica na tela durante 910svh inteiros, isso competia com a headline
+          e com o botão. Indicador é cromo: informa e sai da frente.
+
+          Vencido em tinta a 45%, o da vez em tinta cheia, o que falta no fio.
+          Três valores da MESMA cor, então a barra lê como uma coisa só em vez
+          de três.
+        */}
+        <div className="flex flex-1 items-center gap-2">
           {BEATS.map((b, i) => (
-            <div
-              key={b.id}
-              className="h-0.5 flex-1 overflow-hidden rounded-full bg-rule"
-            >
-              {i < activeBeat && <div className="h-full w-full bg-accent" />}
+            <div key={b.id} className="bg-rule h-px flex-1 overflow-hidden">
+              {i < activeBeat && (
+                <div className="bg-content h-full w-full opacity-45" />
+              )}
               {i === activeBeat &&
                 (reduced ? (
                   // Sob movimento reduzido o segmento da vez fica cheio em vez
                   // de acompanhar o scroll: acompanhar é animação contínua.
-                  <div className="h-full w-full bg-accent" />
+                  <div className="bg-content h-full w-full" />
                 ) : (
                   <m.div
-                    className="h-full w-full origin-left bg-accent"
+                    className="bg-content h-full w-full origin-left"
                     style={{ scaleX: fill }}
                   />
                 ))}
@@ -91,9 +104,9 @@ export function JourneyProgress({
           ))}
         </div>
 
-        <span className="shrink-0 font-mono text-[10px] tabular-stat tracking-[0.14em] text-content-muted">
+        <span className="tabular-stat text-content-muted eyebrow shrink-0 opacity-70">
           {String(activeBeat + 1).padStart(2, "0")}
-          <span className="opacity-45">
+          <span className="opacity-50">
             /{String(BEATS.length).padStart(2, "0")}
           </span>
         </span>

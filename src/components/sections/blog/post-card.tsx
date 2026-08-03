@@ -19,7 +19,7 @@ export function PostCard({ post }: { post: Post }) {
   );
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-xl bg-surface-raised border border-rule transition-[box-shadow,transform] duration-300 hover:-translate-y-1  focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+    <article className="group bg-surface-raised border-rule focus-within:ring-accent relative flex h-full flex-col overflow-hidden rounded-xl border transition-[box-shadow,transform] duration-300 focus-within:ring-2 focus-within:ring-offset-2 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
       <ImageSlot
         slotId={`blog-cover-${post.slug}`}
         ratio="16/9"
@@ -27,13 +27,13 @@ export function PostCard({ post }: { post: Post }) {
       >
         <CoverPlaceholder />
       </ImageSlot>
-      <div className="flex flex-1 flex-col p-card">
+      <div className="p-card flex flex-1 flex-col">
         <div className="flex flex-wrap gap-2">
           {post.temas.slice(0, 2).map((nr) => (
             <CardBadge key={nr}>{nr}</CardBadge>
           ))}
         </div>
-        <h2 className="text-h3 mt-3 text-content">
+        <h2 className="text-h3 text-content mt-3">
           <Link
             href={post.permalink}
             className="after:absolute after:inset-0 focus-visible:outline-none"
@@ -41,10 +41,10 @@ export function PostCard({ post }: { post: Post }) {
             {post.title}
           </Link>
         </h2>
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-content-muted">
+        <p className="text-content-muted text-body mt-2 flex-1 leading-relaxed">
           {post.description}
         </p>
-        <p className="text-eyebrow mt-4 flex flex-wrap gap-x-3 text-content-muted">
+        <p className="eyebrow text-content-muted mt-4 flex flex-wrap gap-x-3">
           <span>{author?.name}</span>
           <span>{date}</span>
           <span>{post.metadata.readingTime} min</span>

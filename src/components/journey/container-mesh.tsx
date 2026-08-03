@@ -55,7 +55,10 @@ function Corrugated({
   const ribs = useMemo(() => {
     const count = Math.max(2, Math.round(width * RIBS_PER_METER));
     const pitch = width / count;
-    return Array.from({ length: count }, (_, i) => -width / 2 + pitch * (i + 0.5));
+    return Array.from(
+      { length: count },
+      (_, i) => -width / 2 + pitch * (i + 0.5),
+    );
   }, [width]);
 
   const pitch = width / ribs.length;
@@ -106,7 +109,11 @@ function CornerCastings({ color = "#4a4f52" }: { color?: string }) {
       {positions.map((p, i) => (
         <mesh key={i} position={p}>
           <boxGeometry args={[CASTING, CASTING, CASTING]} />
-          <meshStandardMaterial color={color} roughness={0.6} metalness={0.55} />
+          <meshStandardMaterial
+            color={color}
+            roughness={0.6}
+            metalness={0.55}
+          />
         </mesh>
       ))}
     </>
@@ -126,12 +133,20 @@ function DoorLeaf({ color }: { color: string }) {
           {/* Haste */}
           <mesh>
             <cylinderGeometry args={[0.028, 0.028, h * 0.9, 8]} />
-            <meshStandardMaterial color="#6f7679" roughness={0.45} metalness={0.7} />
+            <meshStandardMaterial
+              color="#6f7679"
+              roughness={0.45}
+              metalness={0.7}
+            />
           </mesh>
           {/* Manopla */}
           <mesh position={[0.05, 0, 0.03]} rotation={[0, 0, Math.PI / 2]}>
             <boxGeometry args={[0.05, 0.22, 0.05]} />
-            <meshStandardMaterial color="#8a9295" roughness={0.4} metalness={0.7} />
+            <meshStandardMaterial
+              color="#8a9295"
+              roughness={0.4}
+              metalness={0.7}
+            />
           </mesh>
         </group>
       ))}

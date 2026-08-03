@@ -56,17 +56,16 @@ export function BandHeading({
     <header className={cn("max-w-3xl", className)}>
       <div className="flex items-baseline gap-4">
         {ordinal ? (
-          <span
-            aria-hidden
-            className="font-mono text-[11px] tabular-stat text-content-muted"
-          >
+          <span aria-hidden className="tabular-stat text-content-muted eyebrow">
             {ordinal}
           </span>
         ) : null}
-        <p className="text-eyebrow text-accent">{eyebrow}</p>
+        <p className="eyebrow text-accent">{eyebrow}</p>
       </div>
-      <h2 className="mt-4 font-serif text-h2">{title}</h2>
-      {lead ? <p className="mt-5 text-lead text-content-muted">{lead}</p> : null}
+      <h2 className="text-h2 mt-4">{title}</h2>
+      {lead ? (
+        <p className="text-lead text-content-muted mt-5">{lead}</p>
+      ) : null}
     </header>
   );
 }

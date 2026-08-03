@@ -45,22 +45,20 @@ export function SiteHeader() {
         "inset-x-0 top-0 z-40 transition-colors duration-300",
         overlay ? "fixed" : "sticky",
         transparent
-          ? "bg-linear-to-b from-paper/80 via-paper/40 to-transparent"
-          : "border-b border-rule bg-surface/85 backdrop-blur-md",
+          ? "from-paper/80 via-paper/40 bg-linear-to-b to-transparent"
+          : "border-rule bg-surface/85 border-b backdrop-blur-md",
       )}
       style={{ paddingTop: "env(safe-area-inset-top)" }}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-4 sm:px-6">
         <Link
           href="/"
-          className="flex items-baseline gap-2 text-content transition-colors"
+          className="text-content flex items-baseline gap-2 transition-colors"
         >
-          <span className="font-serif text-xl tracking-tight">
-            {siteConfig.name}
-          </span>
+          <span className="text-lead tracking-tight">{siteConfig.name}</span>
           <span
             aria-hidden
-            className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-content-muted sm:inline"
+            className="text-content-muted eyebrow hidden sm:inline"
           >
             comex
           </span>

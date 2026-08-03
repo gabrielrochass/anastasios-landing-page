@@ -14,8 +14,21 @@ export interface ProofPoint {
   value: number | null;
   prefix?: string;
   suffix?: string;
+  /** Uma linha. Duas linhas por número transformam a barra num parágrafo. */
   label: string;
-  /** Sem fonte não vai para a página. Em comex o público confere. */
+  /**
+   * NÃO renderizado hoje, e isso é decisão, não esquecimento.
+   *
+   * A regra "sem fonte não vai para a página" continua certa. O problema é o
+   * dado: duas das quatro fontes aqui são "Palavra do cliente", que não é
+   * fonte, é a admissão de que não existe uma. Impressa embaixo do número ela
+   * enfraquece exatamente o que deveria sustentar, e custava uma linha por
+   * cartão numa faixa que precisa ser lida de relance.
+   *
+   * O campo fica como registro de procedência e volta para a tela quando o
+   * cliente entregar número verificável, que já é bloqueio aberto em
+   * docs/PENDENCIAS-CLIENTE.md.
+   */
   source: string;
 }
 
@@ -23,25 +36,25 @@ export const proofPoints: ProofPoint[] = [
   {
     value: 23,
     suffix: " anos",
-    label: "de vivência comercial da família no mercado brasileiro",
+    label: "de comércio na família",
     source: "Palavra do cliente",
   },
   {
     value: 22,
     suffix: " anos",
-    label: "de operação no comércio exterior",
+    label: "no comércio exterior",
     source: "Palavra do cliente",
   },
   {
     value: 120,
     prefix: "até ",
     suffix: " dias",
-    label: "de prazo de pagamento contados do B/L",
+    label: "de prazo, contados do embarque",
     source: "Modalidades OA e DA",
   },
   {
     value: 3,
-    label: "regiões de origem homologadas: China, Índia e Leste Europeu",
+    label: "regiões de origem homologadas",
     source: "Escopo de atuação",
   },
 ];
@@ -282,7 +295,7 @@ export const faq: FaqItem[] = [
   {
     question: "Como funciona o prazo de 90 a 120 dias?",
     answer:
-      "A contagem começa na data do B/L, ou seja, no embarque, e não na chegada. Nas modalidades OA e DA você recebe a carga e nacionaliza antes de o pagamento vencer, o que libera capital de giro no período mais apertado da operação. [CONFIRMAR com o cliente: quem concede o prazo, se é o fornecedor, uma instituição financeira ou a própria H H Brasil, para a redação ficar juridicamente precisa.]",
+      "A contagem começa na data do conhecimento de embarque, ou seja, no dia em que a carga sai, e não na chegada. Nas duas formas com prazo você recebe a carga e nacionaliza antes de o pagamento vencer, o que libera capital de giro no período mais apertado da operação. [CONFIRMAR com o cliente: quem concede o prazo, se é o fornecedor, uma instituição financeira ou a própria H H Brasil, para a redação ficar juridicamente precisa.]",
   },
   {
     question: "Trabalham com qual volume mínimo?",

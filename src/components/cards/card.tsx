@@ -47,7 +47,7 @@ export function CardBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-badge border border-rule-strong px-2 py-0.5 font-mono text-[11px] uppercase tracking-[0.1em] text-content-muted",
+        "rounded-badge border-rule-strong text-content-muted eyebrow inline-flex items-center border px-2 py-0.5",
         className,
       )}
     >
@@ -67,7 +67,9 @@ export function CardTitle({
   className,
   children,
 }: CardTitleProps) {
-  return <Tag className={cn("text-h3 text-content", className)}>{children}</Tag>;
+  return (
+    <Tag className={cn("text-h3 text-content", className)}>{children}</Tag>
+  );
 }
 
 export function CardMeta({
@@ -78,9 +80,7 @@ export function CardMeta({
   className?: string;
 }) {
   return (
-    <p className={cn("text-eyebrow text-content-muted", className)}>
-      {children}
-    </p>
+    <p className={cn("eyebrow text-content-muted", className)}>{children}</p>
   );
 }
 
@@ -92,7 +92,9 @@ export function CardBody({
   className?: string;
 }) {
   return (
-    <div className={cn("text-sm leading-relaxed text-content-muted", className)}>
+    <div
+      className={cn("text-content-muted text-body leading-relaxed", className)}
+    >
       {children}
     </div>
   );
@@ -109,7 +111,7 @@ export function CardCTA({ href, className, children }: CardCTAProps) {
     <Link
       href={href}
       className={cn(
-        "inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-accent underline underline-offset-4 transition-opacity hover:opacity-80",
+        "text-accent text-body inline-flex min-h-11 items-center gap-1.5 font-semibold underline underline-offset-4 transition-opacity hover:opacity-80",
         className,
       )}
     >

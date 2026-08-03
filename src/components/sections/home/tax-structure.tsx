@@ -23,10 +23,10 @@ export function TaxStructure() {
         lead="Antes de fechar, apresentamos o estudo comparando conta e ordem com encomenda, considerando benefício estadual de ICMS e regime aduaneiro especial federal."
       />
 
-      <div className="mt-16 grid gap-px bg-rule md:grid-cols-2">
+      <div className="bg-rule mt-16 grid gap-px md:grid-cols-2">
         {importRegimes.map((regime) => (
           <article key={regime.id} className="bg-surface p-8">
-            <h3 className="font-serif text-h3">{regime.name}</h3>
+            <h3 className="text-h3">{regime.name}</h3>
             <dl className="mt-6 flex flex-col">
               {[
                 ["Recursos", regime.funds],
@@ -37,10 +37,10 @@ export function TaxStructure() {
               ].map(([label, value]) => (
                 <div
                   key={label}
-                  className="border-b border-rule py-4 last:border-b-0"
+                  className="border-rule border-b py-4 last:border-b-0"
                 >
-                  <dt className="text-eyebrow text-content-muted">{label}</dt>
-                  <dd className="mt-2 text-sm leading-relaxed text-content">
+                  <dt className="eyebrow text-content-muted">{label}</dt>
+                  <dd className="text-content text-body mt-2 leading-relaxed">
                     {value}
                   </dd>
                 </div>
@@ -50,13 +50,13 @@ export function TaxStructure() {
         ))}
       </div>
 
-      <p className="mt-6 font-mono text-[11px] uppercase tracking-widest text-content-muted">
+      <p className="text-content-muted eyebrow mt-6">
         Base legal: {regimeSource}
       </p>
 
-      <aside className="mt-12 max-w-3xl border-l-2 border-accent pl-6">
-        <p className="text-eyebrow text-accent">O que quase ninguém conta</p>
-        <p className="mt-3 text-sm leading-relaxed text-content-muted">
+      <aside className="border-accent mt-12 max-w-3xl border-l-2 pl-6">
+        <p className="eyebrow text-accent">O que quase ninguém conta</p>
+        <p className="text-content-muted text-body mt-3 leading-relaxed">
           {oeaCaveat}
         </p>
       </aside>

@@ -29,14 +29,12 @@ import { siteConfig } from "@/lib/site-config";
  */
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
-  return <p className="text-eyebrow text-accent">{children}</p>;
+  return <p className="eyebrow text-accent">{children}</p>;
 }
 
 function Headline({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-display text-content mt-3 max-w-3xl font-serif">
-      {children}
-    </h2>
+    <h2 className="text-display text-content mt-3 max-w-3xl">{children}</h2>
   );
 }
 
@@ -46,12 +44,12 @@ export function BeatChegada() {
   return (
     <div>
       <Eyebrow>Comércio exterior</Eyebrow>
-      <h1 className="text-display text-content mt-3 max-w-3xl font-serif">
-        Sorte não é método.
+      <h1 className="text-display text-content mt-3 max-w-3xl">
+        Quem escolhe a fábrica responde pela carga.
       </h1>
       <p className="text-lead text-content-muted mt-6 max-w-xl">
-        {siteConfig.years.foreignTrade} anos trazendo carga da Ásia e da Europa
-        para o Brasil. Da escolha da fábrica até a entrega no porto.
+        {siteConfig.years.foreignTrade} anos trazendo mercadoria da Ásia e da
+        Europa, da homologação do fornecedor até a entrega no porto.
       </p>
       <div className="mt-10 flex flex-wrap items-center gap-3">
         {/*
@@ -64,7 +62,7 @@ export function BeatChegada() {
         */}
         <a
           href="#contato"
-          className="bg-accent text-accent-contrast inline-flex min-h-12 items-center rounded-sm px-6 py-3 text-sm font-semibold transition-opacity hover:opacity-90"
+          className="bg-accent text-accent-contrast text-body inline-flex min-h-12 items-center rounded-sm px-6 py-3 font-semibold transition-opacity hover:opacity-90"
         >
           Quero estruturar minha importação
         </a>
@@ -79,11 +77,11 @@ export function BeatCasco() {
   return (
     <div>
       <Eyebrow>Trajetória</Eyebrow>
-      <p className="text-stat tabular-stat text-content mt-6 font-serif">
+      <p className="text-stat tabular-stat text-content mt-6">
         {siteConfig.years.brazil}
       </p>
       <p className="text-lead text-content-muted mt-4 max-w-md">
-        anos de comércio na família. Os últimos {siteConfig.years.foreignTrade}{" "}
+        anos de comércio na família, os últimos {siteConfig.years.foreignTrade}{" "}
         deles fora do país.
       </p>
     </div>
@@ -122,7 +120,9 @@ export function BeatConves() {
     // atravessava os cartões por falta de lugar para onde ir.
     <div className="max-w-2xl">
       <Eyebrow>O que fazemos</Eyebrow>
-      <Headline>Três frentes. Um responsável.</Headline>
+      <Headline>
+        Fornecedor, pagamento e imposto decididos antes de fechar.
+      </Headline>
       {/*
         Duas formas para a mesma lista, e não uma esticada.
 
@@ -138,12 +138,12 @@ export function BeatConves() {
         {FRENTES.map((f) => (
           <li key={f.ordinal} className="sm:bg-surface py-3 sm:p-6">
             <div className="flex items-baseline gap-2.5 sm:block">
-              <span className="tabular-stat text-accent font-mono text-[11px] tracking-widest">
+              <span className="tabular-stat text-accent eyebrow">
                 {f.ordinal}
               </span>
               <h3 className="text-h3 text-content sm:mt-3">{f.title}</h3>
             </div>
-            <p className="text-content-muted mt-1 text-[13px] leading-snug sm:mt-2 sm:text-sm sm:leading-relaxed">
+            <p className="text-content-muted sm:text-body text-meta mt-1 leading-snug sm:mt-2 sm:leading-relaxed">
               {f.body}
             </p>
           </li>
@@ -172,10 +172,10 @@ export function BeatAbertura() {
   return (
     <div className="max-w-2xl">
       <Eyebrow>Crédito</Eyebrow>
-      <Headline>Embarca agora. Paga depois.</Headline>
+      <Headline>Você recebe a carga antes de o pagamento vencer.</Headline>
       <p className="text-lead text-content-muted mt-5">
-        O prazo conta do dia do embarque, não do dia da chegada. Você recebe a
-        mercadoria e libera na alfândega antes de o pagamento vencer.
+        O prazo de 90 a 120 dias começa a correr no embarque, e não na chegada,
+        que é a folga para nacionalizar e girar antes do vencimento.
       </p>
 
       {/*
@@ -185,7 +185,7 @@ export function BeatAbertura() {
       */}
       <a
         href="#credito"
-        className="border-rule-strong text-content-muted hover:text-content mt-9 inline-flex min-h-11 items-center border-b pb-1 text-sm transition-colors"
+        className="border-rule-strong text-content-muted hover:text-content text-body mt-9 inline-flex min-h-11 items-center border-b pb-1 transition-colors"
       >
         Comparar as três formas de pagamento
       </a>
@@ -199,14 +199,17 @@ export function BeatManifesto() {
   return (
     <div className="max-w-lg">
       <Eyebrow>Onde atuamos</Eyebrow>
-      <Headline>Não somos despachante. Nem trading.</Headline>
+      <Headline>
+        Numa cadeia de cinco papéis, o nosso é responder pelo conjunto.
+      </Headline>
       <p className="text-lead text-content-muted mt-5">
-        Somos quem coordena todo mundo e responde quando alguma coisa trava.
+        Fornecedor, trading, agente de carga e despachante fazem cada um a sua
+        parte, e alguém precisa costurar o conjunto.
       </p>
 
       <a
         href="#cadeia"
-        className="border-rule-strong text-content-muted hover:text-content mt-9 inline-flex min-h-11 items-center border-b pb-1 text-sm transition-colors"
+        className="border-rule-strong text-content-muted hover:text-content text-body mt-9 inline-flex min-h-11 items-center border-b pb-1 transition-colors"
       >
         Ver a cadeia inteira e onde entramos
       </a>
@@ -222,7 +225,7 @@ export function BeatPartida() {
       <Eyebrow>Contato</Eyebrow>
       <Headline>A conversa começa por mensagem.</Headline>
       <p className="text-lead text-content-muted mt-6">
-        Sem formulário e sem cadastro. Você escreve, a gente responde.
+        Sem formulário e sem cadastro, você escreve e a gente responde.
       </p>
       <div className="mt-10 flex flex-wrap items-center gap-3">
         <WhatsappButton
@@ -231,7 +234,7 @@ export function BeatPartida() {
         />
         <a
           href="#detalhe"
-          className="border-rule-strong text-content-muted hover:text-content inline-flex min-h-11 items-center border-b pb-1 text-sm transition-colors"
+          className="border-rule-strong text-content-muted hover:text-content text-body inline-flex min-h-11 items-center border-b pb-1 transition-colors"
         >
           Ver tudo em detalhe
         </a>

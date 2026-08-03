@@ -10,7 +10,12 @@ import {
   type MotionValue,
 } from "motion/react";
 import { useReducedMotion } from "@/hooks/use-motion-preference";
-import { BEATS, BEAT_HEIGHT_SVH, BEAT_HEIGHT_SVH_REDUCED, type Beat } from "./beats";
+import {
+  BEATS,
+  BEAT_HEIGHT_SVH,
+  BEAT_HEIGHT_SVH_REDUCED,
+  type Beat,
+} from "./beats";
 import { useBeat } from "./use-beat";
 import { JourneySceneLazy } from "./scene-lazy";
 import { JourneyProgress } from "./journey-progress";
@@ -63,7 +68,7 @@ function JourneyInner({ children }: JourneyProps) {
       // longa funciona melhor.
       data-mode="doc"
       data-journey-track=""
-      className="relative bg-surface text-content"
+      className="bg-surface text-content relative"
     >
       <div className="sticky top-0 h-svh overflow-hidden">
         {/*
@@ -76,7 +81,6 @@ function JourneyInner({ children }: JourneyProps) {
           progress={scrollYProgress}
           className="absolute inset-0"
         />
-
 
         {/*
           O conteúdo. Todas as batidas montadas, sempre, em ordem narrativa.

@@ -53,12 +53,59 @@ mesmo `#2779A7`. O acento é cobre, cor de contêiner, não de brochura de
 armador.
 
 **O mono carrega o argumento.** Código de porto, Incoterm, tipo de equipamento
-e nome de documento em Geist Mono nas margens leem como competência
+e nome de documento em monoespaçada nas margens leem como competência
 operacional. É o detalhe mais barato do projeto e o que mais separa a página de
 um template.
 
-**Instrument Serif no display.** Contraste de traço alto, então o piso do
-`clamp()` é maior que o de uma sans: abaixo de 36px fica frágil.
+**Uma família de texto, não duas.** Archivo em tudo que é prosa, IBM Plex Mono
+em tudo que é dado.
+
+Esta entrada substitui a anterior, que prescrevia Inter no corpo, Instrument
+Serif no display e Geist Mono no dado, e a razão da troca não é técnica, é de
+conotação. Nenhuma das três era ruim isoladamente. Somadas, elas são o uniforme
+exato das landing pages de inteligência artificial de 2023 em diante: Inter é o
+padrão de todo produto SaaS desde 2019, Instrument Serif virou a serifada de
+display daquela cena, e Geist Mono é a fonte da Vercel. O cliente reconheceu
+isso antes de nós, e estava certo.
+
+Vale registrar o erro de método junto: o estudo de fonte que precedeu a troca
+mediu altura de x, contraste de traço e folga de acento, concluiu que a
+Instrument Serif servia, e não estava errado em nenhum número. Mediu a pergunta
+errada. Legibilidade não enxerga conotação.
+
+**Sem serifada de display, a hierarquia migra para a escala.** Era a serifada
+que separava título de corpo. Sem ela, o salto passa a ser de peso e de
+tracking: display e h2 em 600 contra corpo em 400 e lead em 300, com tracking
+de -0.032 em no display contra -0.011 em no corpo. Grotesco em tamanho grande
+abre visualmente, então os valores herdados da serifada não servem. A classe
+`font-serif` foi removida dos 32 usos: numa família só ela seria mentira e
+também redundante, porque quem distingue os níveis é o token de escala.
+
+O risco assumido é achatamento. Se a página ficar plana, o conserto é aumentar
+o salto de tamanho e de espaço, nunca reintroduzir uma segunda família.
+
+**Correção aplicada logo depois: a escala inteira desceu um degrau.** O primeiro
+corte manteve os tamanhos herdados da serifada, e o resultado ficou grande
+demais. O motivo é que o tamanho em pixel não mudou, o PESO mudou: display era
+400 e passou a 600, então a mesma medida carrega muito mais tinta e lê bem
+maior. Foi erro de tradução entre as duas famílias, não de gosto.
+
+Display de 4rem para 3rem, h2 de 2,5 para 2rem, stat de 4 para 2,5rem. E o lead
+passou de peso 300 para 400 com tamanho menor: Archivo Light é bem mais fina que
+Inter Light, e um parágrafo de abertura inteiro nela fica cinza e cansa. No lead
+a legibilidade ganha da elegância, porque ele é o segundo texto mais lido.
+
+**Faixa de números: número e um rótulo de uma linha, nada mais.** A versão
+anterior tinha quatro camadas por cartão, incluindo a fonte de cada número em
+monoespaçada, o que dava dezesseis linhas numa faixa cuja função é ser lida de
+relance. Faixa que precisa ser lida falhou.
+
+A fonte saiu da tela contra o argumento que eu mesmo tinha usado para defender a
+seção. A regra "sem fonte não vai para a página" continua certa; o problema é o
+dado: duas das quatro fontes são "Palavra do cliente", que não é fonte, é a
+admissão de que não existe uma. Impressa embaixo do número ela enfraquece o que
+deveria sustentar. O campo continua em `offer.ts` e volta quando o cliente
+entregar número verificável.
 
 ## Regras duras de cor
 
@@ -161,6 +208,48 @@ então o telefone nunca renderiza a geometria larga para descartar em seguida.
 Uma quebra só, em 768px.
 
 ## Decisões de conteúdo
+
+**O palco não hospeda documento.** Regra que saiu de um erro. Crédito e cadeia
+chegaram a morar dentro de um `<details>` numa batida da jornada, cujo palco é
+`sticky h-svh overflow-hidden`. O estado expandido não tinha para onde ir e o
+único scroll disponível era o da jornada, que é o mesmo que apaga a batida.
+Medido a 375 por 844: a caixa útil é 409px e o estado fechado já usava 385px.
+Conteúdo que cresce vive em fluxo normal. A batida faz uma afirmação e aponta.
+
+**Nenhum título usa "Frase. Virada." mais de uma vez.** O padrão de duas
+sentenças curtas separadas por ponto é o movimento mais reproduzível do método
+Apple, e reproduzível é exatamente o problema: 5 dos 13 títulos o usavam e 4
+abriam com negação, o que somado lê como texto gerado. Catorze títulos, catorze
+construções diferentes. O modelo é a melhor linha do site, que nunca seguiu o
+padrão: "A carga embarca, você nacionaliza, e o pagamento vence depois." Três
+tempos numa sentença só.
+
+**Seis degraus de tamanho, e nada fora deles.** A escala tinha 14 tamanhos
+distintos na tela e a maior parte não vinha de token: `text-sm` aparecia 46
+vezes carregando o corpo do texto enquanto `--text-body` quase não era usado,
+ou seja existiam dois corpos de texto diferentes. Havia ainda 17 usos de
+`text-[10px]` e `text-[11px]` reimplementando à mão o eyebrow que já existia
+como utility.
+
+Diferença pequena entre degraus é o pior dos mundos: não lê como hierarquia, lê
+como descuido. A rampa é 11, 13, 16, 18 a 20, 24 a 30, 30 a 42. O h3 tem o
+tamanho do corpo e se distingue só pelo peso, porque dois pixels não constroem
+hierarquia nenhuma e ainda somam um degrau.
+
+**A utility de eyebrow não pode se chamar `text-eyebrow`.** Duas armadilhas, e
+caí nas duas na mesma sessão. Declarar `--text-eyebrow` em `@theme` faz o
+Tailwind 4 gerar uma utility de tamanho com o mesmo nome, e passa a haver dois
+donos. Manter o prefixo `text-` sem token faz o tailwind-merge, que o `cn()`
+usa, classificar a classe como COR e descartá-la sempre que ela vier junto de
+`text-content-muted` ou `text-accent`. O menu principal perdeu monoespaçada e
+caixa alta exatamente assim, em silêncio, sem erro nenhum. O nome é `eyebrow`,
+sem prefixo, e o tamanho fica literal dentro do `@utility`.
+
+**A barra de progresso é cromo, não acento.** Era `bg-accent` em segmentos de
+2px, e o acento é a cor mais alta do sistema, reservada para o que pede ação.
+Numa peça que fica na tela durante os 910svh inteiros da jornada, ela competia
+com a headline e com o botão. Agora é fio de 1px em tinta, com três valores da
+mesma cor: vencido a 45%, o da vez cheio, o que falta no fio.
 
 **O crédito vai cedo na página.** O prazo de 90 a 120 dias contados do B/L nas
 modalidades OA e DA é o único argumento que nenhum dos 12 concorrentes

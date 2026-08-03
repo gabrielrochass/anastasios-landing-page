@@ -19,7 +19,9 @@ export default function BlogPage() {
 
       <Section>
         {publishedPosts.length === 0 ? (
-          <p className="text-content-muted">Primeiros artigos chegando em breve.</p>
+          <p className="text-content-muted">
+            Primeiros artigos chegando em breve.
+          </p>
         ) : (
           <div className="flex flex-col divide-y divide-neutral-200">
             {publishedPosts.map((post, index) => (

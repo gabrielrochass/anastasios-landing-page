@@ -60,9 +60,9 @@ export default function HomePage() {
           className="bg-surface py-section text-content"
         >
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
-            <p className="text-eyebrow text-accent">Contato</p>
-            <h2 className="mt-4 font-serif text-h2">
-              Quatro perguntas. A conversa começa com contexto.
+            <p className="eyebrow text-accent">Contato</p>
+            <h2 className="text-h2 mt-4">
+              Responda quatro perguntas e a conversa já começa com contexto.
             </h2>
             <Qualifier className="mt-14" />
           </div>

@@ -33,7 +33,7 @@ export function Intelligence() {
         lead="Frete, câmbio, rota e regulação mudam a conta da sua importação toda semana. Publicamos a leitura que usamos nas nossas próprias operações."
       />
 
-      <ul className="mt-14 grid gap-px bg-rule md:grid-cols-3">
+      <ul className="bg-rule mt-14 grid gap-px md:grid-cols-3">
         {posts.map((post) => (
           <li key={post.slug} className="bg-surface">
             <Link
@@ -42,17 +42,17 @@ export function Intelligence() {
             >
               <time
                 dateTime={post.date}
-                className="font-mono text-[11px] tabular-stat text-content-muted"
+                className="tabular-stat text-content-muted eyebrow"
               >
                 {dateFormatter.format(new Date(post.date))}
               </time>
-              <h3 className="mt-4 font-serif text-h3 text-content group-hover:text-accent">
+              <h3 className="text-h3 text-content group-hover:text-accent mt-4">
                 {post.title}
               </h3>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-content-muted">
+              <p className="text-content-muted text-body mt-3 flex-1 leading-relaxed">
                 {post.description}
               </p>
-              <span className="mt-6 inline-flex items-center gap-1.5 text-sm text-accent">
+              <span className="text-accent text-body mt-6 inline-flex items-center gap-1.5">
                 Ler análise
                 <ArrowRight
                   className="size-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none"
@@ -66,7 +66,7 @@ export function Intelligence() {
 
       <Link
         href="/blog"
-        className="mt-10 inline-flex min-h-11 items-center gap-2 border-b border-accent pb-1 text-sm text-content transition-colors hover:text-accent"
+        className="border-accent text-content hover:text-accent text-body mt-10 inline-flex min-h-11 items-center gap-2 border-b pb-1 transition-colors"
       >
         Ver o painel completo
         <ArrowRight className="size-4" aria-hidden />

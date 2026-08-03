@@ -1,29 +1,40 @@
 import { proofPoints } from "@/data/offer";
 
 /**
- * Barra de prova. Quatro números, cada um com a fonte visível embaixo.
+ * Barra de prova. Quatro números, uma linha de rótulo cada.
  *
- * A fonte não é rodapé jurídico, é o argumento: em B2B de comércio exterior o
- * público confere, e número solto sem procedência lê como marketing. Um dos
- * concorrentes auditados exibe "+0 Clientes" em produção, com o contador
- * animado quebrado. Aqui o número é texto estático: contador animado é
- * exatamente o mecanismo que falha e deixa zero na tela, e ele não acrescenta
- * nada a um número que precisa ser lido, não celebrado.
+ * A versão anterior tinha quatro camadas por cartão: número, rótulo em duas
+ * linhas, um fio, e a fonte em monoespaçada. Dezesseis linhas de texto numa
+ * faixa cuja função é ser lida de relance. Faixa não é seção: se ela precisa
+ * ser lida, ela falhou.
+ *
+ * A fonte de cada número saiu da tela, e isso foi decisão contra o meu próprio
+ * argumento anterior. Eu defendi que a procedência justificava a faixa existir,
+ * e ainda acho que "sem fonte não vai para a página" é a regra certa. Só que
+ * duas das quatro fontes são "Palavra do cliente", que não é fonte: é a
+ * admissão de que não existe uma. Impressa embaixo do número, ela enfraquece o
+ * que deveria sustentar. O campo continua em `offer.ts` e volta quando o
+ * cliente entregar número verificável.
+ *
+ * O número é texto estático. Um dos concorrentes auditados exibe "+0 Clientes"
+ * em produção com o contador animado quebrado, e contador é exatamente o
+ * mecanismo que falha desse jeito. Número aqui é para ser lido, não celebrado.
  */
 export function ProofBar() {
   return (
     <section
+      id="prova"
       data-mode="ocean"
       className="border-rule bg-surface text-content border-y"
     >
-      <dl className="bg-rule mx-auto grid max-w-6xl grid-cols-1 gap-px sm:grid-cols-2 lg:grid-cols-4">
+      <dl className="bg-rule mx-auto grid max-w-6xl grid-cols-2 gap-px lg:grid-cols-4">
         {proofPoints.map((point) => (
-          <div key={point.label} className="bg-surface px-6 py-10">
+          <div key={point.label} className="bg-surface px-6 py-8">
             <dt className="sr-only">{point.label}</dt>
             <dd>
-              <span className="text-stat text-content flex items-baseline font-serif">
+              <span className="text-stat text-content flex items-baseline">
                 {point.prefix ? (
-                  <span className="text-lead text-content-muted mr-2 font-sans">
+                  <span className="text-content-muted text-body mr-1.5 font-normal">
                     {point.prefix}
                   </span>
                 ) : null}
@@ -33,17 +44,12 @@ export function ProofBar() {
                     que espaço vazio. */}
                 {point.value === null ? null : point.value}
                 {point.suffix ? (
-                  <span className="text-lead text-content-muted ml-1 font-sans">
+                  <span className="text-content-muted text-body ml-1.5 font-normal">
                     {point.suffix}
                   </span>
                 ) : null}
               </span>
-              <p className="text-content-muted mt-4 max-w-[26ch] text-sm leading-relaxed">
-                {point.label}
-              </p>
-              <p className="border-rule text-content-muted mt-4 border-t pt-3 font-mono text-[10px] tracking-widest uppercase">
-                {point.source}
-              </p>
+              <p className="text-content-muted text-body mt-2">{point.label}</p>
             </dd>
           </div>
         ))}

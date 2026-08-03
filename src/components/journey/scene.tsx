@@ -172,9 +172,17 @@ function Lighting() {
       />
       {/* Preenchimento frio do lado oposto: sem ele a face na sombra fecha em
           preto e a caixa perde volume. */}
-      <directionalLight position={[-8, 4, -6]} intensity={0.7} color="#c3d4de" />
+      <directionalLight
+        position={[-8, 4, -6]}
+        intensity={0.7}
+        color="#c3d4de"
+      />
       {/* Contorno por trás, que separa o objeto do fundo claro. */}
-      <directionalLight position={[0, 6, -12]} intensity={0.9} color="#ffffff" />
+      <directionalLight
+        position={[0, 6, -12]}
+        intensity={0.9}
+        color="#ffffff"
+      />
     </>
   );
 }

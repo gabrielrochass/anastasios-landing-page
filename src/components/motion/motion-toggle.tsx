@@ -20,7 +20,7 @@ export function MotionToggle({ className }: { className?: string }) {
 
   if (systemLocked) {
     return (
-      <p className={cn("font-mono text-[11px] text-content-muted", className)}>
+      <p className={cn("text-content-muted eyebrow", className)}>
         Animações reduzidas pela preferência do seu sistema.
       </p>
     );
@@ -32,7 +32,7 @@ export function MotionToggle({ className }: { className?: string }) {
       onClick={toggle}
       aria-pressed={reduced}
       className={cn(
-        "inline-flex min-h-11 items-center gap-2 font-mono text-[11px] uppercase tracking-[0.12em] text-content-muted transition-colors hover:text-content",
+        "text-content-muted hover:text-content eyebrow inline-flex min-h-11 items-center gap-2 transition-colors",
         className,
       )}
     >
@@ -47,8 +47,8 @@ export function MotionToggle({ className }: { className?: string }) {
           className={cn(
             "block size-2 translate-y-px rounded-full transition-transform",
             reduced
-              ? "translate-x-3.5 bg-accent-contrast"
-              : "translate-x-0.5 bg-rule-strong",
+              ? "bg-accent-contrast translate-x-3.5"
+              : "bg-rule-strong translate-x-0.5",
           )}
         />
       </span>

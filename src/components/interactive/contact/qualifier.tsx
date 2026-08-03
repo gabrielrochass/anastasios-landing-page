@@ -42,7 +42,7 @@ export function Qualifier({ className }: { className?: string }) {
             <legend className="flex items-baseline gap-3">
               <span
                 aria-hidden
-                className="font-mono text-[11px] tabular-stat text-content-muted"
+                className="tabular-stat text-content-muted eyebrow"
               >
                 {String(index + 1).padStart(2, "0")}
               </span>
@@ -56,7 +56,7 @@ export function Qualifier({ className }: { className?: string }) {
                   <label
                     key={option.value}
                     className={cn(
-                      "inline-flex min-h-11 cursor-pointer items-center rounded-sm border px-4 py-2 text-sm transition-colors",
+                      "text-body inline-flex min-h-11 cursor-pointer items-center rounded-sm border px-4 py-2 transition-colors",
                       "has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-[var(--color-focus)]",
                       selected
                         ? "border-accent bg-accent text-accent-contrast"
@@ -80,16 +80,14 @@ export function Qualifier({ className }: { className?: string }) {
         ))}
       </div>
 
-      <div className="mt-12 border-t border-rule pt-8">
+      <div className="border-rule mt-12 border-t pt-8">
         {/* Prévia da mensagem. Mostrar o que vai ser enviado antes de enviar é
             o que transforma "abrir o WhatsApp" de salto no escuro em ação
             previsível, e é o que faz a pessoa confiar em apertar o botão. */}
-        <p className="text-eyebrow text-content-muted">
-          Mensagem que será enviada
-        </p>
+        <p className="eyebrow text-content-muted">Mensagem que será enviada</p>
         <p
           aria-live="polite"
-          className="mt-3 text-sm leading-relaxed text-content-muted"
+          className="text-content-muted text-body mt-3 leading-relaxed"
         >
           {message}
         </p>
@@ -106,10 +104,10 @@ export function Qualifier({ className }: { className?: string }) {
             }
           }}
           className={cn(
-            "mt-8 inline-flex min-h-12 items-center gap-2 rounded-sm px-6 py-3 text-sm font-semibold transition-opacity",
+            "text-body mt-8 inline-flex min-h-12 items-center gap-2 rounded-sm px-6 py-3 font-semibold transition-opacity",
             complete
               ? "bg-accent text-accent-contrast hover:opacity-90"
-              : "cursor-not-allowed border border-rule-strong text-content-muted",
+              : "border-rule-strong text-content-muted cursor-not-allowed border",
           )}
         >
           <MessageCircle className="size-4 shrink-0" aria-hidden />

@@ -12,6 +12,7 @@ import { mkdirSync } from "node:fs";
 const URL = process.argv[2] ?? "http://localhost:3002/";
 const W = Number(process.argv[3] ?? 375);
 const IDS = [
+  "prova",
   "problema",
   "cadeia",
   "credito",

@@ -28,7 +28,7 @@ export function MainNav() {
                 href={link.href}
                 aria-current={current ? "page" : undefined}
                 className={cn(
-                  "font-mono text-[11px] uppercase tracking-[0.14em] transition-colors",
+                  "eyebrow transition-colors",
                   current
                     ? "text-accent"
                     : "text-content-muted hover:text-content",

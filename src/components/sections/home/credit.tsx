@@ -39,23 +39,17 @@ export function Credit() {
             <tr className="border-rule-strong border-b">
               <th
                 scope="col"
-                className="text-eyebrow text-content-muted w-40 py-4 pr-6"
+                className="eyebrow text-content-muted w-40 py-4 pr-6"
               >
                 Modalidade
               </th>
-              <th
-                scope="col"
-                className="text-eyebrow text-content-muted py-4 pr-6"
-              >
+              <th scope="col" className="eyebrow text-content-muted py-4 pr-6">
                 Prazo
               </th>
-              <th
-                scope="col"
-                className="text-eyebrow text-content-muted py-4 pr-6"
-              >
+              <th scope="col" className="eyebrow text-content-muted py-4 pr-6">
                 Documentos originais
               </th>
-              <th scope="col" className="text-eyebrow text-content-muted py-4">
+              <th scope="col" className="eyebrow text-content-muted py-4">
                 Costuma servir para
               </th>
             </tr>
@@ -64,18 +58,20 @@ export function Credit() {
             {paymentTerms.map((term) => (
               <tr key={term.code} className="border-rule border-b align-top">
                 <th scope="row" className="py-6 pr-6">
-                  <span className="text-accent block font-mono text-sm">
+                  <span className="text-accent text-body block font-mono">
                     {term.code}
                   </span>
-                  <span className="text-content-muted mt-1 block text-xs font-normal">
+                  <span className="text-content-muted text-meta mt-1 block font-normal">
                     {term.name}
                   </span>
                 </th>
-                <td className="text-content py-6 pr-6 text-sm">{term.term}</td>
-                <td className="text-content-muted py-6 pr-6 text-sm">
+                <td className="text-content text-body py-6 pr-6">
+                  {term.term}
+                </td>
+                <td className="text-content-muted text-body py-6 pr-6">
                   {term.documents}
                 </td>
-                <td className="text-content-muted py-6 text-sm">
+                <td className="text-content-muted text-body py-6">
                   {term.bestFor}
                 </td>
               </tr>
@@ -88,26 +84,26 @@ export function Credit() {
       <div className="bg-rule mt-12 flex flex-col gap-px md:hidden">
         {paymentTerms.map((term) => (
           <article key={term.code} className="bg-surface py-8">
-            <p className="text-accent font-mono text-sm">{term.code}</p>
-            <p className="text-content-muted mt-1 text-xs">{term.name}</p>
+            <p className="text-accent text-body font-mono">{term.code}</p>
+            <p className="text-content-muted text-meta mt-1">{term.name}</p>
             <dl className="mt-5 flex flex-col gap-4">
               <div>
-                <dt className="text-eyebrow text-content-muted">Prazo</dt>
-                <dd className="text-content mt-1 text-sm">{term.term}</dd>
+                <dt className="eyebrow text-content-muted">Prazo</dt>
+                <dd className="text-content text-body mt-1">{term.term}</dd>
               </div>
               <div>
-                <dt className="text-eyebrow text-content-muted">
+                <dt className="eyebrow text-content-muted">
                   Documentos originais
                 </dt>
-                <dd className="text-content-muted mt-1 text-sm">
+                <dd className="text-content-muted text-body mt-1">
                   {term.documents}
                 </dd>
               </div>
               <div>
-                <dt className="text-eyebrow text-content-muted">
+                <dt className="eyebrow text-content-muted">
                   Costuma servir para
                 </dt>
-                <dd className="text-content-muted mt-1 text-sm">
+                <dd className="text-content-muted text-body mt-1">
                   {term.bestFor}
                 </dd>
               </div>
@@ -122,7 +118,7 @@ export function Credit() {
           label="Quero simular o prazo na minha operação"
           message="Olá! Vim pelo site e quero entender as formas de pagamento de 90 a 120 dias contados do embarque."
         />
-        <p className="text-content-muted text-xs">
+        <p className="text-content-muted text-meta">
           A modalidade é definida junto com o seu financeiro, antes do contrato.
         </p>
       </div>

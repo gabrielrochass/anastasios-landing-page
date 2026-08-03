@@ -27,9 +27,12 @@
  */
 
 @theme {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  /* Uma família de texto e uma de dado. `font-serif` não existe mais: numa
+     família só a classe seria mentira e também seria redundante, porque quem
+     distingue display de corpo passou a ser o TOKEN DE ESCALA, não a família.
+     Menos classe no JSX, e uma fonte só de verdade. */
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
 
   /* Oceano */
   --color-ocean-950: #07141b;
@@ -66,49 +69,67 @@
 
      Só o display escala de forma contínua. Corpo tem passo discreto, porque
      legibilidade é absoluta e não relativa. */
-  --text-display: clamp(2.25rem, 1.4rem + 3.6vw, 4rem);
-  /* 1.17 e não 1.05.
-     Medindo os contornos da fonte: maiúscula acentuada tem topo em 0,950 em e
-     cedilha tem base em -0,215 em, o que dá 1,165 em de tinta. Com entrelinha
-     1,05 isso é sobreposição real, cerca de 7px num display de 64px. Em caixa
-     baixa não colide, então os títulos atuais escapam por sorte, não por
-     projeto: basta uma manchete começando por Ó, Á ou Ê para quebrar.
-     1.20 e não 1.17: a 1.17 a folga é de 0.005 em, cerca de 0.32px em 64px,
-     ou seja encostado. 1.20 sobe para 2.24px e mantém a escala monotônica
-     contra h2 em 1.18 e tagline em 1.19. */
-  --text-display--line-height: 1.2;
-  --text-display--letter-spacing: -0.022em;
-  --text-display--font-weight: 400;
-  --text-h2: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
-  --text-h2--line-height: 1.18;
-  --text-h2--letter-spacing: -0.018em;
-  --text-h2--font-weight: 400;
-  /* Faixa de tagline: o único lugar com tracking positivo. */
-  --text-tagline: clamp(1.3125rem, 1.15rem + 0.7vw, 1.75rem);
-  --text-tagline--line-height: 1.19;
-  --text-tagline--letter-spacing: 0.011em;
-  --text-tagline--font-weight: 600;
-  --text-h3: 1.0625rem;
-  --text-h3--line-height: 1.24;
-  --text-h3--letter-spacing: -0.022em;
+  /* Teto em 3rem e não 4rem. O tamanho em pixel não mudou de fonte, mudou de
+     PESO: a serifada de display era 400 e o grotesco é 600, então a mesma
+     medida carrega muito mais tinta e lê bem maior. Manter 64px foi erro meu
+     de tradução entre as duas famílias. */
+  /*
+   * SEIS DEGRAUS, e nada fora deles.
+   *
+   * A escala tinha 14 tamanhos distintos na tela, e a maior parte não vinha de
+   * token: `text-sm` aparecia 46 vezes carregando o corpo do texto enquanto o
+   * token `--text-body` quase não era usado, então existiam dois corpos de
+   * texto diferentes. Havia ainda 17 usos de `text-[10px]` e `text-[11px]`,
+   * todos reimplementando à mão o eyebrow que já existia como utility.
+   *
+   * Diferença pequena entre degraus é o pior dos mundos: não lê como hierarquia,
+   * lê como descuido. Melhor poucos degraus com salto claro.
+   *
+   *   eyebrow  11px   rótulo, ordinal, código, tudo em mono caixa alta
+   *                   (o tamanho fica literal no @utility, não em @theme: o
+   *                    Tailwind 4 GERA uma utility de tamanho a partir de todo
+   *                    token --text-*, e ela colidiria com a utility de mesmo
+   *                    nome que já traz família, caixa e tracking)
+   *   meta     13px   nota, legenda, ressalva
+   *   body     16px   TODO corpo de texto, e h3 no mesmo tamanho em peso 600
+   *   lead     18 a 20px   parágrafo de abertura
+   *   h2       24 a 30px   título de seção
+   *   display  30 a 42px   título de batida, e o número da faixa de prova
+   *
+   * h3 tem o tamanho do corpo e se distingue só pelo PESO. Dois pixels de
+   * diferença não constroem hierarquia nenhuma e ainda somam um degrau.
+   */
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.45;
+  --text-meta--font-weight: 400;
+  --text-body: 1rem;
+  --text-body--line-height: 1.55;
+  --text-body--letter-spacing: -0.008em;
+  --text-h3: 1rem;
+  --text-h3--line-height: 1.35;
+  --text-h3--letter-spacing: -0.01em;
   --text-h3--font-weight: 600;
-  --text-lead: clamp(1.3125rem, 1.2rem + 0.5vw, 1.5rem);
-  --text-lead--line-height: 1.4;
-  --text-lead--letter-spacing: -0.008em;
-  --text-lead--font-weight: 300;
-  --text-body: 1.0625rem;
-  --text-body--line-height: 1.47;
-  --text-body--letter-spacing: -0.022em;
-  --text-meta: 0.75rem;
-  --text-meta--line-height: 1.35;
-  --text-meta--font-weight: 600;
-  --text-stat: clamp(2.5rem, 1.8rem + 3vw, 4rem);
-  /* 1.17 e não 1. Está 0.165 em abaixo do limiar de colisão de acento e é
-     usado com font-serif. Só escapa hoje porque o conteúdo é um numeral sem
-     acento: uma estatística de duas linhas com acento colidiria. */
-  --text-stat--line-height: 1.17;
-  --text-stat--letter-spacing: -0.022em;
-  --text-stat--font-weight: 400;
+  --text-lead: clamp(1.125rem, 1.08rem + 0.19vw, 1.25rem);
+  --text-lead--line-height: 1.5;
+  --text-lead--letter-spacing: -0.012em;
+  --text-lead--font-weight: 400;
+  --text-h2: clamp(1.5rem, 1.37rem + 0.55vw, 1.875rem);
+  --text-h2--line-height: 1.2;
+  --text-h2--letter-spacing: -0.024em;
+  --text-h2--font-weight: 600;
+  /* Entrelinha nunca abaixo da altura de tinta acentuada. Maiúscula com acento
+     mais cedilha na linha seguinte somam mais de 1 em, então 1.0 é colisão real
+     em português e um título começando por Ó, Á ou Ê quebra. */
+  --text-display: clamp(1.875rem, 1.61rem + 1.13vw, 2.625rem);
+  --text-display--line-height: 1.16;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 600;
+  /* O número da faixa de prova usa o mesmo degrau do display. Um sétimo degrau
+     só para ele não se justificava. */
+  --text-stat: var(--text-display);
+  --text-stat--line-height: 1.1;
+  --text-stat--letter-spacing: -0.03em;
+  --text-stat--font-weight: 600;
 
   --spacing-card: 1.5rem;
   --spacing-section: clamp(3rem, 2rem + 2.7vw, 5rem);
@@ -358,9 +379,22 @@
   }
 }
 
-@utility text-eyebrow {
+/*
+ * Sem o prefixo `text-`, e isso é obrigatório, não estilo.
+ *
+ * Chamava-se `text-eyebrow`, e o `cn()` do projeto usa tailwind-merge, que
+ * agrupa tudo que começa com `text-` e mantém só o último da lista. Como esta
+ * utility não tem um token `--text-*` correspondente em `@theme`, o
+ * tailwind-merge a classificava como COR e a descartava sempre que ela vinha
+ * acompanhada de `text-content-muted` ou `text-accent`. O menu principal ficou
+ * sem monoespaçada e sem caixa alta exatamente por isso, em silêncio.
+ *
+ * Declarar o token em `@theme` também não resolve: aí o Tailwind gera uma
+ * utility de tamanho com o mesmo nome e passa a haver dois donos.
+ */
+@utility eyebrow {
   font-family: var(--font-mono);
-  font-size: var(--text-meta);
+  font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;

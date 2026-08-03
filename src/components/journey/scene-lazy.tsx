@@ -17,7 +17,7 @@ const JourneyScene = dynamic(
   () => import("./scene").then((m) => m.JourneyScene),
   {
     ssr: false,
-    loading: () => <div className="absolute inset-0 bg-ocean-950" />,
+    loading: () => <div className="bg-ocean-950 absolute inset-0" />,
   },
 );
 

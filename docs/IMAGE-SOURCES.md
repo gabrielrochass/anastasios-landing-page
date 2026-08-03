@@ -251,3 +251,38 @@ sem um tratamento único. Recomendações, na ordem de menor para maior interven
 7. **Técnico** (reforço do ASSETS.md): exportar webp/avif em 1x e 2x das
    dimensões do slot, `alt` descritivo em pt-BR obrigatório, e manter o
    `ImageSlot` para zero CLS.
+
+---
+
+## Em uso
+
+### `linha-de-producao`
+
+| campo | valor |
+| --- | --- |
+| arquivo | `public/images/linha-de-producao.jpg`, 1000 por 1250 |
+| seção | 07 Quem somos, coluna da esquerda |
+| autor | Shixart1985 |
+| licença | CC BY 2.0, https://creativecommons.org/licenses/by/2.0 |
+| origem | https://commons.wikimedia.org/wiki/File:Worker_uses_machinery_to_assemble_parts_in_a_factory_setting.jpg |
+| baixada em | 3 de agosto de 2026 |
+| tratamento | corte para 4 por 5 com posicionamento por atenção, JPEG qualidade 82 |
+| atribuição | visível abaixo da foto, exigida pela licença |
+
+**Por que Wikimedia Commons e não Unsplash.** O Commons publica autor, licença e
+origem em campo estruturado consultável por API. No Unsplash a diferença entre a
+licença livre e o Unsplash+ pago da Getty aparece só como selo na página, que é
+exatamente a armadilha que este documento já alertava.
+
+**Por que esta foto e não uma de porto.** Foram testadas três fotos de terminal
+portuário, e todas as três foram rejeitadas pela regra de livery: HAMBURG SÜD e
+ALIANÇA legíveis nos cascos, MSC, COSCO e MAERSK SEALAND nos contêineres. Pátio
+de porto quase sempre carrega marca de armador, é a natureza do assunto.
+
+Linha de produção resolve melhor de qualquer forma, porque é o que o texto ao
+lado descreve: fábrica escolhida e homologada por nós. E a mão em quadro coloca
+trabalho humano na seção sem inventar um indivíduo, o que seria o problema de
+usar retrato de banco de imagem numa seção que traz razão social e CNPJ reais.
+
+**O retrato do Anastasios continua pendente** e está em
+`docs/PENDENCIAS-CLIENTE.md`, item 3.1. Quando chegar, entra nesta seção.

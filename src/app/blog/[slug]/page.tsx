@@ -6,7 +6,12 @@ import { ReadingProgress } from "@/components/motion/reading-progress";
 import { AuthorBio } from "@/components/sections/blog/author-bio";
 import { RelatedPosts } from "@/components/sections/blog/related-posts";
 import { JsonLd } from "@/components/seo/json-ld";
-import { getAuthor, getPostBySlug, getRelatedPosts, publishedPosts } from "@/lib/posts";
+import {
+  getAuthor,
+  getPostBySlug,
+  getRelatedPosts,
+  publishedPosts,
+} from "@/lib/posts";
 import { articleSchema, breadcrumbSchema } from "@/lib/seo/schema";
 
 export const dynamicParams = false;
@@ -54,46 +59,46 @@ export default async function PostPage({
     <>
       <ReadingProgress />
       <article className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-      <header>
-        <p className="text-eyebrow flex flex-wrap gap-x-2 text-accent">
-          {post.temas.length > 0 ? (
-            post.temas.map((nr) => <span key={nr}>{nr}</span>)
-          ) : (
-            <span>SST na prática</span>
-          )}
-        </p>
-        <h1 className="text-display mt-4 text-content">{post.title}</h1>
-        <p className="text-eyebrow mt-5 flex flex-wrap gap-x-3 text-content-muted">
-          {author?.name && <span>{author.name}</span>}
-          <span>{date}</span>
-          <span>{post.metadata.readingTime} min de leitura</span>
-        </p>
-      </header>
+        <header>
+          <p className="eyebrow text-accent flex flex-wrap gap-x-2">
+            {post.temas.length > 0 ? (
+              post.temas.map((nr) => <span key={nr}>{nr}</span>)
+            ) : (
+              <span>SST na prática</span>
+            )}
+          </p>
+          <h1 className="text-display text-content mt-4">{post.title}</h1>
+          <p className="eyebrow text-content-muted mt-5 flex flex-wrap gap-x-3">
+            {author?.name && <span>{author.name}</span>}
+            <span>{date}</span>
+            <span>{post.metadata.readingTime} min de leitura</span>
+          </p>
+        </header>
 
-      <TldrBox items={post.tldr} />
+        <TldrBox items={post.tldr} />
 
-      <MDXContent code={post.content} />
-      {author && <AuthorBio author={author} />}
-      <RelatedPosts posts={related} />
+        <MDXContent code={post.content} />
+        {author && <AuthorBio author={author} />}
+        <RelatedPosts posts={related} />
 
-      <JsonLd
-        data={articleSchema({
-          title: post.title,
-          description: post.description,
-          slug: post.slug,
-          date: post.date,
-          updated: post.updated,
-          authorName: author?.name ?? "Equipe E-Soluções",
-          tags: post.tags,
-        })}
-      />
-      <JsonLd
-        data={breadcrumbSchema([
-          { name: "Início", path: "/" },
-          { name: "Blog", path: "/blog" },
-          { name: post.title, path: post.permalink },
-        ])}
-      />
+        <JsonLd
+          data={articleSchema({
+            title: post.title,
+            description: post.description,
+            slug: post.slug,
+            date: post.date,
+            updated: post.updated,
+            authorName: author?.name ?? "Equipe E-Soluções",
+            tags: post.tags,
+          })}
+        />
+        <JsonLd
+          data={breadcrumbSchema([
+            { name: "Início", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: post.title, path: post.permalink },
+          ])}
+        />
       </article>
     </>
   );

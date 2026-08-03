@@ -24,8 +24,8 @@ export function SupplyChain() {
       <BandHeading
         ordinal="02"
         eyebrow="Onde atuamos"
-        title="Não somos o despachante, nem a trading. Somos quem responde pela operação inteira."
-        lead="A cadeia de uma importação tem cinco papéis distintos, e confundi-los é o que faz empresa contratar a peça errada para o problema que tem."
+        title="A cadeia tem cinco papéis, e confundi-los custa caro."
+        lead="O erro mais caro do setor é contratar a peça errada para o problema que se tem. Abaixo, quem faz o quê, com o nosso lugar marcado."
       />
 
       <ol className="bg-rule mt-16 grid gap-px md:grid-cols-5">
@@ -40,7 +40,7 @@ export function SupplyChain() {
             <span
               aria-hidden
               className={cn(
-                "tabular-stat font-mono text-[10px]",
+                "tabular-stat eyebrow",
                 node.isUs ? "opacity-70" : "text-content-muted",
               )}
             >
@@ -48,7 +48,7 @@ export function SupplyChain() {
             </span>
             <h3
               className={cn(
-                "mt-3 font-sans text-sm font-semibold",
+                "text-body mt-3 font-sans font-semibold",
                 node.isUs ? "" : "text-content",
               )}
             >
@@ -56,7 +56,7 @@ export function SupplyChain() {
             </h3>
             <p
               className={cn(
-                "mt-3 text-xs leading-relaxed",
+                "text-meta mt-3 leading-relaxed",
                 node.isUs ? "opacity-85" : "text-content-muted",
               )}
             >
@@ -68,7 +68,7 @@ export function SupplyChain() {
 
       {/* O aviso é parte do argumento, não letra miúda. Dizer com clareza o
           que não fazemos é o que dá peso ao que fazemos. */}
-      <p className="border-accent text-content-muted mt-10 max-w-3xl border-l-2 pl-6 text-sm leading-relaxed">
+      <p className="border-accent text-content-muted text-body mt-10 max-w-3xl border-l-2 pl-6 leading-relaxed">
         {chainDisclaimer}
       </p>
     </Band>

@@ -5,8 +5,8 @@ export function RelatedPosts({ posts }: { posts: Post[] }) {
   if (posts.length === 0) return null;
   return (
     <section aria-label="Artigos relacionados" className="mt-14">
-      <p className="text-eyebrow text-accent">Continue lendo</p>
-      <h2 className="text-h2 mt-2 text-content">Artigos relacionados</h2>
+      <p className="eyebrow text-accent">Continue lendo</p>
+      <h2 className="text-h2 text-content mt-2">Artigos relacionados</h2>
       <div className="mt-8 grid gap-6 md:grid-cols-3">
         {posts.map((post) => (
           <PostCard key={post.slug} post={post} />

@@ -28,7 +28,7 @@ export function MobileNav() {
         <button
           type="button"
           aria-label="Abrir menu"
-          className="inline-flex size-11 items-center justify-center rounded-sm border border-rule-strong bg-transparent text-content transition-colors hover:bg-surface-raised md:hidden"
+          className="border-rule-strong text-content hover:bg-surface-raised inline-flex size-11 items-center justify-center rounded-sm border bg-transparent transition-colors md:hidden"
         >
           <Menu className="size-5" aria-hidden />
         </button>
@@ -37,16 +37,16 @@ export function MobileNav() {
           Menu é leitura, não cena. */}
       <SheetContent side="right" data-mode="doc" className="bg-surface">
         <SheetHeader>
-          <SheetTitle className="font-serif text-content">Menu</SheetTitle>
+          <SheetTitle className="text-content">Menu</SheetTitle>
         </SheetHeader>
         <nav aria-label="Principal" className="px-4">
           <ul className="flex flex-col">
             {navLinks.map((link) => (
-              <li key={link.href} className="border-b border-rule">
+              <li key={link.href} className="border-rule border-b">
                 <Link
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="flex min-h-14 items-center font-mono text-xs uppercase tracking-[0.14em] text-content"
+                  className="text-content text-meta flex min-h-14 items-center font-mono tracking-[0.14em] uppercase"
                 >
                   {link.label}
                 </Link>
